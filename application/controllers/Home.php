@@ -29,6 +29,8 @@ class Home extends CI_Controller {
                 // Set session data on successful login
                 $this->session->set_userdata('user_id', $user->id);
                 $this->session->set_userdata('username', $user->username);
+                $this->session->set_userdata('name', $user->name);
+
 
                 // If AJAX request, return JSON response with redirect URL
                 if ($this->input->is_ajax_request()) {
