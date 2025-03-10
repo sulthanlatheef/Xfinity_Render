@@ -56,6 +56,8 @@ $route['translate_uri_dashes'] = FALSE;  // Converts dashes to underscores in co
 
 // Add your route for the register page
 $route['register'] = 'register'; 
+$route['Advaned123'] = 'home'; 
+
  // Maps to Register controller (register method)
 
 
