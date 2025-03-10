@@ -36,11 +36,11 @@ class Home extends CI_Controller {
                 if ($this->input->is_ajax_request()) {
                     echo json_encode([
                         'status' => 'success',
-                        'redirect_url' => site_url('home/advanced')
+                        'redirect_url' => site_url('Advanced')
                     ]);
                     return;
                 } else {
-                    redirect('home/advanced');
+                    redirect('advanced');
                 }
             } else {
                 // Invalid credentials: send back error message
