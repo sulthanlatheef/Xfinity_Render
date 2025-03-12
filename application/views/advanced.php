@@ -499,7 +499,7 @@ footer .social-icons i:hover {
         <p>
           Get an instant repair estimate using our AI-powered models  specially tailored to meet your vehicle's repair needs in an efficient manner
         </p>
-        <a href="<?php echo site_url('schedule_pickup'); ?>" class="cta-button">Generate Estimate</a>
+        <a href="<?php echo site_url('ImageUpload'); ?>" class="cta-button">Generate Estimate</a>
       </div>
       <!-- Schedule Pickup Card -->
       <div class="feature-card" id="schedule-pickup">
