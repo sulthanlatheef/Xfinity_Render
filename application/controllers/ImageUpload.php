@@ -5,50 +5,34 @@ class ImageUpload extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        // Load form and URL helpers
+        // Load form, URL, and database libraries
         $this->load->library('session');
         $this->load->helper(array('form', 'url'));
+        $this->load->database();
     }
 
     // Display the upload form
     public function index() {
-        
         $this->load->view('image_upload_form');
     }
 
-    
-
     // Function to handle the upload and prediction logic
     public function predict() {
-        // Check if an image file was uploaded
         if (empty($_FILES['image']['name'])) {
-            // Return a JSON error response if no file was selected
             echo json_encode(['error' => 'Please select an image to upload.']);
             return;
         }
-
-        // Prepare the file for cURL
         $filePath = $_FILES['image']['tmp_name'];
         $fileType = $_FILES['image']['type'];
         $fileName = $_FILES['image']['name'];
-        
-        // Use CURLFile to attach the file to the POST request
         $cfile = new CURLFile($filePath, $fileType, $fileName);
-
-        // Create an array with the file data
         $data = array('image' => $cfile);
-
-        // Initialize cURL to call the Flask API endpoint
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "http://127.0.0.1:5000/predict"); // Flask API endpoint URL
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        // Execute the cURL request
         $result = curl_exec($ch);
-
-        // Handle any cURL errors
         if (curl_errno($ch)) {
             $error_msg = curl_error($ch);
             curl_close($ch);
@@ -56,11 +40,51 @@ class ImageUpload extends CI_Controller {
             return;
         }
         curl_close($ch);
-
-        // Optionally, set header for JSON response and return the API's result
         header('Content-Type: application/json');
         echo $result;
     }
 
-    
+    // AJAX method to fetch brands matching the search term
+    public function get_brands() {
+        $term = $this->input->get('term');
+        $this->db->like('name', $term);
+        $query = $this->db->get('brands');
+        $result = $query->result_array();
+        echo json_encode($result);
+    }
+
+    // AJAX method to fetch models corresponding to a brand and matching the search term
+    public function get_models() {
+        $brand_id = $this->input->get('brand_id');
+        $term = $this->input->get('term');
+        $this->db->where('brand_id', $brand_id);
+        $this->db->like('name', $term);
+        $query = $this->db->get('models');
+        $result = $query->result_array();
+        echo json_encode($result);
+    }
+
+    // New AJAX method to get the accessory price
+    public function get_accessory_price() {
+        $brand_id = $this->input->get('brand_id');
+        $model = $this->input->get('model');
+        $accessory = $this->input->get('accessory');
+
+        $this->db->where('brand_id', $brand_id);
+        $this->db->where('model', $model);
+        $this->db->where('accessory', $accessory);
+        $query = $this->db->get('accessories');
+
+        $result = $query->row_array();
+        if($result) {
+            echo json_encode(['price' => $result['price']]);
+        } else {
+            echo json_encode(['price' => 'Not available']);
+        }
+    }
 }
+
+
+
+
+
