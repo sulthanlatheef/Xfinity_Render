@@ -26,216 +26,29 @@
       overflow-x: hidden;
     }
     /* Navbar (simplified) */
-   /* Global Styles */
-* {
-    box-sizing: border-box;
-   }
-   body {
-    font-family: "Poppins", sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-    color: #333;
-    overflow-x: hidden;
-   }
-   a { text-decoration: none; }
-   h1, h2, p { margin: 0; padding: 0; }
-   
-   /* Navigation Bar */
-   nav {
-    background-color: #ff6600;
-    padding: 8px 0;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-   }
-   .navbar-logo {
-    font-size: 25px;
-    color: white;
-    font-weight: 600;
-    margin-left: 30px;
-    animation: bounce 1.5s ease infinite;
-    white-space: nowrap;
-   }
-   @keyframes bounce {
-    0%, 50%, 100% { transform: translateY(0); }
-    25% { transform: translateY(-10px); }
-    75% { transform: translateY(-5px); }
-   }
-   .nav-links {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: nowrap;
-   }
-   nav a {
-    color: white;
-    font-size: 20px;
-    padding: 10px 30px;
-    border-radius: 4px;
-    transition: background-color 0.3s, transform 0.3s;
-    white-space: nowrap;
-   }
-   nav a:hover {
-    background-color: #ff944d;
-    transform: translateY(-3px);
-   }
-   .user-info {
-    display: flex;
-    align-items: center;
-    margin-right: 30px;
-    flex-wrap: nowrap;
-   }
-   .user-info .username {
-    font-size: 18px;
-    color: white;
-    font-weight: 600;
-    margin-right: 15px;
-    white-space: nowrap;
-   }
-   .user-info .logout-btn {
-    background: red;
-    color: #fff;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    white-space: nowrap;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-   }
-   .user-info .logout-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-   }
-   @media (max-width: 768px) {
-    .navbar-logo { font-size: 20px; margin-left: 15px; }
-    nav a { padding: 10px 20px; font-size: 18px; }
-    .user-info .username { font-size: 16px; }
-    .user-info { margin-right: 15px; }
-   }
-   
-   /* Main Content Styles */
-   .container {
-    max-width: 600px;
-    margin: 60px auto;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    padding: 40px 30px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-   }
-   .container::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at center, rgba(255,255,255,0.15), transparent);
-    animation: rotateBg 15s linear infinite;
-    z-index: 0;
-   }
-   @keyframes rotateBg {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-   }
-   .container > * { position: relative; z-index: 1; }
-   .container h1 {
-    margin-bottom: 20px;
-    font-size: 28px;
-    color: #333;
-   }
-   #error-message {
-    color: #d9534f;
-    margin-bottom: 15px;
-    display: none;
-    font-weight: 500;
-   }
-   
-   /* Advanced Custom File Input */
-   .custom-file-input {
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-    cursor: pointer;
-    border: 2px solid #ff6600;
-    border-radius: 30px;
-    padding: 10px 20px;
-    background: linear-gradient(135deg, #ff6600, #ff944d);
-    color: white;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    font-size: 16px;
-    margin-bottom: 20px;
-   }
-   .custom-file-input:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-   }
-   .custom-file-input input[type="file"] {
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    cursor: pointer;
-    height: 100%;
-    width: 100%;
-   }
-   .file-name {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #555;
-   }
-   
-   /* Submit Button */
-   button[type="submit"] {
-    background: linear-gradient(135deg, #ff6600, #ff944d);
-    border: none;
-    padding: 12px 30px;
-    color: white;
-    font-size: 18px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-   }
-   button[type="submit"]:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-   }
-   
-   /* Predictions Section */
-   #predictions {
-    margin-top: 30px;
-    text-align: left;
-   }
-   #predictions h3 {
-    color: #333;
-    margin-bottom: 15px;
-   }
-   #prediction-list {
-    list-style: none;
-    padding: 0;
-   }
-   #prediction-list li {
-    background: #f8f9fa;
-    padding: 10px 15px;
-    margin: 5px 0;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-   }
-   #prediction-list li:hover {
-    background: #e2e6ea;
-   }
+    nav {
+      padding: 10px;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+    }
+    .navbar-logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ff6600;
+      display: inline-block;
+    }
+    .nav-links {
+      display: inline-block;
+      margin-left: 30px;
+    }
+    .nav-links a {
+      margin-right: 20px;
+      text-decoration: none;
+      color: #333;
+    }
+    .user-info {
+      float: right;
+    }
     /* Vehicle Details Section */
     #vehicle-info {
       margin-top: 20px;
@@ -283,7 +96,7 @@
     #invoice-modal .modal-content {
       padding: 20px;
     }
-    /* New invoice header with logo on left and header on right with a demo address */
+    /* New invoice header layout */
     .invoice-header {
       display: flex;
       justify-content: space-between;
@@ -291,7 +104,7 @@
       margin-bottom: 20px;
     }
     .invoice-logo img {
-      max-width: 100px;
+      max-width: 100px; /* Adjust as needed */
       height: auto;
     }
     .invoice-title {
@@ -317,8 +130,9 @@
       font-size: 14px;
       font-weight: 600;
     }
+    /* Assign a dedicated class for the label element */
     .number-label {
-      /* This element displays "Estimate number :" on screen */
+      /* On screen it shows: "Estimate number :" */
     }
     hr {
       border: none;
@@ -360,9 +174,9 @@
       text-align: left;
       font-weight: 600;
     }
-    /* Schedule Pickup button styling */
+    /* Schedule Pickup button styling - placed below the modal preview */
     #schedule-pickup-btn {
-      display: none;
+      display: none; /* Initially hidden */
       padding: 10px 20px;
       background: #28a745;
       color: #fff;
@@ -371,6 +185,7 @@
       font-size: 16px;
       cursor: pointer;
       margin: 20px auto;
+      /* Removed duplicate display property */
     }
     @media (max-width: 500px) {
       .vehicle-input { width: 100%; margin-right: 0; }
@@ -434,7 +249,8 @@
     <div class="modal-content">
       <div class="invoice-header">
         <div class="invoice-logo">
-        <img src="/XFINITY/assets/images/creative ai (2).png" alt="XFINITY Logo" />
+          <!-- Replace with your logo URL; using relative URL for WAMP -->
+          <img src="/XFINITY/assets/images/logo.png" alt="XFINITY Logo" />
         </div>
         <div class="invoice-title">
           <h2>XFINITY Invoice</h2>
@@ -484,7 +300,7 @@
     </div>
   </div>
 
-  <!-- Schedule Pickup Button (Initially hidden) -->
+  <!-- Schedule Pickup Button (placed below the Modal Preview) -->
   <button id="schedule-pickup-btn">Schedule Pickup</button>
 
   <script>
@@ -697,12 +513,12 @@
         lookupAccessoryPrice();
       });
 
-      // Schedule Pickup button click: Clone and modify modal content for PDF generation.
+      // Schedule Pickup button click: Clone, modify, generate PDF blob and send to backend.
       $("#schedule-pickup-btn").click(function() {
         // Clone the modal content
         var clone = $("#invoice-modal .modal-content").clone();
 
-        // In the clone, update the label from "Estimate number :" to "Invoice number :"
+        // Update the label in the clone: change "Estimate number :" to "Invoice number :"
         clone.find(".number-label").each(function() {
           var html = $(this).html();
           html = html.replace("Estimate number", "Invoice number");
@@ -724,7 +540,27 @@
           html2canvas:  { scale: 2 },
           jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
         };
-        html2pdf().set(opt).from(clone[0]).save();
+
+        // Instead of saving to Downloads, output as a Blob and send it to the server
+        html2pdf().set(opt).from(clone[0]).outputPdf('blob').then(function(pdfBlob) {
+          var formData = new FormData();
+          formData.append('invoice', pdfBlob, filename);
+          $.ajax({
+      url: '<?php echo site_url("invoice/save_invoice"); ?>',
+      type: 'POST',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        // Removed alert on success; now redirecting to homec controller
+        window.location.href = '<?php echo site_url("homec"); ?>';
+      },
+      error: function(xhr, status, error) {
+        // Removed alert on error; logging to console instead
+        console.error('Error saving invoice on server: ' + error);
+      }
+          });
+        });
       });
     });
   </script>
