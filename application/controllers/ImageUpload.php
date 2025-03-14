@@ -64,6 +64,41 @@ class ImageUpload extends CI_Controller {
         echo json_encode($result);
     }
 
+    public function save_pickupdata() {
+        // Retrieve POST data
+        $originalPrediction = $this->input->post('originalPrediction');
+        $brand             = $this->input->post('brand');
+        $model             = $this->input->post('model');
+        $invoiceNumber     = $this->input->post('invoiceNumber');
+        $totalAmount       = $this->input->post('totalAmount');
+
+        // Initialize the pickupdata array
+        $pickupdata = array(
+            'originalPrediction' => $originalPrediction,
+            'brand'              => $brand,
+            'model'              => $model,
+            'invoiceNumber'      => $invoiceNumber,
+            'totalAmount'        => $totalAmount
+        );
+
+        // Save the array to session data
+        $this->session->set_userdata('pickupdata', $pickupdata);
+
+        // Return a JSON response indicating success
+        echo json_encode(['status' => 'success']);
+    }
+
+    public function pickupdata_view() {
+        // Retrieve the pickupdata from session
+        $pickupdata = $this->session->userdata('pickupdata');
+
+        // Pass the data to the view
+        $data['pickupdata'] = $pickupdata;
+        $this->load->view('pickup_view', $data);
+    }
+
+
+
     // New AJAX method to get the accessory price
     public function get_accessory_price() {
         $brand_id = $this->input->get('brand_id');
