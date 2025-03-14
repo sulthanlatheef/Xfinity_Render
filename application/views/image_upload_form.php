@@ -4,195 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Image Upload and YOLOv5 Prediction</title>
+  <link rel="stylesheet" href="<?= base_url('assets/css/stylee.css'); ?>">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
   <!-- jQuery UI CSS -->
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
   <!-- jsPDF and html2pdf Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- jQuery UI JS -->
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-  <style>
-    /* Global Styles */
-    * { box-sizing: border-box; }
-    body {
-      font-family: "Poppins", sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-      color: #333;
-      overflow-x: hidden;
-    }
-    /* Navbar (simplified) */
-    nav {
-      padding: 10px;
-      background: #fff;
-      border-bottom: 1px solid #ddd;
-    }
-    .navbar-logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #ff6600;
-      display: inline-block;
-    }
-    .nav-links {
-      display: inline-block;
-      margin-left: 30px;
-    }
-    .nav-links a {
-      margin-right: 20px;
-      text-decoration: none;
-      color: #333;
-    }
-    .user-info {
-      float: right;
-    }
-    /* Vehicle Details Section */
-    #vehicle-info {
-      margin-top: 20px;
-      display: none;
-      padding: 20px;
-      background: #f0f4f8;
-      border: 1px solid #d1e3f0;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .vehicle-input {
-      width: calc(50% - 10px);
-      padding: 10px;
-      margin-right: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 16px;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    .vehicle-input:focus {
-      outline: none;
-      border-color: #ff6600;
-      box-shadow: 0 0 5px rgba(255,102,0,0.4);
-    }
-    #show-price-button {
-      padding: 10px 20px;
-      background: #ff6600;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background 0.3s;
-      margin-top: 10px;
-    }
-    #show-price-button:hover {
-      background: #ff944d;
-    }
-    /* Invoice Modal Styles */
-    #invoice-modal {
-      display: none;
-      font-size: 14px;
-    }
-    #invoice-modal .modal-content {
-      padding: 20px;
-    }
-    /* New invoice header layout */
-    .invoice-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .invoice-logo img {
-      max-width: 100px; /* Adjust as needed */
-      height: auto;
-    }
-    .invoice-title {
-      text-align: right;
-    }
-    .invoice-title h2 {
-      margin: 0;
-      color: #ff6600;
-      font-size: 24px;
-    }
-    .invoice-title p {
-      margin: 5px 0 0 0;
-      font-size: 14px;
-      color: #555;
-    }
-    .invoice-info {
-      background: #f9f9f9;
-      padding: 10px 20px;
-      border: 1px solid #ddd;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      font-weight: 600;
-    }
-    /* Assign a dedicated class for the label element */
-    .number-label {
-      /* On screen it shows: "Estimate number :" */
-    }
-    hr {
-      border: none;
-      border-top: 1px solid #ddd;
-      margin: 10px 0;
-    }
-    .invoice-billing {
-      margin-bottom: 20px;
-    }
-    .invoice-billing h3 {
-      margin: 0 0 5px 0;
-    }
-    .invoice-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-    .invoice-table th,
-    .invoice-table td {
-      padding: 10px;
-      border: 1px solid #ddd;
-      text-align: left;
-    }
-    .invoice-table th {
-      background: #f9f9f9;
-      font-weight: 600;
-    }
-    .invoice-table tfoot td {
-      border: none;
-      padding: 8px;
-    }
-    .invoice-table tfoot tr td:nth-child(1),
-    .invoice-table tfoot tr td:nth-child(2),
-    .invoice-table tfoot tr td:nth-child(3) {
-      text-align: right;
-      font-weight: 600;
-    }
-    .invoice-table tfoot tr td:nth-child(4) {
-      text-align: left;
-      font-weight: 600;
-    }
-    /* Schedule Pickup button styling - placed below the modal preview */
-    #schedule-pickup-btn {
-      display: none; /* Initially hidden */
-      padding: 10px 20px;
-      background: #28a745;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
-      margin: 20px auto;
-      /* Removed duplicate display property */
-    }
-    @media (max-width: 500px) {
-      .vehicle-input { width: 100%; margin-right: 0; }
-      .invoice-info { flex-direction: column; align-items: flex-start; }
-      .invoice-header { flex-direction: column; align-items: center; }
-    }
-  </style>
+  
 </head>
 <body>
   <!-- Navigation Bar -->
@@ -239,7 +63,11 @@
         <input type="text" id="vehicle-brand" class="vehicle-input" placeholder="Vehicle Brand">
         <input type="text" id="vehicle-model" class="vehicle-input" placeholder="Vehicle Model">
         <br>
-        <button type="button" id="show-price-button">Show Price</button>
+        <!-- Wrap buttons in a container -->
+        <div class="button-container">
+          <button type="button" id="show-price-button">Show Price</button>
+          <button id="schedule-pickup-btn">Schedule Pickup</button>
+        </div>
       </div>
     </div>
   </div>
@@ -249,8 +77,7 @@
     <div class="modal-content">
       <div class="invoice-header">
         <div class="invoice-logo">
-          <!-- Replace with your logo URL; using relative URL for WAMP -->
-          <img src="/XFINITY/assets/images/logo.png" alt="XFINITY Logo" />
+          <img src="/XFINITY/assets/images/creative ai (2).png" alt="XFINITY Logo" />
         </div>
         <div class="invoice-title">
           <h2>XFINITY Invoice</h2>
@@ -300,9 +127,6 @@
     </div>
   </div>
 
-  <!-- Schedule Pickup Button (placed below the Modal Preview) -->
-  <button id="schedule-pickup-btn">Schedule Pickup</button>
-
   <script>
     // Function to filter prediction text and clean up accessory name
     function filterAccessory(prediction) {
@@ -335,6 +159,7 @@
         $("#file-name").text(fileName || "No file selected");
       });
 
+      // Upload form submit handler
       $("#upload-form").submit(function (event) {
         event.preventDefault();
         var formData = new FormData();
@@ -360,8 +185,7 @@
             if (response.predictions && response.predictions.length > 0) {
               response.predictions.forEach(function (pred) {
                 $("#prediction-list").append("<li><strong>Custom:</strong> " + pred.custom + " <br> <strong>Original:</strong> " + pred.original + "</li>");
-                var accessoryName = filterAccessory(pred.original);
-                console.log("Filtered Accessory:", accessoryName);
+                console.log("Filtered Accessory:", filterAccessory(pred.original));
               });
               $("#vehicle-info").fadeIn();
             } else if (response.error) {
@@ -479,7 +303,7 @@
         var total = subtotal + cgst + sgst;
 
         var currentDate = new Date().toLocaleDateString();
-        // For display, generate invoice number with the "EST-" prefix
+        // Generate invoice number with the "EST-" prefix
         var invoiceNumber = "EST-" + Math.floor(Math.random() * 9000 + 1000);
         $("#invoice-number").html(invoiceNumber);
         $("#invoice-date").html(currentDate);
@@ -513,12 +337,12 @@
         lookupAccessoryPrice();
       });
 
-      // Schedule Pickup button click: Clone, modify, generate PDF blob and send to backend.
+      // Schedule Pickup button click handler.
       $("#schedule-pickup-btn").click(function() {
         // Clone the modal content
         var clone = $("#invoice-modal .modal-content").clone();
 
-        // Update the label in the clone: change "Estimate number :" to "Invoice number :"
+        // Update the label: change "Estimate number :" to "Invoice number :"
         clone.find(".number-label").each(function() {
           var html = $(this).html();
           html = html.replace("Estimate number", "Invoice number");
@@ -541,24 +365,60 @@
           jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
         };
 
-        // Instead of saving to Downloads, output as a Blob and send it to the server
+        // Generate PDF blob and send to the server
         html2pdf().set(opt).from(clone[0]).outputPdf('blob').then(function(pdfBlob) {
           var formData = new FormData();
           formData.append('invoice', pdfBlob, filename);
           $.ajax({
-      url: '<?php echo site_url("invoice/save_invoice"); ?>',
-      type: 'POST',
-      data: formData,
-      contentType: false,
-      processData: false,
-      success: function(response) {
-        // Removed alert on success; now redirecting to homec controller
-        window.location.href = '<?php echo site_url("homec"); ?>';
-      },
-      error: function(xhr, status, error) {
-        // Removed alert on error; logging to console instead
-        console.error('Error saving invoice on server: ' + error);
-      }
+            url: '<?php echo site_url("invoice/save_invoice"); ?>',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+              // Retrieve original prediction (without filtering)
+              var originalItem = $("#prediction-list li").filter(function() {
+                return $(this).text().toLowerCase().indexOf("original:") !== -1;
+              }).first().text();
+
+              var originalPrediction = "";
+              var regex = /original\s*:\s*(.*?)(?:\s*custom\s*:|$)/i;
+              var match = originalItem.match(regex);
+              if (match) {
+                originalPrediction = match[1].trim().replace(/-/g, " ");
+              }
+              // Get selected brand and model
+              var brand = $("#vehicle-brand").val();
+              var model = $("#vehicle-model").val();
+              // Invoice number and total amount from modal
+              var invoiceNumber = modifiedNum;
+              var totalAmountText = $("#invoice-total").text();
+              var totalAmount = totalAmountText.replace("₹", "");
+
+              // Save pickup data in session via AJAX call to homec controller
+              $.ajax({
+                url: '<?php echo site_url("ImageUpload/save_pickupdata"); ?>',
+                type: 'POST',
+                data: {
+                  originalPrediction: originalPrediction,
+                  brand: brand,
+                  model: model,
+                  invoiceNumber: invoiceNumber,
+                  totalAmount: totalAmount
+                },
+                success: function(response2) {
+                  // Redirect to homec controller after saving pickup data
+                  window.location.href = '<?php echo site_url("imageupload/pickupdata_view"); ?>';
+                },
+                error: function(xhr, status, error) {
+                  console.error("Error saving pickup data: " + error);
+                  window.location.href = '<?php echo site_url("homec"); ?>';
+                }
+              });
+            },
+            error: function(xhr, status, error) {
+              console.error('Error saving invoice on server: ' + error);
+            }
           });
         });
       });

@@ -1,0 +1,364 @@
+
+    /* Global Styles */
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      color: #333;
+      overflow-x: hidden;
+    }
+    
+    nav {
+    background-color: #ff6600;
+    padding: 8px 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+   }
+   .navbar-logo {
+    font-size: 25px;
+    color: white;
+    font-weight: 600;
+    margin-left: 30px;
+    animation: bounce 1.5s ease infinite;
+    white-space: nowrap;
+   }
+   @keyframes bounce {
+    0%, 50%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-10px); }
+    75% { transform: translateY(-5px); }
+   }
+   .nav-links {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+   }
+   nav a {
+    color: white;
+    font-size: 20px;
+    padding: 10px 30px;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s;
+    white-space: nowrap;
+   }
+   nav a:hover {
+    background-color: #ff944d;
+    transform: translateY(-3px);
+   }
+   .user-info {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+    flex-wrap: nowrap;
+   }
+   .user-info .username {
+    font-size: 18px;
+    color: white;
+    font-weight: 600;
+    margin-right: 15px;
+    white-space: nowrap;
+   }
+   .user-info .logout-btn {
+    background: red;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   }
+   .user-info .logout-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+   }
+   @media (max-width: 768px) {
+    .navbar-logo { font-size: 20px; margin-left: 15px; }
+    nav a { padding: 10px 20px; font-size: 18px; }
+    .user-info .username { font-size: 16px; }
+    .user-info { margin-right: 15px; }
+   }
+   
+   /* Main Content Styles */
+   .container {
+    max-width: 600px;
+    margin: 60px auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+   }
+   .container::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.15), transparent);
+    animation: rotateBg 15s linear infinite;
+    z-index: 0;
+   }
+   @keyframes rotateBg {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+   }
+   .container > * { position: relative; z-index: 1; }
+   .container h1 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333;
+   }
+   #error-message {
+    color: #d9534f;
+    margin-bottom: 15px;
+    display: none;
+    font-weight: 500;
+   }
+   
+   /* Advanced Custom File Input */
+   .custom-file-input {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid #ff6600;
+    border-radius: 30px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #ff6600, #ff944d);
+    color: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: 16px;
+    margin-bottom: 20px;
+   }
+   .custom-file-input:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+   }
+   .custom-file-input input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+   }
+   .file-name {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+   }
+   
+   /* Submit Button */
+   button[type="submit"] {
+    background: linear-gradient(135deg, #ff6600, #ff944d);
+    border: none;
+    padding: 12px 30px;
+    color: white;
+    font-size: 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+   }
+   button[type="submit"]:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+   }
+   
+   /* Predictions Section */
+   #predictions {
+    margin-top: 30px;
+    text-align: left;
+   }
+   #predictions h3 {
+    color: #333;
+    margin-bottom: 15px;
+   }
+   #prediction-list {
+    list-style: none;
+    padding: 0;
+   }
+   #prediction-list li {
+    background: #f8f9fa;
+    padding: 10px 15px;
+    margin: 5px 0;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+   }
+   #prediction-list li:hover {
+    background: #e2e6ea;
+   }
+
+
+
+
+    #vehicle-info {
+      margin-top: 20px;
+      display: none;
+      padding: 20px;
+      background: #f0f4f8;
+      border: 1px solid #d1e3f0;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .vehicle-input {
+      width: calc(50% - 10px);
+      padding: 10px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .vehicle-input:focus {
+      outline: none;
+      border-color: #ff6600;
+      box-shadow: 0 0 5px rgba(255,102,0,0.4);
+    }
+    #show-price-button {
+      padding: 10px 20px;
+      background: #ff6600;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+      margin-top: 10px;
+    }
+    #show-price-button:hover {
+      background: #ff944d;
+    }
+    /* Invoice Modal Styles */
+    #invoice-modal {
+      display: none;
+      font-size: 14px;
+    }
+    #invoice-modal .modal-content {
+      padding: 20px;
+    }
+    /* New invoice header layout */
+    .invoice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .invoice-logo img {
+      max-width: 100px; /* Adjust as needed */
+      height: auto;
+    }
+    .invoice-title {
+      text-align: right;
+    }
+    .invoice-title h2 {
+      margin: 0;
+      color: #ff6600;
+      font-size: 24px;
+    }
+    .invoice-title p {
+      margin: 5px 0 0 0;
+      font-size: 14px;
+      color: #555;
+    }
+    .invoice-info {
+      background: #f9f9f9;
+      padding: 10px 20px;
+      border: 1px solid #ddd;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .number-label {
+      /* Label placeholder */
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 10px 0;
+    }
+    .invoice-billing {
+      margin-bottom: 20px;
+    }
+    .invoice-billing h3 {
+      margin: 0 0 5px 0;
+    }
+    .invoice-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    .invoice-table th,
+    .invoice-table td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    .invoice-table th {
+      background: #f9f9f9;
+      font-weight: 600;
+    }
+    .invoice-table tfoot td {
+      border: none;
+      padding: 8px;
+    }
+    .invoice-table tfoot tr td:nth-child(1),
+    .invoice-table tfoot tr td:nth-child(2),
+    .invoice-table tfoot tr td:nth-child(3) {
+      text-align: right;
+      font-weight: 600;
+    }
+    .invoice-table tfoot tr td:nth-child(4) {
+      text-align: left;
+      font-weight: 600;
+    }
+    /* Schedule Pickup button styling - placed below the modal preview */
+    /* Button Container for stacking buttons vertically */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* Schedule Pickup Button - initially hidden */
+  #schedule-pickup-btn {
+    display: none;
+    padding: 10px 20px;
+    background: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 20px auto;
+  }
+  
+  #schedule-pickup-btn:hover {
+    background: #218838;
+  }
+  
+    @media (max-width: 500px) {
+      .vehicle-input { width: 100%; margin-right: 0; }
+      .invoice-info { flex-direction: column; align-items: flex-start; }
+      .invoice-header { flex-direction: column; align-items: center; }
+    }
+  
