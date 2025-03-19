@@ -65,36 +65,28 @@ class ImageUpload extends CI_Controller {
     }
 
     public function save_pickupdata() {
-        // Retrieve POST data
-        $originalPrediction = $this->input->post('originalPrediction');
-        $brand             = $this->input->post('brand');
-        $model             = $this->input->post('model');
-        $invoiceNumber     = $this->input->post('invoiceNumber');
-        $totalAmount       = $this->input->post('totalAmount');
-
-        // Initialize the pickupdata array
-        $pickupdata = array(
-            'originalPrediction' => $originalPrediction,
-            'brand'              => $brand,
-            'model'              => $model,
-            'invoiceNumber'      => $invoiceNumber,
-            'totalAmount'        => $totalAmount
-        );
-
-        // Save the array to session data
-        $this->session->set_userdata('pickupdata', $pickupdata);
-
+        // Retrieve POST data and set them directly in session
+        $this->session->set_userdata('originalPrediction', $this->input->post('originalPrediction'));
+        $this->session->set_userdata('brand', $this->input->post('brand'));
+        $this->session->set_userdata('model', $this->input->post('model'));
+        $this->session->set_userdata('invoiceNumber', $this->input->post('invoiceNumber'));
+        $this->session->set_userdata('totalAmount', $this->input->post('totalAmount'));
+        $this->session->set_userdata('pickupdate', $this->input->post('pickup_date'));
+        $this->session->set_userdata('pickuptime', $this->input->post('pickup_time'));
+        $this->session->set_userdata('pickupaddress', $this->input->post('pickup_address'));
+        $this->session->set_userdata('pickupcity', $this->input->post('pickup_city'));
+        $this->session->set_userdata('pickupstate', $this->input->post('pickup_state'));
+        $this->session->set_userdata('pickupzip', $this->input->post('pickup_zip'));
+    
         // Return a JSON response indicating success
         echo json_encode(['status' => 'success']);
     }
+    
 
     public function pickupdata_view() {
-        // Retrieve the pickupdata from session
-        $pickupdata = $this->session->userdata('pickupdata');
-
-        // Pass the data to the view
-        $data['pickupdata'] = $pickupdata;
-        $this->load->view('pickup_view', $data);
+        
+        
+        $this->load->view('pickup_view');
     }
 
 
