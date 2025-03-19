@@ -43,46 +43,56 @@
 <body>
   <div class="container">
     <h1>Pickup Data Details</h1>
-    <?php if (!empty($pickupdata)): ?>
-      <table>
-        <tr>
-          <th>Field</th>
-          <th>Value</th>
-        </tr>
-        <tr>
-          <td>Original Prediction</td>
-          <td><?php echo htmlspecialchars($pickupdata['originalPrediction']); ?></td>
-        </tr>
-        <tr>
-          <td>Brand</td>
-          <td><?php echo htmlspecialchars($pickupdata['brand']); ?></td>
-        </tr>
-        <tr>
-          <td>Model</td>
-          <td><?php echo htmlspecialchars($pickupdata['model']); ?></td>
-        </tr>
-        <tr>
-          <td>Invoice Number</td>
-          <td><?php echo htmlspecialchars($pickupdata['invoiceNumber']); ?></td>
-        </tr>
-        <tr>
-          <td>Total Amount</td>
-          <td><?php echo htmlspecialchars($pickupdata['totalAmount']); ?></td>
-        </tr>
-        <tr>
-          <td>User's Name</td>
-          <td><?php echo html_escape($this->session->userdata('name')); ?></td>
-        </tr>
-        <tr>
-          <td>User ID</td>
-          <td><?php echo html_escape($this->session->userdata('user_id')); ?></td>
-        </tr>
-        <tr>
-          
-      </table>
-    <?php else: ?>
-      <p>No pickup data found in session.</p>
-    <?php endif; ?>
+    <table>
+      <tr>
+        <th>Field</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td>Original Prediction</td>
+        <td><?php echo html_escape($this->session->userdata('originalPrediction')); ?></td>
+      </tr>
+      <tr>
+        <td>Brand</td>
+        <td><?php echo html_escape($this->session->userdata('brand')); ?></td>
+      </tr>
+      <tr>
+        <td>Model</td>
+        <td><?php echo html_escape($this->session->userdata('model')); ?></td>
+      </tr>
+      <tr>
+        <td>Invoice Number</td>
+        <td><?php echo html_escape($this->session->userdata('invoiceNumber')); ?></td>
+      </tr>
+      <tr>
+        <td>Total Amount</td>
+        <td><?php echo html_escape($this->session->userdata('totalAmount')); ?></td>
+      </tr>
+      <tr>
+        <td>Pickup Date</td>
+        <td><?php echo html_escape($this->session->userdata('pickupdate')); ?></td>
+      </tr>
+      <tr>
+        <td>Pickup Time</td>
+        <td><?php echo html_escape($this->session->userdata('pickuptime')); ?></td>
+      </tr>
+      <tr>
+        <td>Pickup Address</td>
+        <td><?php echo html_escape($this->session->userdata('pickupaddress')); ?></td>
+      </tr>
+      <tr>
+        <td>Pickup City</td>
+        <td><?php echo html_escape($this->session->userdata('pickupcity')); ?></td>
+      </tr>
+      <tr>
+        <td>Pickup State</td>
+        <td><?php echo html_escape($this->session->userdata('pickupstate')); ?></td>
+      </tr>
+      <tr>
+        <td>Pickup Zip</td>
+        <td><?php echo html_escape($this->session->userdata('pickupzip')); ?></td>
+      </tr>
+    </table>
   </div>
 </body>
 </html>

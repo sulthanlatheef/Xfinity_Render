@@ -11,7 +11,7 @@ model_path = r'E:\cardata\yolov5\runs\train\exp22\weights\best.pt'
 
 # Load the YOLOv5 model with custom weights
 model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path)
-model.conf = 0.30
+model.conf = 0.40
 
 # Define a custom output mapping for all 17 classes (indices 0 to 16)
 custom_labels = {
@@ -50,20 +50,23 @@ def predict():
 
     predictions = []
     try:
-        # Extract class indices from the model's results
-        labels = results.xyxyn[0][:, -1].numpy()
-        for label in labels:
-            cls_index = int(label)
-            # Retrieve custom output and original class name
+        # YOLOv5 returns a tensor with columns: [x1, y1, x2, y2, confidence, class]
+        detections = results.xyxyn[0]
+        for detection in detections:
+            cls_index = int(detection[5])
+            confidence_score = float(detection[4])
             custom = custom_labels.get(cls_index, "Unknown Custom Output")
             original = model.names[cls_index] if cls_index in model.names else "Unknown"
-            predictions.append({"custom": custom, "original": original})
+            predictions.append({
+                "custom": custom,
+                "original": original,
+                "confidence": confidence_score  # raw confidence (assumed to be between 0 and 1)
+            })
     except Exception as e:
         return jsonify({"error": "Failed to extract predictions", "exception": str(e)}), 500
 
-    # If no detections were made, return a custom message
     if not predictions:
-        predictions = [{"custom": "sorry no detections", "original": ""}]
+        predictions = [{"custom": "sorry no detections", "original": "", "confidence": 0.0}]
 
     return jsonify({"predictions": predictions})
 
