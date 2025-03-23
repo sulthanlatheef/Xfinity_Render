@@ -233,19 +233,19 @@
   </div>
 
   <script>
-    const text = "Welcome to Our Registration Page";
+    const text = "Exploring The Aesthetics Of Technology";
     const element = document.getElementById("animatedText");
 
     function typeText(i = 0) {
       if (i < text.length) {
         element.textContent += text.charAt(i);
-        let delay = 50 + Math.random() * 100;
+        let delay = 55 + Math.random() * 100;
         if (",.!?".includes(text.charAt(i))) {
           delay += 250;
         }
         setTimeout(() => typeText(i + 1), delay);
       } else {
-        setTimeout(fadeOutText, 1500);
+        setTimeout(fadeOutText, 1600);
       }
     }
 

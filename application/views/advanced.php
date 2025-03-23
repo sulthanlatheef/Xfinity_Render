@@ -508,7 +508,7 @@ footer .social-icons i:hover {
         <p>
           Request a pickup for your vehicle and let us take care of the rest. We'll collect your car, diagnose it, and recommend repairs.
         </p>
-        <a href="<?php echo site_url('schedule_pickup'); ?>" class="cta-button">Schedule Pickup</a>
+        <a href="<?php echo site_url('Forcepickupcontrol'); ?>" class="cta-button">Schedule Pickup</a>
       </div>
       <!-- Track Status Card -->
       <div class="feature-card">

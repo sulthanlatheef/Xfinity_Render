@@ -107,11 +107,11 @@
     /* Main Layout */
     .wrapper {
       display: flex;
-      max-width: 1300px;
-      margin: 50px auto;
+      max-width: 1350px;
+      margin: 25px auto;
       background: #fff;
       box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      border-radius: 8px;
+      border-radius: 20px;
       overflow: hidden;
     }
     .sidebar {
@@ -257,47 +257,115 @@
     }
     .btn:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
     
-    /* Pickup Location Form Styling */
-    #pickup-location-form {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    .pickup-header {
+      text-align: center;
+      margin-bottom: 5px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+      animation: slideDown 0.6s ease;
     }
-    #pickup-location-form label {
-      font-weight: 500;
-      margin: 12px 0 5px;
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .pickup-header i {
+      font-size: 42px;
+      color: #ff6600;
+      margin-bottom: 5px;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .pickup-header h3 {
+      font-size: 28px;
       color: #333;
+      margin-bottom: 5px;
     }
-    #pickup-location-form input[type="text"] {
+    .pickup-header p {
+      font-size: 16px;
+      color: #777;
+    }
+    .pickup-location-form {
+      background: linear-gradient(135deg, #ffffff, #fdfdfd);
+      padding: 14px;
+      border-radius: 14px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      /* Removed hover scale effect */
+    }
+    .pickup-location-form .form-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .pickup-location-form .form-group {
+      flex: 1;
+      min-width: 220px;
+    }
+    .pickup-location-form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #555;
+    }
+    .pickup-location-form input[type="text"] {
       width: 100%;
-      padding: 12px;
-      border: 2px solid #f0f0f0;
+      padding: 14px;
+      border: 2px solid #eaeaea;
       border-radius: 8px;
       font-size: 16px;
       transition: border-color 0.3s, box-shadow 0.3s;
-      margin-bottom: 10px;
     }
-    #pickup-location-form input[type="text"]:focus {
-      border-color:rgb(255, 0, 0);
-      box-shadow: 0 0 10px rgba(255,102,0);
+    .pickup-location-form input[type="text"]:focus {
+      border-color: #ff6600;
+      box-shadow: 0 0 10px rgba(255,140,0,0.5);
       outline: none;
     }
-    /* Flex container for buttons in pickup location step */
     .pickup-buttons {
       display: flex;
-      gap: 20px;
-      margin-top: 20px;
-      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      margin-top: 30px;
     }
-    /* Override default button style for Locate Me */
-    #locateMeBtn {
-      background: red !important;
-      margin-right: 8px;
+    .pickup-buttons .btn {
+      padding: 14px 35px;
+      font-size: 18px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-    #locateMeBtn i {
-  margin-right: 12px; /* Adjust value as needed */
+    .rotating {
+  animation: rotation 1s infinite linear;
 }
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.locate-me i {
+  margin-right: 11px; /* adjust the value as needed */
+}
+
+    .pickup-buttons .locate-me {
+      background: red;
+      color: #fff;
+    }
+    .pickup-buttons .next-btn {
+      background: linear-gradient(90deg, #ff6600, #ff944d);
+      color: #fff;
+    }
+    .pickup-buttons .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
     
     /* Invoice Modal (Restored as provided) */
     #invoice-modal { display: none; font-size: 14px; }
@@ -367,14 +435,7 @@
     
 
 
-    @keyframes rotation {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-.rotating {
-  animation: rotation 3s linear;
-}
-
+   
     /* Spinning Animation */
     @keyframes spin {
       from { transform: rotate(0deg); }
@@ -502,6 +563,7 @@
         <div class="vehicle-details">
           <input type="text" id="vehicle-brand" placeholder="Vehicle Brand" autocomplete="off">
           <input type="text" id="vehicle-model" placeholder="Vehicle Model" autocomplete="off">
+          <input type="text" id="vehicle-reg" placeholder="Vehicle Registration No" autocomplete="off">
         </div>
         <button id="show-price-button" class="btn">Get Price Estimate</button>
       </section>
@@ -568,31 +630,42 @@
       </section>
 
       <!-- Step 5: Pickup Location -->
+      <!-- Step 3: Pickup Location -->
       <section id="step-pickup-location" class="card step-section" style="display:none;">
-        <h3>Step 5: Pickup Location</h3>
-        <form id="pickup-location-form">
-          <label for="pickup-address">Address</label>
-          <input type="text" id="pickup-address" name="pickup_address" placeholder="Street Address" required style="width:100%; padding:12px; margin:10px 0; border:2px solid #f0f0f0; border-radius:8px;">
-          
-          <label for="pickup-city">City</label>
-          <input type="text" id="pickup-city" name="pickup_city" placeholder="City" required style="width:100%; padding:12px; margin:10px 0; border:2px solid #f0f0f0; border-radius:8px;">
-          
-          <label for="pickup-state">State</label>
-          <input type="text" id="pickup-state" name="pickup_state" placeholder="State" required style="width:100%; padding:12px; margin:10px 0; border:2px solid #f0f0f0; border-radius:8px;">
-          
-          <label for="pickup-zip">ZIP Code</label>
-          <input type="text" id="pickup-zip" name="pickup_zip" placeholder="ZIP Code" required style="width:100%; padding:12px; margin:10px 0; border:2px solid #f0f0f0; border-radius:8px;">
-          
+        <div class="pickup-header">
+          <i class="fas fa-map-marked-alt"></i>
+          <h3>Where Should We Pick You Up?</h3>
+          <p>Enter your location details below and let us handle the rest.</p>
+        </div>
+        <form id="pickup-location-form" class="pickup-location-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="pickup-address">Street Address</label>
+              <input type="text" id="pickup-address" name="pickup_address" placeholder="123 Main St" required>
+            </div>
+            <div class="form-group">
+              <label for="pickup-city">City</label>
+              <input type="text" id="pickup-city" name="pickup_city" placeholder="Your City" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="pickup-state">State</label>
+              <input type="text" id="pickup-state" name="pickup_state" placeholder="Your State" required>
+            </div>
+            <div class="form-group">
+              <label for="pickup-zip">ZIP Code</label>
+              <input type="text" id="pickup-zip" name="pickup_zip" placeholder="ZIP Code" required>
+            </div>
+          </div>
           <!-- Hidden fields for latitude and longitude -->
           <input type="hidden" id="latitude" name="latitude">
           <input type="hidden" id="longitude" name="longitude">
           
           <div class="pickup-buttons">
-          <button type="button" id="locateMeBtn" class="btn"><i class="fa fa-map-pin"></i>&nbsp;Locate Me</button>
-
-            <button type="button" id="to-schedule-btn" class="btn">Next: Schedule Pickup</button>
+            <button type="button" id="locateMeBtn" class="btn locate-me"><i class="fas fa-map-pin"></i> Locate Me</button>
+            <button type="button" id="to-schedule-btn" class="btn next-btn">Next: Schedule Pickup</button>
           </div>
-          
         </form>
       </section>
 
@@ -990,6 +1063,8 @@
         var pickupCity = $("#pickup-city").val();
         var pickupState = $("#pickup-state").val();
         var pickupZip = $("#pickup-zip").val();
+        
+
         // Extract diagnosed issue text from the first prediction card diagnosed box value.
         var originalPrediction = $("#prediction-list .prediction-card").first().find(".diagnosed-box span.value").text().trim();
         
@@ -1005,11 +1080,12 @@
             pickup_zip: pickupZip,
             brand: $("#vehicle-brand").val(),
             model: $("#vehicle-model").val(),
+            vehicle_reg: $("#vehicle-reg").val(),
             originalPrediction: originalPrediction,
             invoiceNumber: $("#invoice-number").html().replace("EST-", "INV-"),
             totalAmount: $("#invoice-total").text().replace("₹", "")
           },
-          success: function(response){ window.location.href = '<?php echo site_url("imageupload/pickupdata_view"); ?>'; },
+          success: function(response){ window.location.href = '<?php echo site_url("Pickup/confirm"); ?>'; },
           error: function(xhr, status, error){ console.error("Error scheduling pickup: " + error); }
         });
       });
@@ -1036,15 +1112,17 @@
       
       // Locate Me button: auto-fill pickup location fields using geolocation & geocoding
       $("#locateMeBtn").click(function(){
-  // Add rotating class to the icon inside the button
+  // Start icon rotation
   $(this).find("i.fa-map-pin").addClass("rotating");
-  
-  // Delay for 3 seconds before proceeding
+
+  // Apply border animation to the input fields
+  $("#pickup-address, #pickup-city, #pickup-state, #pickup-zip").addClass("animate-border");
+
   setTimeout(function(){
-    // Remove rotating class after 3 seconds
+    // Stop icon rotation and border animation after 3 seconds
     $("#locateMeBtn").find("i.fa-map-pin").removeClass("rotating");
+    $("#pickup-address, #pickup-city, #pickup-state, #pickup-zip").removeClass("animate-border");
     
-    // Now proceed with geolocation logic
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
     } else {
