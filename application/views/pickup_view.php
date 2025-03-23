@@ -92,6 +92,10 @@
         <td>Pickup Zip</td>
         <td><?php echo html_escape($this->session->userdata('pickupzip')); ?></td>
       </tr>
+      <tr>
+        <td>vehicler reg</td>
+        <td><?php echo html_escape($this->session->userdata('vehiclereg')); ?></td>
+      </tr>
     </table>
   </div>
 </body>
