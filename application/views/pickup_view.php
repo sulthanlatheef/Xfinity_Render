@@ -94,9 +94,10 @@
       </tr>
       <tr>
         <td>vehicler reg</td>
-        <td><?php echo html_escape($this->session->userdata('vehiclereg')); ?></td>
+        <td><?php echo html_escape($this->session->userdata('vehicletyp')); ?></td>
       </tr>
     </table>
   </div>
 </body>
 </html>
+font-size: 1.05rem !important;
