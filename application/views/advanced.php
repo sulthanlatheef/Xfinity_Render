@@ -517,7 +517,7 @@ footer .social-icons i:hover {
         <p>
           Stay informed! Track the progress of your vehicle’s repair in real time, from pickup to each and every process untill completion.
         </p>
-        <a href="<?php echo site_url('track_status'); ?>" class="cta-button">Track Status</a>
+        <a href="<?php echo site_url('Tracking'); ?>" class="cta-button">Track Status</a>
       </div>
       <!-- Locate Ventures Card -->
       <div class="feature-card">

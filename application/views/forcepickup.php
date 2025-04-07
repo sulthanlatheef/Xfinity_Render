@@ -698,7 +698,7 @@
 
   setTimeout(function(){
     $("#pickup-address").fadeOut(300, function(){
-    $(this).attr("placeholder", "Retrieving Exact Adress").fadeIn(300);
+    $(this).attr("placeholder", "Retrieving Exact Address").fadeIn(300);
   });
   $("#pickup-city").fadeOut(300, function(){
     $(this).attr("placeholder", "Retrieving Your City").fadeIn(300);
@@ -799,6 +799,7 @@
         var vehicleModel = $("#vehicle-model").val();
         var vehicleIssue = $("#vehicle-issue").val();
         var vehiclereg = $("#vehicle-reg").val();
+        var vehicletyp = $("#vehicle-typ").val();
         $.ajax({
           url: '<?php echo site_url("ImageUpload/save_pickupdata"); ?>',
           type: 'POST',
@@ -812,6 +813,7 @@
             brand: vehicleBrand,
             model: vehicleModel,
             vehicle_reg: vehiclereg,
+            vehicle_typ: vehicletyp,
             originalPrediction: vehicleIssue
           },
           success: function(response){

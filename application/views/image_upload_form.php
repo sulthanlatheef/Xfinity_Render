@@ -432,6 +432,38 @@
       font-size: 15px;
       color: #555;
     }
+    @keyframes borderRainbow {
+  0% {
+    border-color: #ff0000;
+    box-shadow: 0 0 5px #ff0000;
+  }
+  20% {
+    border-color:rgb(255, 102, 0);
+    box-shadow: 0 0 10pxrgb(255, 132, 0);
+  }
+  40% {
+    border-color:rgb(255, 0, 0);
+    box-shadow: 0 0 15pxrgb(255, 0, 0);
+  }
+  60% {
+    border-color:rgb(255, 94, 0);
+    box-shadow: 0 0 10pxrgb(255, 132, 0);
+  }
+  80% {
+    border-color:rgb(255, 0, 0);
+    box-shadow: 0 0 15pxrgb(255, 115, 0);
+  }
+  100% {
+    border-color:rgb(255, 60, 0);
+    box-shadow: 0 0 5pxrgb(255, 72, 0);
+  }
+}
+
+.animate-border {
+  animation: borderRainbow 9s ease-in-out;
+  /* Optionally add a transition to smooth out the return state */
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
     
 
 
@@ -957,11 +989,11 @@
                         var severity = "";
                         var descriptiveInfo = "";
                         var confidencePercent = (pred.confidence * 100).toFixed(2);
-                        if (confidencePercent >= 40 && confidencePercent <= 60) {
+                        if (confidencePercent >= 20 && confidencePercent <= 50) {
                           severity = "Moderate Dent";
                           dentCost = 2000;
                           descriptiveInfo = "The dent is moderate. Standard repair procedures will restore the appearance.";
-                        } else if (confidencePercent > 60) {
+                        } else if (confidencePercent > 50) {
                           severity = "Severe Dent";
                           dentCost = 4000;
                           descriptiveInfo = "The dent is severe. Extensive repair work may be needed for restoration.";
@@ -1114,23 +1146,76 @@
       $("#locateMeBtn").click(function(){
   // Start icon rotation
   $(this).find("i.fa-map-pin").addClass("rotating");
+  
 
-  // Apply border animation to the input fields
+  // Save original placeholders for later restoration
+  var originalPlaceholders = {
+    address: $("#pickup-address").attr("placeholder"),
+    city: $("#pickup-city").attr("placeholder"),
+    state: $("#pickup-state").attr("placeholder"),
+    zip: $("#pickup-zip").attr("placeholder")
+  };
+
+  // Immediately update placeholders and add fade animation class to all four fields
+  $("#pickup-address").fadeOut(300, function(){
+    $(this).attr("placeholder", "Locating Your Address").fadeIn(300);
+  });
+  $("#pickup-city").fadeOut(300, function(){
+    $(this).attr("placeholder", "Finding Your City").fadeIn(300);
+  });
+  $("#pickup-state").fadeOut(300, function(){
+    $(this).attr("placeholder", "Determining Your State").fadeIn(300);
+  });
+  $("#pickup-zip").fadeOut(300, function(){
+    $(this).attr("placeholder", "Fetching ZIP Code").fadeIn(300);
+  });
+
+  // Apply rainbow border animation if desired
+  setTimeout(function(){
   $("#pickup-address, #pickup-city, #pickup-state, #pickup-zip").addClass("animate-border");
+}, 300);
+
+  // After 1.5 seconds, update the placeholder text to "connecting with google"
+  setTimeout(function(){
+    $("#pickup-address, #pickup-city, #pickup-state, #pickup-zip").attr("placeholder", "Connecting With Google Maps");
+  }, 3000);
 
   setTimeout(function(){
-    // Stop icon rotation and border animation after 3 seconds
+    $("#pickup-address").fadeOut(300, function(){
+    $(this).attr("placeholder", "Retrieving Exact Address").fadeIn(300);
+  });
+  $("#pickup-city").fadeOut(300, function(){
+    $(this).attr("placeholder", "Retrieving Your City").fadeIn(300);
+  });
+  $("#pickup-state").fadeOut(300, function(){
+    $(this).attr("placeholder", "Retrieving Exact State").fadeIn(300);
+  });
+  $("#pickup-zip").fadeOut(300, function(){
+    $(this).attr("placeholder", "Retrieving Your Zip Code").fadeIn(300);
+  });
+  }, 6000);
+
+  // After a total of 3 seconds, remove animations and restore original placeholders
+  setTimeout(function(){
+    // Stop icon rotation and remove animations
     $("#locateMeBtn").find("i.fa-map-pin").removeClass("rotating");
-    $("#pickup-address, #pickup-city, #pickup-state, #pickup-zip").removeClass("animate-border");
-    
+    $("#pickup-address, #pickup-city, #pickup-state, #pickup-zip")
+      .removeClass("animate-border animate-placeholder");
+
+    // Restore original placeholders
+    //$("#pickup-address").attr("placeholder", originalPlaceholders.address);
+    //$("#pickup-city").attr("placeholder", originalPlaceholders.city);
+    //$("#pickup-state").attr("placeholder", originalPlaceholders.state);
+    //$("#pickup-zip").attr("placeholder", originalPlaceholders.zip);
+
+    // Proceed with geolocation logic
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
     } else {
       alert("Geolocation is not supported by your browser.");
     }
-  }, 3000);
+  }, 9000);
 });
-
       
       function successCallback(position) {
         var lat = position.coords.latitude;

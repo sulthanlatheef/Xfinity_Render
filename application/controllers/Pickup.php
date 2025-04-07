@@ -70,6 +70,31 @@ class Pickup extends CI_Controller {
             }
         }
 
+
+        // Insert a record into the 'tracking' table
+$tracking_data = array(
+    'user_id'   => $data['user_id'],
+    'name'      => $data['name'],
+    'pickup_city' => $data['pickup_city'],
+    'pickup_id' => $pickup_id,
+    'brand'     => $data['brand'],
+    'model'     => $data['model'],
+    'registration_no'     => $data['vehicle_reg'],
+    'issue'     => $data['original_prediction'],
+    'total_amount'=> empty($data['total_amount']) ? 'force pickup' : $data['total_amount'],
+    'status'    => 'Pickup Scheduled'
+    
+    
+);
+
+if($this->db->insert('tracking', $tracking_data)) {
+    $this->add_log("Tracking record inserted successfully.");
+} else {
+    $error = $this->db->error();
+    $this->add_log("Failed to insert tracking record. Error: " . json_encode($error));
+}
+
+
         // Retrieve the email address corresponding to the user_id from the users table
         $query = $this->db->get_where('users', array('id' => $user_id));
         if ($query->num_rows() > 0) {

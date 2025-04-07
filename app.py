@@ -11,7 +11,7 @@ model_path = r'E:\cardata\yolov5\runs\train\exp22\weights\best.pt'
 
 # Load the YOLOv5 model with custom weights
 model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path)
-model.conf = 0.40
+model.conf = 0.20
 
 # Define a custom output mapping for all 17 classes (indices 0 to 16)
 custom_labels = {
