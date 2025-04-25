@@ -307,19 +307,43 @@
     .feature-card a.cta-button {
       background-color: rgb(255, 17, 0);
       color: white;
-      padding: 10px 15px;
+      min-width:280px;
+      height:50px;
+      padding:10px;
+      padding-top:10px;
+      padding-bottom:10px;
       font-size: 20px;
       font-weight: 600;
-      border-radius: 35px;
+      border-radius: 40px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      box-sizing:border-box;
+     
       cursor: pointer;
       transition: background-color 0.3s, transform 0.3s;
       display: inline-block;
     }
+    .feature-cardb {
+      background-color: rgb(255, 17, 0);
+      color: white;
+      min-width:280px;
+      height:50px;
+      padding:10px;
+      padding-right:5px;
+      padding-top:10px;
+      padding-bottom:10px;
+      font-size: 20px;
+      font-weight: 600;
+      border-radius: 40px;
+      text-transform: uppercase;
+      box-sizing:border-box;
+     border:1px solid red;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
     .feature-card a.cta-button:hover {
       background-color: #3498db;
-      transform: translateY(-2px);
+      transform: translateY(0px);
     }
     .feature-card img.card-img {
       width: 100%;
@@ -414,6 +438,10 @@ footer .social-icons i:hover {
     margin: 0 8px;
   }
 }
+.feature-cardb:hover{
+  transform:translate(0px,-5px);
+  
+  }
 
 
   </style>
@@ -495,11 +523,19 @@ footer .social-icons i:hover {
       <!-- Generate Estimate Card with Image -->
       <div class="feature-card">
         <img src="<?php echo base_url('assets/images/image-250x150 (5).jpg'); ?>" alt="Generate Estimate" class="card-img" />
-        <h3>Generate Estimate</h3>
+        <h3>
+          Generate Estimate</h3>
         <p>
           Get an instant repair estimate using our AI-powered models  specially tailored to meet your vehicle's repair needs in an efficient manner
         </p>
-        <a href="<?php echo site_url('ImageUpload'); ?>" class="cta-button">Generate Estimate</a>
+       
+        <a href="<?php echo site_url('ImageUpload'); ?>" >
+        <button class="feature-cardb">
+        <span><i class="fa-solid fa-file-invoice-dollar" style="font-size:23px;color:white; padding-right:5px; padding-top:0px;"></i></span>
+        
+          Generate Estimate
+    </button>
+    </a>
       </div>
       <!-- Schedule Pickup Card -->
       <div class="feature-card" id="schedule-pickup">
@@ -508,7 +544,14 @@ footer .social-icons i:hover {
         <p>
           Request a pickup for your vehicle and let us take care of the rest. We'll collect your car, diagnose it, and recommend repairs.
         </p>
-        <a href="<?php echo site_url('Forcepickupcontrol'); ?>" class="cta-button">Schedule Pickup</a>
+        <a href="<?php echo site_url('Forcepickupcontrol'); ?>">
+          <button class="feature-cardb">
+          <span><i class="fa-solid fa-calendar-days" style="font-size:23px;color:white; padding-right:5px; padding-top:0px;"></i></span>
+        Schedule Pickup
+        
+        
+    </button>
+  </a>
       </div>
       <!-- Track Status Card -->
       <div class="feature-card">
@@ -517,8 +560,13 @@ footer .social-icons i:hover {
         <p>
           Stay informed! Track the progress of your vehicle’s repair in real time, from pickup to each and every process untill completion.
         </p>
-        <a href="<?php echo site_url('Tracking'); ?>" class="cta-button">Track Status</a>
+        <a href="<?php echo site_url('Tracking'); ?>" >
+        <button class="feature-cardb">  
+        <span><i class="fa-solid fa-screwdriver-wrench" style="font-size:23px;color:white; padding-right:5px; padding-top:0px;"></i></span>
+        Track Status
+    </button></a>
       </div>
+      
       <!-- Locate Ventures Card -->
       <div class="feature-card">
         <img src="<?php echo base_url('assets/images/image-250x150 (4).JPG'); ?>" alt="Locate Ventures" class="card-img" />
@@ -526,7 +574,12 @@ footer .social-icons i:hover {
         <p>
           Need assistance locating a nearby venture? Our AI will guide you to the nearest workshop, service center, or partner.
         </p>
-        <a href="<?php echo site_url('locate_ventures'); ?>" class="cta-button">Locate Ventures</a>
+        <a href="<?php echo site_url('locate_ventures'); ?>">
+        <button class="feature-cardb">  
+        <span><i class="fa-solid fa-location-dot" style="font-size:23px;color:white; padding-right:5px; padding-top:0px;"></i></span>
+        Locate Ventures
+        
+    </button></a>
       </div>
     </div>
     <!-- Chat Button Container (hidden by default) -->

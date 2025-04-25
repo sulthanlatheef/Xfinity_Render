@@ -40,15 +40,18 @@ class Pickup extends CI_Controller {
             'pickup_address'      => $this->session->userdata('pickupaddress'),
             'pickup_date'         => $this->session->userdata('pickupdate'),
             'pickup_time'         => $this->session->userdata('pickuptime'),
-            'pickup_city'         => $this->session->userdata('pickupcity'),
+            
             'pickup_id'           => $pickup_id,
             'invoice_number'      => $this->session->userdata('invoiceNumber'),
             'total_amount'        => $this->session->userdata('totalAmount'),
             'vehicle_reg'         => $this->session->userdata('vehiclereg'),
+            'pickup_zip'        => $this->session->userdata('pickupzip'),
         );
 
         // Check if invoice_number is not empty
         if (!empty($data['invoice_number'])) {
+            $data['service_type'] = 'Express';
+
             // Insert the data into the 'pickups' table
             $insert = $this->db->insert('pickups', $data);
             if ($insert) {
@@ -61,6 +64,8 @@ class Pickup extends CI_Controller {
             // Remove invoice_number and total_amount from data array
             unset($data['invoice_number'], $data['total_amount']);
             // Insert the data into the 'forcepickups' table
+            $data['service_type'] = 'Regular';
+
             $insert = $this->db->insert('forcepickups', $data);
             if ($insert) {
                 $this->add_log("Data inserted successfully into forcepickups table.");
@@ -75,9 +80,13 @@ class Pickup extends CI_Controller {
 $tracking_data = array(
     'user_id'   => $data['user_id'],
     'name'      => $data['name'],
-    'pickup_city' => $data['pickup_city'],
+    'pickup_zip' => $data['pickup_zip'],
     'pickup_id' => $pickup_id,
+    'pickup_date' => $data['pickup_date'],
+    'pickup_time' => $data['pickup_time'],
+    'pickup_address' => $data['pickup_address'],
     'brand'     => $data['brand'],
+    'service_type'     => $data['service_type'],
     'model'     => $data['model'],
     'registration_no'     => $data['vehicle_reg'],
     'issue'     => $data['original_prediction'],

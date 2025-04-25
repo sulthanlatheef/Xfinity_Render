@@ -31,27 +31,36 @@ class Tracking extends CI_Controller {
 
     public function details($pickup_id)
     {
-        // Retrieve the current user's ID from the session
+        // 1. Load your model up front
+        $this->load->model('tracking_model');
+    
+        // 2. Get current user
         $user_id = $this->session->userdata('user_id');
-        
-        // If no user_id is set, redirect the user to the login page
-        if(!$user_id) {
+        if (!$user_id) {
             redirect('login');
         }
-        
-        // Retrieve all details for the given pickup_id and user_id
-        $data['pickup_details'] = $this->tracking_model->get_pickup_details($user_id, $pickup_id);
-
-        // If no details found, you might want to redirect or show an error
-        if (empty($data['pickup_details'])) {
+    
+        // 3. Fetch pickup details
+        $pickup_details = $this->tracking_model->get_pickup_details($user_id, $pickup_id);
+        if (empty($pickup_details)) {
             show_404();
         }
-        
-        // Save the pickup_id in session as 'c_pickup_id'
+    
+        // 4. Fetch payment record for this user & pickup
+        $payment = $this->tracking_model->get_by_pickup_and_user($pickup_id, $user_id);
+        $is_paid = ($payment && $payment->status === 'paid');
+    
+        // 5. Inject the flag into your details object
+        $pickup_details->is_paid = $is_paid;
+        $pickup_details->payment_id = $payment ? $payment->razorpay_payment_id : null;
+
+    
+        // 6. Save the pickup_id in session (for later AJAX status‐checks)
         $this->session->set_userdata('c_pickup_id', $pickup_id);
-        
-        // Load the detail view and pass the data
+    
+        // 7. Pass everything to your view
+        $data['pickup_details'] = $pickup_details;
         $this->load->view('tracking_detail_view', $data);
-        
     }
+    
 }
