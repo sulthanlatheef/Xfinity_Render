@@ -9,7 +9,7 @@
   <!-- Google Fonts: Poppins -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     /* Global Styles */
     body {
@@ -623,7 +623,11 @@ footer .social-icons a:hover {
                   <div class="detail-item">
                     <i class="fas fa-car"></i>
                     <span> 
-                      Model: <?php echo isset($pickup->model) ? htmlspecialchars($pickup->model, ENT_QUOTES, 'UTF-8') : 'N/A'; ?>
+                    Vehicle Info: <?php 
+  echo isset($pickup->brand) ? htmlspecialchars($pickup->brand, ENT_QUOTES, 'UTF-8') . ' ' : ''; 
+  echo isset($pickup->model) ? htmlspecialchars($pickup->model, ENT_QUOTES, 'UTF-8') : 'N/A'; 
+?>
+
                      
                     </span>
                   </div>
@@ -631,13 +635,22 @@ footer .social-icons a:hover {
                     <i class="fas fa-calendar-alt"></i>
                     <span>Created At: <?php echo isset($pickup->created_at) ? htmlspecialchars($pickup->created_at, ENT_QUOTES, 'UTF-8') : 'N/A'; ?></span>
                   </div>
-                  <?php if (isset($pickup->status) && strtolower($pickup->status) != 'completed'): ?>
+                  <?php if (isset($pickup->service_type) && strtolower($pickup->status) != 'completed'): ?>
                     <div class="in-progress">
                       <div class="spinner">
                         <i class="fa fa-wrench"></i>
                       </div>
-                      <div class="progress-text">In Progress</div>
-                    </div>
+                      <div class="progress-text" style="margin: 0 0.5em;">In Progress
+                        <?php if (isset($pickup->service_type) && strtolower($pickup->service_type) == 'express'): ?>
+      
+                          <i class="fa-solid fa-bolt-lightning" style="color:red;padding-left:5px;"></i>
+     
+    <?php endif; ?>
+  </div>
+
+    <!-- only show car if total_amount ≠ 'force pickup' -->
+    
+  </div>
                   <?php else: ?>
                     <div class="completed">
                       <div class="check-icon"><i class="fa fa-check-circle"></i></div>

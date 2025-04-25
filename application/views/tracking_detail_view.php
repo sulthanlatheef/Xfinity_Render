@@ -38,7 +38,7 @@
     }
     /* Animated Gradient Background */
     body {
-      background: linear-gradient(-45deg, rgb(246, 108, 2), rgb(137, 250, 250), rgb(230, 166, 156), rgb(226, 220, 143));
+      background: linear-gradient(-45deg, rgb(2, 185, 246), rgb(137, 250, 250), rgb(148, 208, 240), rgb(226, 220, 143));
       background-size: 400% 400%;
       animation: gradientBG 15s ease infinite;
       font-family: 'Roboto', sans-serif;
@@ -59,7 +59,7 @@
       width: 100%;
       z-index: 1000;
       background-color: #ff6600;
-      padding: 7.5px 0;
+      padding: 7px 0;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       display: flex;
       align-items: center;
@@ -266,16 +266,16 @@
     }
     /* Enhanced Detail Cards */
     .detail-card {
-      background: linear-gradient(135deg, rgb(247, 245, 243), rgba(245, 245, 245, 0.9));
+      background: linear-gradient(135deg, rgb(253, 253, 253), rgba(255, 255, 255, 0.9));
       border-radius: 1.5rem;
-      padding: 1.5rem 2rem;
+      padding: 1.5rem 2.5rem;
       margin-bottom: 1rem;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       border-left: 5px solid var(--primary);
       transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      min-height: 196px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      min-height: 201px;
     }
     .detail-card:hover {
       transform: translateY(-5px);
@@ -301,8 +301,8 @@
     /* Active Payment Card Additional Styling */
     .active-payment {
       border-left: 5px solid var(--accent);
-      background: linear-gradient(135deg, #fff, #ffeedd);
-      box-shadow: 0 0 15px rgba(255, 140, 0, 0.5);
+      background: linear-gradient(135deg, #fff,rgb(255, 255, 255));
+      box-shadow: 0 0 15px rgb(252, 29, 4);
     }
     /* Custom Payment Button Style */
     .status-button {
@@ -363,7 +363,7 @@
     .payment-confirmation {
       text-align: center;
       padding: 2rem 0;
-      font-size: 3rem;
+      font-size: 3.5rem;
       color: var(--primary);
       animation: fadeInContainer 1s ease;
       margin-top: -10px;
@@ -377,7 +377,7 @@
       position: relative;
       width: 100px;
       height: 100px;
-      margin: -15px auto 1rem auto;
+      margin: -18px auto 1rem auto;
     }
     /* Ensure SVG takes full container dimensions */
     .checkmark-circle {
@@ -459,7 +459,52 @@
       100%, 100% { transform: translateY(0) scale(1); opacity: 1; }
       997% { transform: translateY(10px) scale(1.1); opacity: 0.8; }
     }
+    .footer{
+      text-align:center;
+      color:white;
+      height:80px;
+      font-weight:550;
+      font-size:17px;
+     
+    
+  }
+  .footer i{
+    font-size:30px;
+    padding:7.5px;
+    transition:all 0.3s ease-in;
+  }
+  .footer i:hover{
+    color: rgb(0, 255, 128);
+    transform:translate(0px,-5px);
+    cursor:pointer;
+  }
+
+  .fanimate{
+
+   display:inline-block;
+   cursor:pointer;
+
+  }
+  .fanimate:hover{
+    color: rgb(0, 255, 128);
+    animation:bounce 1s linear infinite;
+  }
+
+  @keyframes bounce{
+      
+    0% {
+     transform:translate(0px,0px);
+    }
+    50%{
+      transform:translate(0px,-5px);
+    }
+    100%{
+     transform:translate(0px,0px);
+    }
+  }
   </style>
+
+  
 </head>
 <body>
   <!-- Particle Background -->
@@ -536,45 +581,69 @@
                 <i class="fas fa-lock"></i>  256-bit AES encryption on Data
               </p>
             </div>
-            <div class="detail-card">
-              <h5><i class="fas fa-cube"></i> Vehicle Info</h5>
-              <p class="mb-1"><strong>Manufacturer:</strong> <?= $pickup_details->model ?></p>
+            <div class="detail-card" style="padding-bottom:0px;">
+              <h5><i class="fas fa-cube" ></i> Vehicle Info</h5>
+              <p class="mb-1"><strong>Concern:</strong> <span style= "color:red; font-size:16px;"><?= $pickup_details->issue?></span></p>
+              <p class="mb-1"><strong>Manufacturer:</strong> <?= $pickup_details->brand ?></p>
               <p class="mb-1"><strong>Model:</strong> <?= $pickup_details->model ?></p>
-              <p class="mb-1"><strong>Serial:</strong> XF-2023-<?= $pickup_details->pickup_id ?></p>
+             
+              <p class="mb-1"><strong>Reg NO:</strong> <?= $pickup_details->registration_no ?></p>
             </div>
           </div>
           <div class="col-md-6">
-            <!-- Payment Session Card -->
-            <?php 
-              $isPaymentActive = (  $pickup_details->status === 'Service Completed' &&
-              $pickup_details->total_amount !== 'force pickup');
-              $paymentCardClass = $isPaymentActive ? 'active-payment' : 'disabled-card';
+            <?php
+              // Payment flags
+              $isPaid = !empty($pickup_details->is_paid);
+              $isPaymentActive = (!$isPaid && $pickup_details->status==='Service Completed' );
+              $paymentCardClass = $isPaid?
+                'detail-card active-payment':
+                ($isPaymentActive?
+                  'detail-card active-payment':'detail-card disabled-card'
+                );
+              // Compute estimated completion
+              $pickupTimestamp = strtotime($pickup_details->pickup_date.' '.$pickup_details->pickup_time);
+              $estimatedTimestamp = ($pickup_details->service_type==='Regular')?
+                strtotime('+7 days',$pickupTimestamp):strtotime('+24 hours',$pickupTimestamp);
+              $estimatedCompletion = date('M d, \a\t g:i A',$estimatedTimestamp);
             ?>
-            <div id="paymentCard" class="detail-card <?php echo $paymentCardClass; ?>">
-              <h5><i class="fas fa-credit-card"></i> Payment Session</h5>
-              <?php if($isPaymentActive): ?>
-                <div class="mb-2 text-center">
-                  <button id="pay_now" class="status-button">
-                    Proceed to Payment
-                  </button>
+            <div id="paymentCard" class="<?= $paymentCardClass?>" style="min-height:199px;box-shadow:none;margin-top:2px; ">
+              <?php if ($isPaid): ?>
+                <div class="payment-confirmation" style="padding-bottom:10px; padding-top:15px;">
+                  <div class="confirmation-icon-container">
+                    <svg class="checkmark-circle" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="40" fill="none" stroke="#4CAF50" stroke-width="8"/>
+                    </svg>
+                    <i class="fas fa-check checkmark-icon"></i>
+                  </div>
+                  <p style="font-size:20px;color:#4CAF50;margin-top:-15px;">Payment Confirmed !</p>
+                  <p style="font-size:15px;margin-top:-5px;margin-bottom:-12px;color:#4CAF50;"> <strong>Transaction ID:</strong> <span style="color:red; font-size:17px;"><?= $pickup_details->payment_id ?></span></p>
                 </div>
+
+              <?php elseif ($isPaymentActive): ?>
+                <h5><i class="fas fa-credit-card"></i> Payment Session</h5>
+                <div class="mb-2 text-center">
+                  <button id="pay_now" class="status-button">Proceed to Payment</button>
+                </div>
+                <p class="text-muted" style="margin-top:21px;"><i class="fas fa-shield-alt"></i> 256-bit AES & SSL Secured Connection</p>
+
               <?php else: ?>
-                <p class="text-muted mb-2">Payment option will be available once service is completed only for Quick service appointments</p>
+                <h5><i class="fas fa-credit-card"></i> Payment Session</h5>
+                <p class="text-muted mb-2">Payment option will be available once service is completed</p>
+                <p class="text-muted"><i class="fas fa-shield-alt"></i> 256-bit AES & SSL Secured Connection</p>
               <?php endif; ?>
-              <p class="text-muted" style="margin-top: 21px;">
-                <i class="fas fa-shield-alt"></i> 256-bit AES &amp; SSL Secured Connection
-              </p>
             </div>
-            <div class="detail-card">
+
+            <div id="currentStatusCard" class="detail-card">
               <h5><i class="fas fa-clock"></i> Current Status</h5>
               <div class="status-display">
                 <span class="status-badge">
-                  <i class="fas fa-<?php echo ($pickup_details->status === 'Delivered') ? 'check' : 'sync-alt'; ?> <?php echo ($pickup_details->status !== 'Delivered') ? 'spin' : ''; ?>"></i>
-                  <?= $pickup_details->status ?>
+                  <i class="fas fa-<?php echo ($pickup_details->status==='Delivered')?'check':'sync-alt'; ?> <?php echo ($pickup_details->status!=='Delivered')?'spin':''; ?>"></i>
+                  <?= $pickup_details->status?>
                 </span>
               </div>
-              <p class="mt-2 text-muted" style="text-align:center;">Estimated completion: <?= date('Y-m-d', strtotime('+3 days')) ?></p>
+              <p class="mt-4 text-muted text-center">Estimated completion: <?= $estimatedCompletion?></p>
             </div>
+
           </div>
         </div>
       </div>
@@ -611,8 +680,17 @@
   
   <!-- Footer -->
   <footer>
-    <div class="container">
-      <p>&copy; <?= date('Y'); ?> Xfinity. All rights reserved.</p>
+    <div class="footer">
+      <p>&copy; <?= date('Y'); ?> Xfinity.In All rights reserved !</p>
+      <P> <span class="fanimate"></span>
+      <i class="fa-brands fa-themeisle"></i>
+      <i class="fa-brands fa-facebook"></i>
+      <i class="fa-brands fa-youtube"></i>
+      <i class="fa-brands fa-instagram"></i>
+      <i class="fa-brands fa-facebook-messenger"></i>
+      <i class="fa-brands fa-threads"></i>
+      
+      </P>
     </div>
   </footer>
 
@@ -665,91 +743,174 @@
     // Razorpay Payment Integration
     console.log("Payment view loaded.");
 
-    $('#pay_now').click(function(e) {
-      e.preventDefault();
-      
-      // Show the overlay as flex
-      $('#paymentOverlay').css('display', 'flex').hide().fadeIn();
+  $('#pay_now').click(function(e) {
+    e.preventDefault();
+    
+    // Show the overlay as flex
+    $('#paymentOverlay').css('display', 'flex').hide().fadeIn();
 
-      // Delay the payment process for 7 seconds
-      setTimeout(function() {
-        $.ajax({
-          url: "<?php echo site_url('payment/create_order'); ?>",
-          type: "GET",
-          dataType: "json",
-          success: function(result) {
-            if(result.status === 'success') {
-              var orderData = result.data;
-              var options = {
-                "key": orderData.key_id,
-                "amount": orderData.amount,
-                "currency": "INR",
-                "name": "Your Company Name",
-                "description": "Test Transaction",
-                "order_id": orderData.order_id,
-                "handler": function (response) {
-                  $.ajax({
-                    url: "<?php echo site_url('payment/verify_payment'); ?>",
-                    type: "POST",
-                    dataType: "json",
-                    contentType: "application/json",
-                    data: JSON.stringify({
-                      razorpay_payment_id: response.razorpay_payment_id,
-                      razorpay_order_id: response.razorpay_order_id,
-                      razorpay_signature: response.razorpay_signature
-                    }),
-                    success: function(verifyResult) {
-                      $('#paymentOverlay .processing-text').text("Authenticating Transaction...");
-                      $('#paymentOverlay').fadeIn();
-                      setTimeout(function() {
+    // Delay the payment process for 7 seconds
+    setTimeout(function() {
+      $.ajax({
+        url: "<?php echo site_url('payment/create_order'); ?>",
+        type: "GET",
+        dataType: "json",
+        success: function(result) {
+          if(result.status === 'success') {
+            var orderData = result.data;
+            var options = {
+              "key": orderData.key_id,
+              "amount": orderData.amount,
+              "currency": "INR",
+              "name": "XFINITY",
+              "description": "Test Transaction",
+              "order_id": orderData.order_id,
+              "handler": function (response) {
+                $.ajax({
+                  url: "<?php echo site_url('payment/verify_payment'); ?>",
+                  type: "POST",
+                  dataType: "json",
+                  contentType: "application/json",
+                  data: JSON.stringify({
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_signature: response.razorpay_signature
+                  }),
+                  success: function(verifyResult) {
+                    $('#paymentOverlay .processing-text').text("Authenticating Transaction...");
+$('#paymentOverlay').css('display', 'flex').show(); // Instantly shows it as flex container
+
+setTimeout(function() {
+  $('#paymentOverlay').fadeOut();
+  var paymentCard = $('#paymentCard');
+  var cardHeight = paymentCard.height();
+  paymentCard.css('height', cardHeight + 'px');
+  paymentCard.empty();
+
+  if (verifyResult.message !== "Payment Processed Successfully!") {
+    // Display error message with red circle and cross icon
+    paymentCard.append(
+      '<div class="payment-confirmation">' +
+        '<div class="confirmation-icon-container" style="position: relative; display: inline-block;">' +
+          '<svg class="cross-circle" viewBox="0 0 100 100" style="display: block;">' +
+            '<circle cx="50" cy="50" r="40" fill="none" stroke="#f44336" stroke-width="8" />' +
+          '</svg>' +
+          '<i class="fas fa-times" style="color: #f44336; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>' +
+        '</div>' +
+        '<p style="font-size: 19px; color: #f44336; margin-top: -20px;">Server verification failed!</p>' +
+      '</div>'
+    );
+  } else {
+    // Display success message with green circle and check mark icon
+    paymentCard.append(
+      '<div class="payment-confirmation">' +
+    '<div class="confirmation-icon-container">' +
+      '<svg class="checkmark-circle" viewBox="0 0 100 100">' +
+        '<circle cx="50" cy="50" r="40" fill="none" stroke="#4CAF50" stroke-width="8" />' +
+      '</svg>' +
+      '<i class="fas fa-check checkmark-icon"></i>' +
+    '</div>' +
+    '<p style="font-size: 19px;color : #4CAF50; margin-top: -7px;">' + verifyResult.message + '</p>' +
+    '<p style="font-size: 15px; margin-top: -10px; color : #4CAF50";">E-receipt sent to inbox!</p>' +
+  '</div>'
+    );
+  }
+}, 3000);
+
+                  },
+                  error: function(xhr, status, error) {
+                    alert('Verification error: ' + error);
+                  }
+                });
+              },
+              "prefill": {
+                "name": "XFINITY",
+                "email": "test@example.com",
+                "contact": "7585756479"
+              },
+              "theme": {
+                "color": "rgb(10, 225, 249)"
+              },
+              // New modal dismiss callback
+              "modal": {
+                "ondismiss": function() {
+                  // First, show the overlay if not already showing
+                  $('#paymentOverlay .processing-text').text("Authenticating Transaction...");
+                $('#paymentOverlay').css('display', 'flex').show(); 
+
+
+                  // Wait for 3 seconds before proceeding with the status check
+                  setTimeout(function() {
+                    $.ajax({
+                      url: "<?php echo site_url('payment/check_status'); ?>",
+                      type: "GET",
+                      dataType: "json",
+                      data: {
+                        c_pickup_id: "<?php echo $this->session->userdata('c_pickup_id'); ?>",
+                        user_id: "<?php echo $this->session->userdata('user_id'); ?>"
+                      },
+                      success: function(result) {
+                        var paymentCard = $('#paymentCard');
+                        var cardHeight = paymentCard.height();
+                        paymentCard.css('height', cardHeight + 'px');
+                        paymentCard.empty();
+                        
+                        if(result.status === 'paid') {
+                          // Simulate transaction confirmation with check icon
+                          paymentCard.append(
+                            '<div class="payment-confirmation">' +
+                              '<div class="confirmation-icon-container">' +
+                                '<svg class="checkmark-circle" viewBox="0 0 100 100">' +
+                                  '<circle cx="50" cy="50" r="40" fill="none" stroke="#4CAF50" stroke-width="8" />' +
+                                '</svg>' +
+                                '<i class="fas fa-check checkmark-icon"></i>' +
+                              '</div>' +
+                              '<p style="font-size: 19px;">Transaction complete</p>' +
+                            '</div>'
+                          );
+                        } else {
+                          // Show a warning for an aborted/incomplete transaction.
+                          // The green confirmation circle is removed and replaced with a larger red warning icon.
+                          paymentCard.append(
+                            '<div class="payment-confirmation">' +
+                              '<div class="confirmation-icon-container animate__animated animate__swing animate__infinite animate_slow" style="font-size: 5.5rem; color: rgb(255, 0, 0); margin-top: -35px;">' +
+                                '<i class="fas fa-exclamation-triangle"></i>' +
+                              '</div>' +
+                              '<p style="font-size: 19px; margin-top: 25px; color: rgb(255, 0, 0);">Transaction Incomplete. Retry!</p>' +
+                            '</div>'
+                          );
+                        }
+                        // Fade out the overlay after updating the UI
                         $('#paymentOverlay').fadeOut();
-                      var paymentCard = $('#paymentCard');
-                      var cardHeight = paymentCard.height();
-                      paymentCard.css('height', cardHeight + 'px');
-                      paymentCard.empty();
-                      paymentCard.append(
-                        '<div class="payment-confirmation">' +
-                          '<div class="confirmation-icon-container">' +
-                            '<svg class="checkmark-circle" viewBox="0 0 100 100">' +
-                              '<circle cx="50" cy="50" r="40" fill="none" stroke="#4CAF50" stroke-width="8" />' +
-                            '</svg>' +
-                            '<i class="fas fa-check checkmark-icon"></i>' +
-                          '</div>' +
-                          '<p style="font-size: 19px;">' + verifyResult.message + '</p>' +
-                        '</div>'
-                      );
-                    }, 5000);
-                    },
-                    error: function(xhr, status, error) {
-                      alert('Verification error: ' + error);
-                    }
-                  });
-                },
-                "prefill": {
-                  "name": "Test User",
-                  "email": "test@example.com",
-                  "contact": "9999999999"
-                },
-                "theme": {
-                  "color": "#F37254"
+                      },
+                      error: function(xhr, status, error) {
+                        alert('Error checking payment status: ' + error);
+                        // In case of AJAX error, fade out the overlay after 3 seconds.
+                        $('#paymentOverlay').fadeOut();
+                      }
+                    });
+                  }, 3000); // 3-second delay
                 }
-              };
+              }
+            };
 
-              var rzp1 = new Razorpay(options);
-              rzp1.open();
-            } else {
-              alert("Error creating order: " + result.message);
-            }
-          },
-          error: function(xhr, status, error) {
-            alert("AJAX error: " + error);
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+          } else {
+            alert("Error creating order: " + result.message);
           }
-        });
+        },
+        error: function(xhr, status, error) {
+          alert("AJAX error: " + error);
+        }
+      });
 
-        // Hide the overlay after 7 seconds
+      // Hide the overlay after 7 seconds from initial payment click (if not already hidden)
+      setTimeout(function() {
         $('#paymentOverlay').fadeOut();
-      }, 6000);
-    });
+      }, 3000);
+    }, 3000); // Adjust delay if needed
+  });
   </script>
 </body>
 </html>

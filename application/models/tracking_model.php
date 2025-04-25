@@ -18,7 +18,7 @@ class Tracking_model extends CI_Model {
      */
     public function get_pickup_ids_by_user($user_id)
     {
-        $this->db->select('pickup_id, model, created_at,status'); // Now fetching model and created_at
+        $this->db->select('pickup_id, model,brand, created_at,status,total_amount,service_type'); // Now fetching model and created_at
         $this->db->from('tracking');
         $this->db->where('user_id', $user_id);
         $query = $this->db->get();
@@ -44,5 +44,15 @@ class Tracking_model extends CI_Model {
         
         // Return a single row object
         return $query->row();
+    }
+
+    public function get_by_pickup_and_user($pickup_id, $user_id)
+    {
+        return $this->db
+            ->where('pickup_id',   $pickup_id)
+            ->where('user_id',     $user_id)
+            ->where('status',      'paid')
+            ->get('payments')
+            ->row();  // returns null if no paid record
     }
 }
