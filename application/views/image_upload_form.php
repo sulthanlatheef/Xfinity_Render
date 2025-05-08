@@ -31,7 +31,7 @@
     /* Header */
     nav {
       background-color: #ff6600;
-      padding: 8px 0;
+      padding: 7px 0;
       position: sticky;
       top: 0;
       z-index: 10;
@@ -170,6 +170,192 @@
       color:rgb(255, 32, 32);
       border-radius: 4px;
     }
+
+    #savedAddrSuccess {
+  display: none;
+  position: relative;
+  background: #e6ffed;           /* light green */
+  color: #2a7a2e;                /* dark green */
+  padding: 5px 14px;
+  border-left: 4px solid #2a7a2e;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  animation: slideDown 0.4s ease-out;
+}
+
+/* Edit card styling */
+#savedAddrEdit {
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border-radius: 8px;
+  padding: 0px;
+  display: none;
+  height:60px;
+}
+
+/* Buttons inside edit */
+#savedAddrEdit .btn {
+  background: linear-gradient(90deg, #ff8c42, #ff5722);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+#savedAddrEdit .btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Slide-down keyframes */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sidebarnew {
+  position: fixed;
+  top: 0;
+  right: -350px;
+  width: 330px;
+  height: 100%;
+  background: linear-gradient(135deg,rgba(225, 220, 215, 0.84),rgba(255, 255, 255, 0.8));
+  backdrop-filter: blur(12px);
+  border-left: 2px solid #ffffff40;
+  border-top: 2px solid #ffffff30;
+  border-radius: 20px 0 0 20px;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+  transition: right 0.4s ease-in-out;
+  z-index: 2000;
+  padding: 25px;
+  padding-top:20px;
+  margin-top: 69px;
+}
+
+.sidebarnew.active {
+  right: 0;
+}
+
+.sidebarnew .top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebarnew .close-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #555;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.sidebarnew .close-btn:hover {
+  transform: rotate(90deg);
+}
+
+.profile-section {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.profile-pic {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 20%;
+  border: 4px solid #eee;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s;
+}
+
+.profile-pic:hover {
+  transform: scale(1.05);
+}
+
+.avatar-options p {
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.avatar-list {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 2px solid transparent;
+}
+
+.avatar:hover {
+  transform: scale(1.15);
+  border-color: #ff6600;
+  box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+}
+
+.menu {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 16px;
+  color: #333;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+.menu a i {
+  transition: transform 0.3s ease;
+}
+
+.menu a:hover {
+  background-color: #ff6600;
+  color: white;
+}
+
+.menu a:hover i {
+  transform: scale(1.2);
+}
+
+.logout-btn {
+  margin-top: 20px;
+  padding: 12px 20px;
+  width: 100%;
+  background: linear-gradient(135deg, #ff4d4d, #cc0000);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.logout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(204, 0, 0, 0.4);
+}
+
 
     /* File Upload */
     .upload-box {
@@ -523,14 +709,45 @@
       <a href="#track-status">Track Status</a>
     </div>
     <?php if ($this->session->userdata('name')): ?>
-      <div class="user-info">
-        <span class="username"><?php echo html_escape($this->session->userdata('name')); ?></span>
-        <a href="<?php echo site_url('home/logout'); ?>" class="logout-btn">Logout</a>
+     
+      <div class="user-info" style="cursor:pointer;" onclick="toggleSidebar()">
+      <i class="fa-solid fa-user-astronaut" style="color:white;font-size:29px;padding-right:10px;"></i>
+        <span class="username" style="font-size:19.5px;"><?php echo html_escape($this->session->userdata('name')); ?></span>
+        
+       
       </div>
     <?php else: ?>
       <a href="<?php echo site_url('login'); ?>" class="button" style="margin-right:30px; color:#fff; font-size:20px; padding:10px 30px;">Login</a>
     <?php endif; ?>
   </nav>
+
+  <div class="sidebarnew" id="sidebar">
+  <div class="top-section">
+  <h3>Hello, <?php echo html_escape($this->session->userdata('name')); ?></h3>
+
+    <button class="close-btn" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+  </div>
+
+  <div class="profile-section">
+    <img src="<?= html_escape( $this->session->userdata('avatar') ) ?>" class="profile-pic" alt="Profile Picture">
+    <p style="margin-top: 10px; font-weight: 500;"><?php echo html_escape($this->session->userdata('membership')); ?></p>
+  </div>
+
+  <div class="avatar-options">
+    <p style="margin-left:65px;">Choose Your Avatar</p>
+    <div class="avatar-list" id="avatar-list"></div>
+  </div>
+
+  <div class="menu">
+    <a href="<?= site_url('home/profile') ?>"><i class="fas fa-user-circle"></i> Profile</a>
+    <a href="<?= site_url('advanced') ?>"><i class="fas fa-house-user"></i> Home</a>
+    <a href="<?= site_url('home/support') ?>"><i class="fas fa-headset"></i> Support</a>
+  </div>
+
+  <a href="<?php echo site_url('home/logout'); ?>">
+    <button class="logout-btn">Logout</button>
+  </a>
+</div>
 
   <!-- Main Wrapper -->
   <div class="wrapper">
@@ -703,28 +920,184 @@
 
       <!-- Step 6: Schedule Pickup -->
       <section id="step-schedule" class="card step-section" style="display:none;">
-        <h3>Step 6: Schedule Pickup</h3>
-        <form id="schedule-form">
-          <div class="pickup-form">
-            <label for="pickup-date">Pickup Date:</label>
-            <input type="date" id="pickup-date" name="pickup_date" required>
-            <label for="pickup-time">Pickup Time:</label>
-            <input type="time" id="pickup-time" name="pickup_time" required>
-          </div>
-          <button type="submit" class="btn">Confirm & Schedule Pickup</button>
-        </form>
-      </section>
+  <h3>Schedule Pickup</h3>
+  <form id="schedule-form">
+    <div class="pickup-form">
+      <label for="pickup-date">Pickup Date:</label>
+      <input type="date" id="pickup-date" name="pickup_date" required>
+      <label for="pickup-time">Pickup Time:</label>
+      <input type="time" id="pickup-time" name="pickup_time" required>
+    </div>
+
+    <!-- Saved Address with Edit -->
+    <!-- Saved Address with Edit & Confirmation -->
+<div class="form-group" style="margin: 16px 0; position: relative;">
+  <label style="font-weight:600;">Your Saved Delivery Address</label>
+  <i id="toggleSavedAddr"
+     class="fas fa-eye"
+     style="cursor:pointer; margin-left:8px;"
+     title="Show / Hide"></i>
+
+  <div id="savedAddrContainer" style="margin-top:8px;">
+    <!-- Confirmation banner -->
+   
+    <div id="savedAddrSuccess">  
+      <i class="fas fa-check-circle" style="margin-right:6px;"></i>
+      Address updated!
+   
+    </div>
+
+    <!-- View mode -->
+    <div id="savedAddrView" style="padding:8px; background:#fafafa; border:1px solid #ddd; border-radius:6px; position:relative;">
+      <span id="savedAddrText"><?= html_escape($user['delivery_address']) ?></span>
+      <i id="editSavedAddr" class="fas fa-edit"
+         style="position:absolute; top:8px; right:8px; cursor:pointer;"
+         title="Edit Address"></i>
+    </div>
+
+    <!-- Edit mode (modern card) -->
+    <div id="savedAddrEdit">
+      <textarea id="savedAddrInput"
+                style="width:100%;height:60px; border-radius:4px; font-weight:300;font-size:16px;padding:8px; resize: vertical;"
+                rows="2"><?= html_escape($user['delivery_address']) ?></textarea>
+      <div style="margin-top:12px; text-align:right;">
+        <button type="button" id="cancelSavedAddr" class="btn" 
+                style="background:#ccc; color:#333; margin-right:8px;">Cancel</button>
+        <button type="button" id="saveSavedAddr" class="btn">Save </button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <button type="submit" class="btn">Confirm &amp; Schedule Pickup </button>
+   
+  </form>
+</section>
     </main>
   </div>
+  
 
   <!-- Preview Modal for Uploaded Image -->
+  
   <div id="preview-modal" title="Image Preview" style="display:none; text-align:center;">
     <img id="preview-image" src="" alt="Uploaded Image Preview" style="max-width:100%; height:auto;">
   </div>
 
   <!-- JavaScript -->
   <script>
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('active');
+  }
+
+  function createRandomAvatar() {
+    const seed = Math.random().toString(36).substring(2, 10);
+    return `https://api.dicebear.com/9.x/bottts/svg?seed=${seed}`;
+  }
+
+  function populateAvatars(count = 4) {
+    const container = document.getElementById('avatar-list');
+    container.innerHTML = '';
+    for (let i = 0; i < count; i++) {
+      const img = document.createElement('img');
+      img.src = createRandomAvatar();
+      img.className = 'avatar';
+      img.onclick = () => selectAvatar(img.src);
+      container.appendChild(img);
+    }
+  }
+
+  function selectAvatar(src) {
+    document.querySelector('.profile-pic').src = src;
+    fetch('<?= site_url("home/update_avatar") ?>', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ avatar_url: src })
+    });
+  }
+
+  setInterval(() => populateAvatars(), 10000);
+  populateAvatars();
+</script>
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const eye        = document.getElementById('toggleSavedAddr');
+  const viewPane   = document.getElementById('savedAddrView');
+  const editPane   = document.getElementById('savedAddrEdit');
+  const addrText   = document.getElementById('savedAddrText');
+  const editBtn    = document.getElementById('editSavedAddr');
+  const cancelBtn  = document.getElementById('cancelSavedAddr');
+  const saveBtn    = document.getElementById('saveSavedAddr');
+  const inputField = document.getElementById('savedAddrInput');
+  const successMsg = document.getElementById('savedAddrSuccess');
+
+  // Toggle show/hide
+  eye.addEventListener('click', () => {
+    if (viewPane.style.display === 'none') {
+      viewPane.style.display = 'block';
+      eye.classList.replace('fa-eye-slash', 'fa-eye');
+    } else {
+      viewPane.style.display = 'none';
+      editPane.style.display = 'none';
+      eye.classList.replace('fa-eye', 'fa-eye-slash');
+    }
+  });
+
+  // Enter edit
+  editBtn.addEventListener('click', () => {
+    viewPane.style.display = 'none';
+    editPane.style.display = 'block';
+    inputField.focus();
+  });
+
+  // Cancel edit
+  cancelBtn.addEventListener('click', () => {
+    editPane.style.display = 'none';
+    viewPane.style.display = 'block';
+    inputField.value = addrText.textContent.trim();
+  });
+
+  // Save via AJAX
+  saveBtn.addEventListener('click', () => {
+    const newAddr = inputField.value.trim();
+    if (!newAddr) {
+      alert('Address cannot be empty.');
+      return;
+    }
+    fetch('<?= site_url("advanced/update_address") ?>', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'delivery_address=' + encodeURIComponent(newAddr)
+    })
+    .then(res => {
+      if (!res.ok) throw new Error('Network error');
+      return res.text();
+    })
+    .then(() => {
+      // Update UI
+      addrText.textContent = newAddr;
+      editPane.style.display = 'none';
+      viewPane.style.display = 'block';
+
+      // Show & auto-hide success banner
+      successMsg.style.display = 'block';
+      setTimeout(() => successMsg.style.display = 'none', 3000);
+    })
+    .catch(err => {
+      console.error(err);
+      alert('⚠️ Failed to update address. Please try again.');
+    });
+  });
+});
+</script>
+<script>
     var dentCost = undefined;
+    var membership = <?= json_encode($this->session->userdata('membership')) ?>;
+
 
     function filterAccessory(prediction) {
       if (typeof prediction !== "string") return "";
@@ -771,42 +1144,73 @@
       }
     }
 
-    function openInvoiceModal(data) {
-      var price = data.price ? parseFloat(data.price) : 0;
-      var laborCharge = 200;
-      var serviceDescription = data.accessory + " for " + data.brandName + " " + data.model;
-      var subtotal = price + laborCharge;
-      var cgst = subtotal * 0.09;
-      var sgst = subtotal * 0.09;
-      var total = subtotal + cgst + sgst;
-      var currentDate = new Date().toLocaleDateString();
-      var invoiceNumber = "EST-" + Math.floor(Math.random() * 9000 + 1000);
-      
-      $("#invoice-number").html(invoiceNumber);
-      $("#invoice-date").html(currentDate);
-      var tbodyHtml = "<tr>" +
-          "<td>" + serviceDescription + "</td>" +
-          "<td>1</td>" +
-          "<td>₹" + price.toFixed(2) + "</td>" +
-          "<td>₹" + price.toFixed(2) + "</td>" +
-        "</tr>" +
-        "<tr>" +
-          "<td>Labor Charge</td>" +
-          "<td>1</td>" +
-          "<td>₹" + laborCharge.toFixed(2) + "</td>" +
-          "<td>₹" + laborCharge.toFixed(2) + "</td>" +
-        "</tr>";
-      $("#invoice-modal .invoice-table tbody").html(tbodyHtml);
-      $("#invoice-subtotal").html("₹" + subtotal.toFixed(2));
-      $("#invoice-cgst").html("₹" + cgst.toFixed(2));
-      $("#invoice-sgst").html("₹" + sgst.toFixed(2));
-      $("#invoice-total").html("₹" + total.toFixed(2));
-      
-      $(".step").removeClass("active");
-      $('.step[data-step="invoice"]').addClass("active");
-      $(".step-section").hide();
-      $("#step-invoice").fadeIn();
-    }
+  function openInvoiceModal(data) {
+  var price        = data.price ? parseFloat(data.price) : 0;
+  var laborCharge  = 200;
+  var serviceDesc  = data.accessory + " for " + data.brandName + " " + data.model;
+  var subtotal     = price + laborCharge;
+  var cgst         = subtotal * 0.09;
+  var sgst         = subtotal * 0.09;
+  var total        = subtotal + cgst + sgst;
+
+  // SESSION‐DRIVEN DISCOUNT
+  var discount     = (membership === 'Gold Membership') ? 500 : 0;
+  var hasDiscount  = discount > 0;
+  if (hasDiscount) { total -= discount; }
+
+  // invoice header
+  var today        = new Date().toLocaleDateString();
+  var invNumber    = "EST-" + Math.floor(Math.random() * 9000 + 1000);
+  $("#invoice-number").text(invNumber);
+  $("#invoice-date").text(today);
+
+  // line items
+  var rows = [
+    `<tr>
+       <td>${serviceDesc}</td>
+       <td>1</td>
+       <td>₹${price.toFixed(2)}</td>
+       <td>₹${price.toFixed(2)}</td>
+     </tr>`,
+    `<tr>
+       <td>Labor Charge</td>
+       <td>1</td>
+       <td>₹${laborCharge.toFixed(2)}</td>
+       <td>₹${laborCharge.toFixed(2)}</td>
+     </tr>`
+  ];
+
+  if (hasDiscount) {
+    rows.push(
+      `<tr>
+         <td style="color:green;">Free Car Wash ( worth ₹500) for GOLD membership</td>
+         <td style="color:green;">1</td>
+         <td style="color:green;">₹${discount.toFixed(2)}</td>
+         <td style="color:green;">FREE</td>
+       </tr>`
+    );
+  }
+
+  $("#invoice-modal .invoice-table tbody").html(rows.join(''));
+
+  // totals & taxes
+  $("#invoice-subtotal").text("₹" + subtotal.toFixed(2));
+  $("#invoice-cgst").text("₹" + cgst.toFixed(2));
+  $("#invoice-sgst").text("₹" + sgst.toFixed(2));
+
+  // optional discount banner
+  
+
+  $("#invoice-total").text("₹" + total.toFixed(2));
+
+  // show the invoice
+  $(".step").removeClass("active");
+  $('.step[data-step="invoice"]').addClass("active");
+  $(".step-section").hide();
+  $("#step-invoice").fadeIn();
+}
+
+
 
     $(document).ready(function(){
       $("#to-vehicle-btn").hide();

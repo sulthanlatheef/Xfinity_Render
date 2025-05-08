@@ -11,27 +11,27 @@ model_path = r'E:\cardata\yolov5\runs\train\exp22\weights\best.pt'
 
 # Load the YOLOv5 model with custom weights
 model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path)
-model.conf = 0.20
+model.conf = 0.25
 
 # Define a custom output mapping for all 17 classes (indices 0 to 16)
 custom_labels = {
-    0: "Custom Output for Class 0",
-    1: "Custom Output for Class 1",
-    2: "Custom Output for Class 2",
-    3: "Custom Output for Class 3",
+    0: "Smart Diagnostics confirmed denting on the body panel, requiring repair work. Kindly share your vehicle details in the next step so I can generate an overall estimate for your concern.",
+    1: "Smart Diagnostics confirmed cracks or chips on the front windscreen needing replacement. Kindly share your vehicle details in the next step so I can generate an overall estimate for your concern.",
+    2: " Smart Diagnostics confirmed damage to the headlight assembly leading to a replacement need. Kindly share your vehicle details in the next step so I can generate an overall estimate for your concern.",
+    3: " Smart Diagnostics confirmed breakage on the rear windscreen, suggesting replacement. Kindly share your vehicle details in the next step so I can generate an overall estimate for your concern.",
     4: "Custom Output for Class 4",
-    5: "Custom Output for Class 5",
+    5: " Smart Diagnostics confirmed damage to the side mirror’s glass or casing leading to a replacement. Kindly share your vehicle details in the next step so I can generate an overall estimate for your concern.",
     6: "Custom Output for Class 6",
-    7: "Custom Output for Class 7",
-    8: "Custom Output for Class 8",
+    7: "Smart Diagnostics confirmed damage to the taillight housing leading to a need for replacement. Kindly share your vehicle details in the next step so I can generate an overall estimate for your concern.",
+    8: "Smart Diagnostics confirmed denting on the bonnet panel, suggesting body repairs. Kindly allow me to analyze the severity so we can generate an overall estimate for your concern.",
     9: "Custom Output for Class 9",
-    10: "Custom Output for Class 10",
-    11: "Custom Output for Class 11",
-    12: "Custom Output for Class 12",
+    10: "Smart Diagnostics confirmed denting on the outer door panel needing professional repair. Kindly allow me to analyze the severity so we can generate an overall estimate for your concern.",
+    11: "Smart Diagnostics confirmed dents and deformations on the fender area requiring correction. Kindly allow me to analyze the severity so we can generate an overall estimate for your concern.",
+    12: " Smart Diagnostics confirmed dents on the front bumper suggesting replacement or repair. Kindly allow me to analyze the severity so we can generate an overall estimate for your concern.",
     13: "Custom Output for Class 13",
-    14: "Custom Output for Class 14",
-    15: "Custom Output for Class 15",
-    16: "Custom Output for Class 16"
+    14: "Smart Diagnostics confirmed denting on the quarter panel requiring professional restoration.Kindly allow me to analyze the severity so we can generate an overall estimate for your concern.",
+    15: " Smart Diagnostics confirmed dents on the rear bumper suggesting repair or replacement. Kindly allow me to analyze the severity so we can generate an overall estimate for your concern.",
+    16: " Smart Diagnostics confirmed denting on the roof panel requiring restoration work. Kindly allow me to analyze the severity so we can generate an overall estimate for your concern."
 }
 
 @app.route('/predict', methods=['POST'])
@@ -66,7 +66,7 @@ def predict():
         return jsonify({"error": "Failed to extract predictions", "exception": str(e)}), 500
 
     if not predictions:
-        predictions = [{"custom": "sorry no detections", "original": "", "confidence": 0.0}]
+        predictions = [{"custom": "Please upload much closer version of the issue,If problem persists kindly consider the Regular Service option", "original": "", "confidence": 0.0}]
 
     return jsonify({"predictions": predictions})
 

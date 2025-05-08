@@ -78,7 +78,10 @@
 <div class="form-row">
   <div>
     <label>Customer Name</label>
-    <input type="text" id="customer-name" placeholder="Enter customer name" oninput="updateCustomer()">
+    <input type="text" id="customer-name" placeholder="Enter customer name"
+  value="<?php echo isset($name) ? htmlspecialchars($name, ENT_QUOTES) : ''; ?>"
+  oninput="updateCustomer()">
+
   </div>
   <div>
     <label>Invoice Number</label>
@@ -153,59 +156,84 @@
 <button onclick="downloadPDF()">Download & Save Invoice</button>
 
 <script>
-  const invoiceNo = 'INV-' + Math.floor(100000 + Math.random() * 900000);
-  document.getElementById('invoice-no').value = invoiceNo;
-  document.getElementById('invoice-number-display').textContent = invoiceNo;
-  document.getElementById('invoice-date').textContent = new Date().toLocaleDateString();
+  // Auto-populate bill-to name if present
+  var membership = <?= json_encode($membership) ?>;
+  document.addEventListener("DOMContentLoaded", function() {
+  updateCustomer();
+  updateTotals();
+});
 
-  function updateCustomer() {
-    const name = document.getElementById('customer-name').value || 'Customer Name';
-    document.getElementById('invoice-bill-to').textContent = name;
+const invoiceNo = 'INV-' + Math.floor(100000 + Math.random() * 900000);
+document.getElementById('invoice-no').value                 = invoiceNo;
+document.getElementById('invoice-number-display').textContent = invoiceNo;
+document.getElementById('invoice-date').textContent         = new Date().toLocaleDateString();
+
+function updateCustomer() {
+  const name = document.getElementById('customer-name').value || 'Customer Name';
+  document.getElementById('invoice-bill-to').textContent = name;
+}
+
+function addItem() {
+  const desc  = document.getElementById('desc').value;
+  const qty   = parseFloat(document.getElementById('qty').value);
+  const price = parseFloat(document.getElementById('price').value);
+
+  if (!desc || qty <= 0 || price <= 0) {
+    alert('Please enter valid item details.');
+    return;
   }
 
-  function addItem() {
-    const desc = document.getElementById('desc').value;
-    const qty = parseFloat(document.getElementById('qty').value);
-    const price = parseFloat(document.getElementById('price').value);
+  const amount = qty * price;
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${desc}</td>
+    <td>${qty}</td>
+    <td>${price.toFixed(2)}</td>
+    <td>${amount.toFixed(2)}</td>
+  `;
+  document.getElementById('invoice-body').appendChild(row);
 
-    if (!desc || qty <= 0 || price <= 0) {
-      alert('Please enter valid item details.');
-      return;
-    }
+  // clear inputs
+  document.getElementById('desc').value  = '';
+  document.getElementById('qty').value   = '';
+  document.getElementById('price').value = '';
 
-    const amount = qty * price;
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${desc}</td>
-      <td>${qty}</td>
-      <td>${price.toFixed(2)}</td>
-      <td>${amount.toFixed(2)}</td>
+  updateTotals();
+}
+
+function updateTotals() {
+  // remove previous free-wash row if any
+  document.querySelectorAll('.membership-service').forEach(el => el.remove());
+
+  // if $membership === "Gold Membership", add free interior wash
+  if (membership === 'Gold Membership') {
+    const washRow = document.createElement('tr');
+    washRow.className = 'membership-service';
+    washRow.innerHTML = `
+      <td style="color:green;">Free Interior Wash (worth ₹500) for GOLD Membership</td>
+      <td style="color:green;">1</td>
+      <td style="color:green;">₹500</td>
+      <td style="color:green;">Free</td>
     `;
-    document.getElementById('invoice-body').appendChild(row);
-
-    document.getElementById('desc').value = '';
-    document.getElementById('qty').value = '';
-    document.getElementById('price').value = '';
-
-    updateTotals();
+    document.getElementById('invoice-body').appendChild(washRow);
   }
 
-  function updateTotals() {
-    let subtotal = 0;
-    document.querySelectorAll('#invoice-body tr').forEach(row => {
-      const amount = parseFloat(row.children[3].textContent);
-      subtotal += amount;
-    });
+  // recalc totals
+  let subtotal = 0;
+  document.querySelectorAll('#invoice-body tr').forEach(row => {
+    subtotal += parseFloat(row.children[3].textContent) || 0;
+  });
 
-    const cgst = subtotal * 0.09;
-    const sgst = subtotal * 0.09;
-    const total = subtotal + cgst + sgst;
+  const cgst  = subtotal * 0.09;
+  const sgst  = subtotal * 0.09;
+  const total = subtotal + cgst + sgst;
 
-    document.getElementById('invoice-subtotal').textContent = subtotal.toFixed(2);
-    document.getElementById('invoice-cgst').textContent = cgst.toFixed(2);
-    document.getElementById('invoice-sgst').textContent = sgst.toFixed(2);
-    document.getElementById('invoice-total').textContent = total.toFixed(2);
-  }
+  document.getElementById('invoice-subtotal').textContent = subtotal.toFixed(2);
+  document.getElementById('invoice-cgst').textContent     = cgst.toFixed(2);
+  document.getElementById('invoice-sgst').textContent     = sgst.toFixed(2);
+  document.getElementById('invoice-total').textContent    = total.toFixed(2);
+}
+
 
   function downloadPDF() {
     const $clone = $('#invoice-content').clone();

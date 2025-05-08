@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
 class Payment extends CI_Controller {
 
     public function __construct() {
@@ -20,6 +21,192 @@ class Payment extends CI_Controller {
         log_message('info', 'Loading payment view.');
         // Loads the view without order details.
         $this->load->view('payment_view');
+    }
+
+    public function promocode()
+    {
+        $code = strtoupper(trim($this->input->post('code')));
+    
+        // Query the 'promocodes' table
+        $this->db->where('promocode', $code);
+        $query = $this->db->get('promocodes');
+        $promocode = $query->row();
+    
+        if ($promocode) {
+            if ($promocode->type === 'common') {
+                if ($promocode->status === 'active') {
+                    echo json_encode([
+                        'status' => 'success',
+                        'discount' => $promocode->discount
+                    ]);
+                    return;
+                }
+                else{
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'This promo code is suspended!'
+                    ]);
+                }
+            }
+             if ($promocode->type === 'unique') {
+                if ($promocode->status === 'active') {
+                    // Mark the promocode as expired
+                    $this->session->set_userdata('promocode',  $code);
+                    log_message('info', 'Promocode "' . $code . '" has been set in session.');
+    
+                    echo json_encode([
+                        'status' => 'success',
+                        'discount' => $promocode->discount
+                    ]);
+                    return;
+                }
+                else{
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Oops! already claimed / expired'
+                    ]);
+                    
+                }
+            }
+        }
+        else{
+    
+        // If no valid promocode found
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Invalid Promocode!'
+        ]);
+    }
+    }
+    
+
+
+
+    public function subscription() {
+        require_once(APPPATH.'../assets/vendor/autoload.php');
+    
+        $key_id = 'rzp_test_5eDUiiTXUK94MD';
+        $key_secret = '9mxzfivN3YK8EH38Cg95hI7K';
+        $api = new Razorpay\Api\Api($key_id, $key_secret);
+    
+        // Get amount from POST
+        $amount = $this->input->post('amount');
+    
+        // Fallback to 4999 if not provided or invalid
+        if (empty($amount) || !is_numeric($amount)) {
+            $amount = 4999;
+        }
+    
+        $orderData = [
+            'receipt'         => 'receipt_' . time(),
+            'amount'          => $amount * 100, // Razorpay expects amount in paise
+            'currency'        => 'INR',
+            'payment_capture' => 1
+        ];
+
+        try {
+            $razorpayOrder = $api->order->create($orderData);
+
+            $response = [
+                'status' => 'success',
+                'order_id' => $razorpayOrder['id'],
+                'amount' => $orderData['amount'],
+                'key_id' => $key_id
+            ];
+        } catch (Exception $e) {
+            $response = ['status' => 'error', 'message' => $e->getMessage()];
+        }
+
+        echo json_encode($response);
+    }
+
+    public function verify() {
+        // load input
+        $order_id   = $this->input->post('razorpay_order_id');
+        $payment_id = $this->input->post('razorpay_payment_id');
+        $signature  = $this->input->post('razorpay_signature');
+
+        // your Razorpay keys
+        require_once(APPPATH.'../assets/vendor/autoload.php');
+        $key_id     = 'rzp_test_5eDUiiTXUK94MD';
+        $key_secret = '9mxzfivN3YK8EH38Cg95hI7K';
+        $api = new Razorpay\Api\Api($key_id, $key_secret);
+
+
+        // prepare attributes for verification
+        $attributes = [
+            'razorpay_order_id'   => $order_id,
+            'razorpay_payment_id' => $payment_id,
+            'razorpay_signature'  => $signature
+        ];
+
+        try {
+            // throws if signature is invalid
+            $api->utility->verifyPaymentSignature($attributes);
+        
+            // Load session library if not autoloaded
+            $this->load->library('session');
+
+            $promocode = $this->session->userdata('promocode');
+            // Get user ID from session
+            $user_id = $this->session->userdata('user_id');
+        
+            // Check if user_id exists
+            if ($user_id) {
+                // Load database
+                $this->load->database();
+            
+                // Update membership_type in 'users' table
+                //$this->db->where('id', $user_id);
+                //$this->db->update('users', ['membership_type' => 'Gold Membership']);
+                //$this->session->set_userdata('membership', 'Gold Membership');
+
+                  // Mark the promocode as expired
+                  $this->db->where('promocode', $promocode);
+                  $this->db->update('promocodes', ['status' => 'expired']);
+            
+                $start_date = date('Y-m-d');
+                $end_date = date('Y-m-d', strtotime('+1 year'));
+            
+                $data = array(
+                    'user_id' => $user_id,
+                    'start_date' => $start_date,
+                    'end_date' => $end_date,
+                    'status' => 'active'
+                );
+            
+                // Check if subscription exists
+                $this->db->where('user_id', $user_id);
+                $query = $this->db->get('subscriptions');
+            
+                if ($query->num_rows() > 0) {
+                    // Subscription exists, update it
+                    $this->db->where('user_id', $user_id);
+                    $this->db->update('subscriptions', $data);
+                } else {
+                    // No subscription, insert new
+                    $this->db->insert('subscriptions', $data);
+                }
+        
+                echo json_encode([
+                    'status' => 'success',
+                    'message'=> 'Signature verified and membership upgraded.'
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message'=> 'User ID not found in session.'
+                ]);
+            }
+        
+        
+        } catch (SignatureVerificationError $e) {
+            // ─── FAILURE ───
+            echo json_encode([
+                'status'  => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -67,6 +254,35 @@ class Payment extends CI_Controller {
             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
+
+    public function verify_sub()
+{
+    // Load the database library if not autoloaded
+    $this->load->database();
+
+    // Get user ID from session
+    $user_id = $this->session->userdata('user_id');
+
+    // Default fallback
+    $membership_type = null;
+
+    if ($user_id) {
+        // Query the database directly
+        $query = $this->db->select('membership_type')
+                          ->from('users')
+                          ->where('id', $user_id)
+                          ->get();
+
+        if ($query->num_rows() > 0) {
+            $membership_type = $query->row()->membership_type;
+        }
+    }
+
+    // Return result as JSON
+    echo json_encode([
+        'membership_type' => $membership_type
+    ]);
+}
 
     
     public function check_status() {
@@ -129,7 +345,7 @@ class Payment extends CI_Controller {
 
     try {
         // Verify the payment signature.
-        $api->utility->verifyPaymentSignature($attributes);
+        $api->utility->verifyPaymentSignature($attributes); 
         log_message('info', 'Payment verified successfully for order: ' . $post['razorpay_order_id']);
         
         // Payment is verified. Now record the payment details in the database.
