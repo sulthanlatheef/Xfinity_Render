@@ -9,11 +9,24 @@ class ImageUpload extends CI_Controller {
         $this->load->library('session');
         $this->load->helper(array('form', 'url'));
         $this->load->database();
+        $this->load->model('User_model_profile');
     }
 
     // Display the upload form
     public function index() {
-        $this->load->view('image_upload_form');
+        
+        if ( ! $this->session->has_userdata('user_id')) {
+            redirect('login');
+            return;
+        }
+
+        // 2. Retrieve user_id from session
+        $user_id = $this->session->userdata('user_id');
+
+        // 3. Load user data
+        $user = $this->User_model_profile->get_by_id($user_id);
+        $data['user'] = $user;
+        $this->load->view('image_upload_form',$data);
     }
 
     // Function to handle the upload and prediction logic

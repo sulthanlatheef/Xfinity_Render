@@ -9,11 +9,33 @@ class Forcepickupcontrol extends CI_Controller {
         $this->load->library('session');
         $this->load->helper(array('form', 'url'));
         $this->load->database();
+        $this->load->model('User_model_profile');
     }
 
     // Display the upload form
     public function index() {
-        $this->load->view('forcepickup');
+
+        if ( ! $this->session->has_userdata('user_id')) {
+            redirect('login');
+            return;
+        }
+
+        // 2. Retrieve user_id from session
+        $user_id = $this->session->userdata('user_id');
+
+        // 3. Load user data
+        $user = $this->User_model_profile->get_by_id($user_id);
+
+        if ( ! $user) {
+            show_error('User not found', 404);
+        }
+
+        // 4. Ensure membership_type key exists
+        if (empty($user['membership_type'])) {
+            $user['membership_type'] = 'Not Available';
+        }
+        $data['user'] = $user;
+        $this->load->view('forcepickup',$data);
     }
 
     

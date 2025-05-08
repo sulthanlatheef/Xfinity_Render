@@ -53,6 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'home';  // This is your default controller
 $route['404_override'] = '';  // Custom 404 page (if any)
 $route['translate_uri_dashes'] = FALSE;  // Converts dashes to underscores in controller and method names
+$route['user/update_avatar'] = 'home/update_avatar';
 
 // Add your route for the register page
 $route['register'] = 'register'; 

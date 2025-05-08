@@ -49,7 +49,7 @@
       background-image: linear-gradient(45deg, #FF4500, #DC143C);
       -webkit-background-clip: text;
       color: transparent;
-      transition: all 0.3s ease;
+     transition: all 0.3s ease; 
     }
 
     /* Blinking Cursor */

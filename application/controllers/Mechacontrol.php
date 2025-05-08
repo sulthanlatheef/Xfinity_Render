@@ -32,20 +32,46 @@ class Mechacontrol extends CI_Controller {
         $this->load->view('view_pickups', $data);
     }
     public function geninvoice()
-{
-    // Retrieve pickup_id from POST
-    $pickup_id = $this->input->post('pickup_id');
+    {
+        // Retrieve pickup_id from POST
+        $pickup_id = $this->input->post('pickup_id');
+    
+        // Log the pickup_id
+        log_message('info', 'Generating invoice for pickup_id: ' . $pickup_id);
+    
+        // Initialize the data array
+        $data['pickup_id'] = $pickup_id;
+    
+        // Load the database if not autoloaded
+        $this->load->database();
+    
+        // Fetch the name from the 'tracking' table based on pickup_id
+        $query = $this->db->get_where('tracking', ['pickup_id' => $pickup_id]);
+        $row = $query->row();
+    
+        if ($row) {
+            $data['name'] = $row->name;
+            $data['user_id'] = $row->user_id;
+        } else {
+            $data['name'] = null; // or handle missing entry appropriately
+            log_message('error', 'No tracking entry found for pickup_id: ' . $pickup_id);
+        }
 
-    // Log the pickup_id
-    log_message('info', 'Generating invoice for pickup_id: ' . $pickup_id);
+        $query = $this->db->get_where('users', ['id' => $data['user_id']]);
+        $row = $query->row();
+        if ($row) {
+            $data['membership'] = $row->membership_type;
+            
+        } else {
+            $data['membership'] = null; // or handle missing entry appropriately
+            log_message('error', 'No tracking entry found for pickup_id: ' . $pickup_id);
+        }
 
-    // Optional: pass it to the view if needed
-    $data['pickup_id'] = $pickup_id;
-
-    // Load the view
-    $this->load->view('geninvoice', $data);
-}
-
+    
+        // Load the view
+        $this->load->view('geninvoice', $data);
+    }
+    
 
 public function finvoice() {
     $invoiceNumber = $this->input->post('invoice_number');

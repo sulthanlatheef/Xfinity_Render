@@ -55,7 +55,7 @@ def send_email(service, message):
 
 def main():
     # Email subject
-    subject = "Your Pickup Confirmation - Sterelx.ai"
+    subject = "Pickup Confirmed!"
     
     # Advanced, modern and stylish HTML email content
     body = f"""
@@ -135,7 +135,7 @@ def main():
       <body>
         <div class="container">
           <div class="header">
-            <h1>Sterelx.ai</h1>
+            <h1>XFINITY</h1>
           </div>
           <div class="content">
             <h2>Pickup Confirmed!</h2>
@@ -149,12 +149,12 @@ def main():
             </div>
             <p>If you have any questions or need further assistance, feel free to contact our support team.</p>
             <p style="text-align:center;">
-              <a class="button" href="https://www.sterelx.ai">Visit Our Website</a>
+              <a class="button" href="https://www.XFINITY.IN">Visit Our Website</a>
             </p>
             <p>Thank you for choosing Sterelx.ai!</p>
           </div>
           <div class="footer">
-            &copy; {name} {brand} {model} - Sterelx.ai. All rights reserved.
+            &copy; {name} {brand} {model} - XFINITY. All rights reserved.
           </div>
         </div>
       </body>
@@ -165,7 +165,7 @@ def main():
     mime_message = MIMEText(body, "html")
     mime_message['To'] = email
     mime_message['Subject'] = subject
-    mime_message['From'] = "STERELEX.AI <sulthanlatheef0@gmail.com>"
+    mime_message['From'] = "XFINITY <sulthanlatheef0@gmail.com>"
     
     # Encode the message in base64 URL-safe format
     raw_message = base64.urlsafe_b64encode(mime_message.as_bytes()).decode()
