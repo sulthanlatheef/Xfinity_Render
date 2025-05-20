@@ -40,6 +40,7 @@ class Pickup extends CI_Controller {
             'pickup_address'      => $this->session->userdata('pickupaddress'),
             'pickup_date'         => $this->session->userdata('pickupdate'),
             'pickup_time'         => $this->session->userdata('pickuptime'),
+            'delivery_address'    => $this->session->userdata('delivery'),
             
             'pickup_id'           => $pickup_id,
             'invoice_number'      => $this->session->userdata('invoiceNumber'),
@@ -85,6 +86,7 @@ $tracking_data = array(
     'pickup_date' => $data['pickup_date'],
     'pickup_time' => $data['pickup_time'],
     'pickup_address' => $data['pickup_address'],
+    'delivery_address' => $data['delivery_address'],
     'brand'     => $data['brand'],
     'service_type'     => $data['service_type'],
     'model'     => $data['model'],
@@ -92,6 +94,7 @@ $tracking_data = array(
     'issue'     => $data['original_prediction'],
     'total_amount'=> empty($data['total_amount']) ? 'force pickup' : $data['total_amount'],
     'status'    => 'Pickup Scheduled'
+
     
     
 );

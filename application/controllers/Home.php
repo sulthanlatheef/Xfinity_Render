@@ -259,6 +259,10 @@ if ($query->num_rows() > 0) {
         $this->session->sess_destroy();
         redirect('home/login');
     }
+      public function logoutadmin() {
+        $this->session->sess_destroy();
+        redirect('mechanic');
+    }
     
     // New function to slide the home view to its bottom
     public function slide() {

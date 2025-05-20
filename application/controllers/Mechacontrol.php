@@ -31,6 +31,23 @@ class Mechacontrol extends CI_Controller {
         // 3) Load the view and pass the data
         $this->load->view('view_pickups', $data);
     }
+     public function manage_delivery()
+    {
+        // 1) Get vcity from session
+        $vcity = $this->session->userdata('vcity');
+
+        if (empty($vcity)) {
+            // If no city in session, redirect to login or dashboard
+            redirect('login');
+            return;
+        }
+
+        // 2) Fetch all matching pickups
+        $data['pickups'] = $this->Forcepickups_model->get_by_city($vcity);
+        
+        // 3) Load the view and pass the data
+        $this->load->view('delivery', $data);
+    }
     public function geninvoice()
     {
         // Retrieve pickup_id from POST
@@ -123,6 +140,52 @@ public function finvoice() {
         // Redirect back to the list
         redirect('Mechacontrol/view_pickups');
     }
+    public function complete_delivery($pickup_id)
+    {
+        // Update status and lock it
+        $this->Forcepickups_model->update_status_and_lock($pickup_id, 'Delivered');
+
+        $query = $this->db->get_where('tracking', array('pickup_id' => $pickup_id));
+
+   
+        $user_row = $query->row();
+        $user_id = $user_row->user_id;
+        $this->add_log("Retrieved user_id successfully(express service): {$user_id}");
+
+        $name = $user_row->name;
+        $brand = $user_row->brand;
+
+        $query = $this->db->get_where('users', array('id' => $user_id));
+       
+        $user_row = $query->row();
+        $email = $user_row->email;
+        $this->add_log("Retrieved mail_id: {$email}");
+
+
+          $pythonExecutable = 'C:\\Users\\shanu\\AppData\\Local\\Programs\\Python\\Python38\\python.exe';
+                $pythonScriptPath = 'C:\\wamp64\\www\\XFINITY\\assets\\python\\delivery.py';
+        
+                // Pass parameters to the Python script
+                $cmd = $pythonExecutable . " " . $pythonScriptPath . " " . 
+                       escapeshellarg($email) . " " . 
+                       escapeshellarg($name) . " " . 
+                       escapeshellarg($pickup_id) . " 2>&1"; 
+                      
+                      
+                     
+        
+                $this->add_log("Executing command: {$cmd}");
+                
+                // Execute the command and capture output
+                $output = shell_exec($cmd);
+                $this->add_log("Python script output: " . trim($output));
+        
+
+    
+        // Redirect back to the list
+        redirect('Mechacontrol/manage_delivery');
+    }
+    
     
     public function update_status()
 {

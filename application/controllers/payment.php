@@ -60,6 +60,13 @@ class Payment extends CI_Controller {
                     ]);
                     return;
                 }
+                 else if ($promocode->status === 'paused') {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'This code is suspended!'
+                    ]);
+                    
+                }
                 else{
                     echo json_encode([
                         'status' => 'error',
