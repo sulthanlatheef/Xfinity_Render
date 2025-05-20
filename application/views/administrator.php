@@ -21,6 +21,24 @@
             align-items: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+        .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.1s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
 
         .navbar h1 {
             margin: 0;
@@ -68,26 +86,6 @@
             color: #777;
             font-size: 14px;
         }
-         .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 8px 16px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform 0.1s ease, box-shadow 0.2s ease;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    
-    
-  .btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
 
         @media (max-width: 768px) {
             .dashboard {
@@ -104,33 +102,28 @@
 <body>
 
     <div class="navbar">
-        <h1>Xfinity Garage <?php if ($this->session->userdata('musername')): ?>
-          <i class="fa-solid fa-wrench" style="color:;font-size:25px;"></i>
-        <?php endif; ?></h1>
-         <span style="color: white;font-size:23px;font-weight:bold;">
-      <i class="fa-solid fa-location-dot"></i>  <?= $this->session->userdata('vcity'); ?>
-    </span> 
-        <a href="<?= site_url('home/logoutadmin'); ?>" class="btn" style="background-color: #ffffff; color: Red;">
+        <h1>Xfinity Administraton</h1>
+          <a href="<?= site_url('home/logoutadmin'); ?>" class="btn" style="background-color: #ffffff; color: red;font-size:17px;">
       🔓 Logout
     </a>
-        <div style="font-size:20px;">Mechanic Panel</div>
+
+        <div>Admin Panel</div>
     </div>
 
     <div class="dashboard">
-        <div class="tile" onclick="location.href='<?php echo site_url('mechacontrol/view_pickups'); ?>'">
-            <h2>View Pickups</h2>
+        <div class="tile" onclick="location.href='<?php echo site_url('Admin/promocodes'); ?>'">
+            <h2>Create Promocodes</h2>
         </div>
-        <div class="tile" onclick="location.href='<?php echo site_url('mechacontrol/manage_service'); ?>'">
-            <h2>Manage Service</h2>
+        <div class="tile" onclick="location.href='<?php echo site_url('Admin/promocodeview'); ?>'">
+            <h2>Manage Promocodes</h2>
         </div>
-        <div class="tile" onclick="location.href='<?php echo site_url('mechacontrol/manage_delivery'); ?>'">
-            <h2>Ready for Delivery</h2>
-        </div>
+       
     </div>
 
     <div class="footer">
-        © <?php echo date("Y"); ?> Xfinity Automobile Services. All rights reserved.
+        © <?php echo date("Y"); ?> Xfinity Automobile Services(Administartion). All rights reserved.
     </div>
 
 </body>
 </html>
+

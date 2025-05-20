@@ -5,6 +5,7 @@
   <title>User Profile</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <style>
     /* --- Global Reset & Body --- */
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -17,7 +18,7 @@
 
     /* Navbar */
 .xfinity-navbar {
-  background: linear-gradient(90deg, #ff8c42, #ff5722);
+  background: linear-gradient(90deg,rgb(255, 98, 0), #ff5722);
   position: fixed;
   top: 0; left: 0; width: 100%;
   z-index: 999;
@@ -108,6 +109,7 @@
     }
     /* Container for processing animation */
     .processing-container {
+      margin-left:0px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1054,10 +1056,10 @@
     <span class="rocket">🚀</span> Upgrade to <span class="highlight">GOLD</span> &amp; save 
     <span class="highlight">₹500</span> – use code
     <span class="code" style="margin-right:5px;">
-      GOLD50
+      GOLD500
      
     </span>
-    <span onclick="copyToClipboard('GOLD50')" style="cursor: pointer; margin-left: 5px;" title="Copy Code"><i class="fa-solid fa-copy"></i></span>
+    <span onclick="copyToClipboard('GOLD500')" style="cursor: pointer; margin-left: 5px;" title="Copy Code"><i class="fa-solid fa-copy"></i></span>
   </span>
 </div>
 
@@ -1218,20 +1220,9 @@
   </div>
   <div id="paymentOverlay">
     <div class="processing-container">
-      <svg class="spinning-circles" width="150" height="150" viewBox="0 0 100 100">
-        <defs>
-          <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#F37254;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#FF8C00;stop-opacity:1" />
-          </linearGradient>
-        </defs>
-        <!-- Outer circle (75% arc, radius = 45) spins clockwise -->
-        <circle class="outer-circle" cx="50" cy="50" r="45" />
-        <!-- Inner circle (75% arc, radius = 35) spins counter-clockwise -->
-        <circle class="inner-circle" cx="50" cy="50" r="30" />
-      </svg>
+       <lottie-player src="https://lottie.host/507a1221-4e48-4e87-b305-bd5e10361bd1/FokzMiOxqc.json"background="transparent" speed="1.8" loop autoplay style=" display:inline-block;width: 300px; height:300px;"></lottie-player>
       <div class="processing-text animate__animated animate__headShake animate__infinite animate__slow">
-  Connecting To Razorpay...
+  Connecting To Razorpay.....
   
 </div>
 
@@ -1531,9 +1522,28 @@ const modalConfetti = confetti.create(modalCanvas, {
     },
     success: function (res) {
   if (res.status === 'success') {
+         
+  const lottiePlayer = document.querySelector('#paymentOverlay lottie-player');
 
-    $('#paymentOverlay .processing-text').text("Authenticating Transaction...");
-$('#paymentOverlay').css('display', 'flex').show();
+    // Remove the old player
+    const newPlayer = document.createElement('lottie-player');
+    newPlayer.setAttribute('src', 'https://lottie.host/fb191421-3f43-445f-b191-0bbe4bb2e4bc/iQLGxtSM88.json');
+    newPlayer.setAttribute('background', 'transparent');
+    newPlayer.setAttribute('speed', '1');
+    newPlayer.setAttribute('loop', '');
+    newPlayer.setAttribute('autoplay', '');
+    newPlayer.setAttribute('style', 'display:inline-block;width: 350px; height:350px;');
+
+    // Replace the old one
+    lottiePlayer.parentNode.replaceChild(newPlayer, lottiePlayer);
+
+    // Update the processing text
+    const textElement = document.querySelector('#paymentOverlay .processing-text');
+    textElement.textContent = "Authenticating Transaction...";
+    textElement.style.marginTop = '-30px'; // ✅ This line sets the margin
+
+    // Show the overlay
+    $('#paymentOverlay').css('display', 'flex').show();
 setTimeout(function() {
     $('#paymentOverlay').fadeOut('fast');
     openGoldModal();
@@ -1563,7 +1573,7 @@ const title = document.querySelector('.gold-title');
             togglePromoLink.style.color = "green";                  
 togglePromoLink.style.pointerEvents = 'none';    // make it non-clickable
 togglePromoLink.style.opacity = '1';    
-}, 4000);         // optionally hide it completely
+}, 8000);         // optionally hide it completely
 
 // 2) Animate “Become Our Gold Member” and disable the button
 // 2) Animate “Become Our Gold Member” and disable the button

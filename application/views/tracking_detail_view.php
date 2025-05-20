@@ -12,6 +12,7 @@
   />
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <!-- particles.js for background effect -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <!-- jQuery -->
@@ -651,22 +652,11 @@
   </main>
 
   <!-- Payment Processing Overlay with Two Concentric Spinning Circles -->
-  <div id="paymentOverlay">
+   <div id="paymentOverlay">
     <div class="processing-container">
-      <svg class="spinning-circles" width="150" height="150" viewBox="0 0 100 100">
-        <defs>
-          <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#F37254;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#FF8C00;stop-opacity:1" />
-          </linearGradient>
-        </defs>
-        <!-- Outer circle (75% arc, radius = 45) spins clockwise -->
-        <circle class="outer-circle" cx="50" cy="50" r="45" />
-        <!-- Inner circle (75% arc, radius = 35) spins counter-clockwise -->
-        <circle class="inner-circle" cx="50" cy="50" r="30" />
-      </svg>
+       <lottie-player src="https://lottie.host/507a1221-4e48-4e87-b305-bd5e10361bd1/FokzMiOxqc.json"background="transparent" speed="1.8" loop autoplay style=" display:inline-block;width: 300px; height:300px;"></lottie-player>
       <div class="processing-text animate__animated animate__headShake animate__infinite animate__slow">
-  Connecting To Razorpay...
+  Connecting To Razorpay.....
   
 </div>
 
@@ -777,8 +767,27 @@
                     razorpay_signature: response.razorpay_signature
                   }),
                   success: function(verifyResult) {
-                    $('#paymentOverlay .processing-text').text("Authenticating Transaction...");
-$('#paymentOverlay').css('display', 'flex').show(); // Instantly shows it as flex container
+                    const lottiePlayer = document.querySelector('#paymentOverlay lottie-player');
+
+    // Remove the old player
+    const newPlayer = document.createElement('lottie-player');
+    newPlayer.setAttribute('src', 'https://lottie.host/fb191421-3f43-445f-b191-0bbe4bb2e4bc/iQLGxtSM88.json');
+    newPlayer.setAttribute('background', 'transparent');
+    newPlayer.setAttribute('speed', '1');
+    newPlayer.setAttribute('loop', '');
+    newPlayer.setAttribute('autoplay', '');
+    newPlayer.setAttribute('style', 'display:inline-block;width: 350px; height:350px;');
+
+    // Replace the old one
+    lottiePlayer.parentNode.replaceChild(newPlayer, lottiePlayer);
+
+    // Update the processing text
+    const textElement = document.querySelector('#paymentOverlay .processing-text');
+    textElement.textContent = "Authenticating Transaction...";
+    textElement.style.marginTop = '-30px'; // ✅ This line sets the margin
+
+    // Show the overlay
+    $('#paymentOverlay').css('display', 'flex').show();
 
 setTimeout(function() {
   $('#paymentOverlay').fadeOut();

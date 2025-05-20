@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <!-- Google Maps API: Replace YOUR_API_KEY with your actual key -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyNnYX9lxpsHAWG4cC2YBPYA66QoOR2ao"></script>
+   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   
   <style>
     /* Global Reset & Base Styles */
@@ -40,8 +41,8 @@
     .navbar-logo {
       font-size: 28px;
       color: #fff;
-      font-weight: 600;
-      animation: bounce 1.5s ease infinite;
+      font-weight: 1000;
+      animation: none;
     }
     @keyframes bounce {
       0%, 50%, 100% { transform: translateY(0); }
@@ -652,11 +653,180 @@ gap:10px;
       .pickup-location-form .form-row { flex-direction: column; }
     }
   </style>
+  <style>
+  :root {
+    --orange: #ff6a00;
+    --orange-light: #ff8a33;
+    --orange-dark: #cc4e00;
+    --gray-bg: #fafafa;
+    --white: #ffffff;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --radius: 1rem;
+    --font-heading: 'Helvetica Neue', Arial, sans-serif;
+    --font-body: 'Roboto', sans-serif;
+    --transition: 0.3s;
+  }
+
+  /* base modal styles */
+ .modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  
+}
+.modal.show {
+  display: flex;
+}
+
+  .modal-content {
+    background: var(--white);
+    width: 900px;
+   
+    border-radius: var(--radius);
+    box-shadow: 0 8px 24px var(--shadow);
+    overflow: hidden;
+    transform: scale(0.9);
+    opacity: 0;
+    animation: zoomIn var(--transition) ease-out forwards;
+  }
+  @keyframes zoomIn {
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  /* Header with gradient + Lottie */
+  .modal-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, var(--orange-light), var(--orange-dark));
+    color: var(--white);
+    font-family: var(--font-heading);
+  }
+  .modal-header h3 {
+    margin: 0;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    flex: 1;
+  }
+  .modal-header lottie-player {
+    width: clamp(50px, 10vw, 80px);
+    height: clamp(50px, 10vw, 80px);
+    margin-right: 1rem;
+  }
+  .modal-header .close {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    cursor: pointer;
+    transition: transform var(--transition);
+    z-index: 1;
+  }
+  .modal-header .close:hover { transform: rotate(90deg); }
+
+  /* Body & typography */
+  .modal-body {
+    background: var(--gray-bg);
+    padding: 1.5rem;
+    font-family: var(--font-body);
+    color: #333;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+  }
+  .modal-body p { margin-bottom: 1rem; }
+
+  .label {
+    display: inline;
+    margin: 1rem 0 0.5rem;
+    font-weight: bold;
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+  }
+
+  /* Issues list with SVG icons */
+  .issues-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 1rem;
+  }
+  .issues-list li {
+    background: var(--white);
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 8px var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform var(--transition), box-shadow var(--transition);
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+  }
+  .issues-list li:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+  .issues-list li svg {
+    width: 1.2em;
+    height: 1.2em;
+    fill: var(--orange);
+    flex-shrink: 0;
+  }
+
+  /* Footer & buttons */
+  .modal-footer {
+    padding: 1rem 1.5rem;
+    background: var(--white);
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+  .btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius);
+    border: none;
+    font-family: var(--font-heading);
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    cursor: pointer;
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  
+  .btn-primary {
+    background: var(--orange);
+    color: var(--white);
+  }
+  .btn-secondary {
+    background: var(--orange);
+    color: var(--white);
+  }
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow);
+  }
+  
+</style>
+<svg style="display: none;">
+  <symbol id="icon-dent" viewBox="0 0 24 24">
+    <!-- placeholder: replace with your dent icon path -->
+    <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 110 16 8 8 0 010-16z"/>
+  </symbol>
+  <symbol id="icon-windscreen" viewBox="0 0 24 24">
+    <!-- placeholder -->
+    <path d="M3 3h18v4H3V3zm0 6h18v2H3V9z"/>
+  </symbol>
+  <!-- add more symbols: icon-headlight, icon-mirror, icon-door, etc. -->
+</svg>
 </head>
 <body>
   <!-- Header -->
   <nav>
-    <div class="navbar-logo">Xfinity</div>
+   <div class="navbar-logo" style="animation:none;"><i class="fa-solid fa-shield" style="margin-right:5px;"></i>Prime Care</div>
     <div class="nav-links">
       <a href="#vehicle-details">Vehicle Details</a>
       <a href="#issue-details">Issue Details</a>
@@ -674,6 +844,40 @@ gap:10px;
       <a href="<?php echo site_url('login'); ?>" class="button" style="margin-right:30px; color:#fff; font-size:20px; padding:10px 30px;">Login</a>
     <?php endif; ?>
   </nav>
+
+  <!-- PrimeCare Modal -->
+<div id="prime-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <lottie-player
+        src="https://lottie.host/c5097afd-3162-43e6-84db-eefa96c0bddd/hqYYC9rPj7.json"
+        background="transparent" speed="1" loop autoplay>
+      </lottie-player>
+      <h3>PrimeCare Regular Repair</h3>
+      <button class="close" data-target="prime-modal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>
+        <strong>Comprehensive maintenance</strong> & repair for all other concerns—mechanical, electrical, systems & more.
+      </p>
+      <span class="label">Our PrimeCare package includes:</span>
+      <ul class="issues-list">
+        <li><svg><use xlink:href="#icon-dent"/></svg>Engine & Transmission</li>
+        <li><svg><use xlink:href="#icon-dent"/></svg>Brake System & Suspension</li>
+        <li><svg><use xlink:href="#icon-dent"/></svg>Air/ventilation systems</li>
+        <li><svg><use xlink:href="#icon-dent"/></svg>Electrical Diagnostics</li>
+        <li><svg><use xlink:href="#icon-dent"/></svg>Routine Servicing</li>
+      </ul>
+      <p><span class="label">🔧 Turnaround:</span> <strong>4–5 Working Days</strong></p>
+      <p><span class="label">✅ You vehicle would be in the safest hands!</p>
+      <p><em>Final quote after in-depth inspection.</em></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" data-target="prime-modal">Close</button>
+     
+    </div>
+  </div>
+</div>
 
   <div class="sidebarnew" id="sidebar">
   <div class="top-section">
@@ -695,7 +899,7 @@ gap:10px;
   <div class="menu">
     <a href="<?= site_url('home/profile') ?>"><i class="fas fa-user-circle"></i> Profile</a>
     <a href="<?= site_url('advanced') ?>"><i class="fa-solid fa-house-user"></i>Home</a>
-    <a href="<?= site_url('home/support') ?>"><i class="fas fa-headset"></i> Support</a>
+    <a href="<?= site_url('home/support') ?>"><i class="fas fa-ghost"></i> Support</a>
   </div>
 
   <a href="<?php echo site_url('home/logout'); ?>">
@@ -730,7 +934,8 @@ gap:10px;
     <main class="content">
       <!-- Step 1: Vehicle Details -->
       <section id="step-vehicle" class="card step-section">
-        <h3>Vehicle Details</h3>
+        <h3>Vehicle Details <i class="fa-solid fa-circle-info" style="transform:translateY(-2px);color: #ff6a00;;font-size:20px;margin-left:4px; cursor:pointer;"
+     data-open="prime-modal"></i></h3>
         <div class="vehicle-details-container">
           <div class="vehicle-details">
             <input type="text" id="vehicle-brand" placeholder="Vehicle Brand" autocomplete="off">
@@ -857,6 +1062,22 @@ gap:10px;
 
     </main>
   </div>
+     <script>
+    document.querySelectorAll('.close, .btn-secondary').forEach(el => {
+      el.addEventListener('click', e => {
+        const tgt = e.target.dataset.target;
+        if (tgt) document.getElementById(tgt).classList.remove('show');
+      });
+    });
+   document.querySelectorAll('[data-open]').forEach(btn => {
+  btn.addEventListener('click', e => {
+    const modalId = btn.dataset.open;
+    const modal = document.getElementById(modalId);
+    if (modal) modal.classList.add('show');
+  });
+});
+
+  </script>
   <script>
   function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('active');
@@ -1174,6 +1395,8 @@ document.addEventListener('DOMContentLoaded', () => {
       $("#schedule-form").submit(function(e){
         e.preventDefault();
         var pickupDate = $("#pickup-date").val();
+      
+        var delivery = $("#savedAddrText").text();
         var pickupTime = $("#pickup-time").val();
         var pickupAddress = $("#pickup-address").val();
         var pickupCity = $("#pickup-city").val();
@@ -1196,6 +1419,8 @@ document.addEventListener('DOMContentLoaded', () => {
             pickup_zip: pickupZip,
             brand: vehicleBrand,
             model: vehicleModel,
+            delivery_addr: delivery,
+           
             vehicle_reg: vehiclereg,
             vehicle_typ: vehicletyp,
             originalPrediction: vehicleIssue

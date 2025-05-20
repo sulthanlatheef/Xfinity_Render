@@ -12,6 +12,7 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
   />
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <style>
     /* Global Styles */
     body {
@@ -47,7 +48,7 @@
 .navbar-logo {
   font-size: 30px;
   color: white;
-  font-weight: 700;
+  font-weight: 800;
   animation: bounce 1.5s ease infinite;
   
 }
@@ -171,7 +172,7 @@
       padding: 12px 20px;
       border-radius: 50px;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
+      box-shadow: 0 0 15px rgba(255, 98, 0, 0.23);
       cursor: pointer;
       transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, opacity 0.3s ease;
       animation: float 3s infinite ease-in-out;
@@ -189,8 +190,8 @@
     }
     .chat-container:hover {
       transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 0 50px rgba(9, 128, 255, 0.76);
-      background: rgba(211, 203, 203, 0.3);
+      box-shadow: 0 0 50px rgb(255, 95, 9);
+      background: rgba(255, 255, 255, 0.42);
     }
     .chat-caption {
       font-size: 14px;
@@ -198,24 +199,22 @@
       color: rgba(255, 0, 0, 0.99);
       transition: color 0.3s ease;
     }
-    .chat-container:hover .chat-caption {
-      color: #00d4ff;
-    }
+   
     .chat-icon {
       font-size: 24px;
       color: #fff;
-      background: linear-gradient(135deg, #007bff, #00d4ff);
-      padding: 12px;
+      background: linear-gradient(135deg,rgb(255, 115, 0),rgb(255, 123, 0));
+      padding: 10px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+      
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .chat-icon:hover {
       transform: scale(1.2) rotate(15deg);
-      box-shadow: 0 0 30px rgba(0, 123, 255, 0.8);
+     
     }
     @keyframes float {
       0% { transform: translateY(0); }
@@ -277,7 +276,7 @@
   z-index: 2000;
   padding: 25px;
   padding-top:0px;
-  margin-top: 57px;
+  margin-top: 57.15px;
 }
 
 .sidebar.active {
@@ -403,6 +402,7 @@
 
 
 
+
     header h1 {
       font-size: 44px;
       font-weight: 700;
@@ -494,6 +494,7 @@
       color: #555;
       line-height: 1.4;
       margin-bottom: 15px;
+      text-align: justify;
     }
     .feature-card a.cta-button {
       background-color: rgb(255, 17, 0);
@@ -639,6 +640,66 @@ footer .social-icons i:hover {
   display:inline-block;
 }
 
+ 
+#paymentOverlay {
+      display: none; /* Initially hidden */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(7px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Container for processing animation */
+    .processing-container {
+      margin-left:0px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    /* New CSS for two 75% complete concentric circles spinning in opposite directions */
+    .outer-circle {
+      fill: none;
+      stroke: url(#grad);
+      stroke-width: 10;
+      /* For r = 45, circumference ≈ 282.7, so 75% ≈ 212 visible, gap ≈ 70 */
+      stroke-dasharray: 212 70;
+      transform-origin: center;
+      animation: spinClockwise 1.8s linear infinite;
+    }
+    .inner-circle {
+      fill: none;
+      stroke: url(#grad);
+      stroke-width: 8;
+      /* For r = 35, circumference ≈ 219.9, so 75% ≈ 165 visible, gap ≈ 55 */
+      stroke-dasharray: 165 55;
+      transform-origin: center;
+      animation: spinCounterClockwise 1.8s linear infinite;
+    }
+    @keyframes spinClockwise {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(1080deg); }
+    }
+    @keyframes spinCounterClockwise {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-1080deg); }
+    }
+    /* Updated Processing Text */
+    .processing-text {
+      margin-top: 15px;  /* moved down */
+      font-size: 23px;   /* increased size */
+      color: #fff;       /* white color */
+      //animation: popText 2s ease-in-out infinite;
+    }
+    @keyframes popText {
+      100%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+      997% { transform: translateY(10px) scale(1.1); opacity: 0.8; }
+    }
 
 
 
@@ -682,8 +743,7 @@ footer .social-icons i:hover {
   <?php endif; ?>
 </nav>
 
-
-
+ 
 <div class="sidebar" id="sidebar">
   <div class="top-section">
     <h3>Hello, <?php echo html_escape($userName); ?></h3>
@@ -711,7 +771,9 @@ footer .social-icons i:hover {
   </a>
 </div>
 
-  <!-- Hero Section -->
+
+
+  <!-- hero-->
   <header>
     <!-- Background Video -->
     <video autoplay muted loop id="background-video">
@@ -725,7 +787,7 @@ footer .social-icons i:hover {
   </header>
   <!-- AI Features Section -->
   <div class="section" id="ai-features">
-    <h2>Next-Gen Car Services</h2>
+   <h2>Next-Gen Car Services <lottie-player src="https://lottie.host/d8278d1d-2b57-4434-891a-fa71c591d5f7/f5jBlB1e4g.json"background="transparent" speed="1" loop autoplay style="margin-left:-10px; transform:translateY(30px);display:inline-block;width: 100px; height:100px;padding-top:20px;margin-top:-180px;"></lottie-player></h2>
     <p>
       Experience cutting-edge auto care with AI-powered diagnostics, seamless booking,
       real-time tracking, and expert service—making car maintenance faster, smarter, and
@@ -772,30 +834,30 @@ footer .social-icons i:hover {
       <div class="feature-card">
         <img src="<?php echo base_url('assets/images/image-250x150 (5).jpg'); ?>" alt="Generate Estimate" class="card-img" />
         <h3>
-          Generate Estimate</h3>
+          Instant Estimate</h3>
         <p>
           Get an instant repair estimate using our AI-powered models  specially tailored to meet your vehicle's repair needs in an efficient manner
         </p>
        
         <a href="<?php echo site_url('ImageUpload'); ?>" >
         <button class="feature-cardb">
-        <span><i class="fa-solid fa-file-invoice-dollar" style="font-size:23px;color:white; padding-right:5px; padding-top:0px;"></i></span>
+        <span><i class="fa-solid fa-bolt" style="font-size:23px;color:white; padding-right:5px; padding-top:0px;"></i></span>
         
-          Generate Estimate
+          XPRESS FIX
     </button>
     </a>
       </div>
       <!-- Schedule Pickup Card -->
       <div class="feature-card" id="schedule-pickup">
         <img src="<?php echo base_url('assets/images/image-250x150.jpg'); ?>" alt="Schedule Pickup" class="card-img" />
-        <h3>Schedule Pickup</h3>
+        <h3>Regular Service</h3>
         <p>
-          Request a pickup for your vehicle and let us take care of the rest. We'll collect your car, diagnose it, and recommend repairs.
+          Request a pickup for your vehicle and let us take care of the rest. We'll collect your car, diagnose it, and provides the recommend repairs.
         </p>
         <a href="<?php echo site_url('Forcepickupcontrol'); ?>">
           <button class="feature-cardb">
-          <span><i class="fa-solid fa-calendar-days" style="font-size:23px;color:white; padding-right:5px; padding-top:0px;"></i></span>
-        Schedule Pickup
+          <span><i class="fa-solid fa-shield" style="font-size:23px;color:white; padding-right:5px; padding-top:0px;"></i></span>
+        PRIME CARE
         
         
     </button>
@@ -822,7 +884,7 @@ footer .social-icons i:hover {
         <p>
           Need assistance locating a nearby venture? Our AI will guide you to the nearest workshop, service center, or partner.
         </p>
-        <a href="<?php echo site_url('locate_ventures'); ?>">
+        <a href="<?php echo site_url('Ventures'); ?>">
         <button class="feature-cardb">  
         <span><i class="fa-solid fa-location-dot" style="font-size:23px;color:white; padding-right:5px; padding-top:0px;"></i></span>
         Locate Ventures
@@ -832,10 +894,11 @@ footer .social-icons i:hover {
     </div>
     <!-- Chat Button Container (hidden by default) -->
     <div class="chat-container hidden">
-      <span class="chat-caption">Need Help? Let's Chat!</span>
-      <a href="<?php echo site_url('chatbot'); ?>" class="chat-icon">
-        <i class="fas fa-comment-alt"></i>
-      </a>
+      <span class="chat-caption">Need a Hand? XYLE’s Here!</span>
+      <button id="xyle" class="chat-icon" style="border:none;">
+      <i class="fa-solid fa-ghost" style="font-size:40px;color:rgb(255, 255, 255);"></i>
+      
+  </button>
     </div>
   </div>
   <!-- Footer Section -->
@@ -850,6 +913,26 @@ footer .social-icons i:hover {
       </span>
     </p>
   </footer>
+  <div id="paymentOverlay">
+    <div class="processing-container">
+       <lottie-player src="https://lottie.host/7751efa9-d608-41fc-8a14-87c9e5090379/7lSyrOVa8q.json"background="transparent" speed="1" loop autoplay style=" display:inline-block;width: 300px; height:300px;"></lottie-player>
+      <div class="processing-text animate__animated animate__headShake animate__infinite animate__slow" style="margin-top:-40px;">
+  Hold On! Connecting to XYLE...
+  
+</div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    
+  document.getElementById('xyle').addEventListener('click', function () {
+    $('#paymentOverlay').css('display', 'flex').hide().fadeIn();
+    // Optional: give some feedback (e.g. animation/spinner/message) here
+    setTimeout(function () {
+       $('#paymentOverlay').fadeOut('fast');
+      window.location.href = "<?php echo site_url('chatbot'); ?>";
+    }, 4000); // 6000 milliseconds = 6 seconds
+  });
+</script>
   <script>
   const membership = <?php echo json_encode($this->session->userdata('membership')); ?>;
 </script>

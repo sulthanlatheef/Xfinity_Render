@@ -98,10 +98,10 @@ class Mechanic extends CI_Controller {
             header('Content-Type: application/json');
             echo json_encode([
                 'status'   => true,
-                'redirect' => site_url('admin/index')
+                'redirect' => site_url('Admin/index')
             ]);
         } else {
-            redirect('admin/index');
+            redirect('Admin/index');
         }
         return; // stop further processing
     }

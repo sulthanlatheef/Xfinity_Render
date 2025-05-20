@@ -27,19 +27,14 @@
     }
 
     .navbar {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      position:relative;
       background: var(--primary);
-      padding: 1rem 2rem;
+      display:flex;
+      flex-direction:row;
+      align-items:center;
+      justify-content:space-between;
+      padding: 1.1rem 2rem;
       color: white;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      height:80px;
-    }
-
-    .navbar p{
-      margin-top:0px;
     }
 
     .navbar h1 {
@@ -48,25 +43,7 @@
       letter-spacing: 0.5px;
     }
 
-    .navbar button{
-      background-color:red;
-      color:white;
-      padding:12px 30px;
-      border-radius:20px;
-      border:0px solid red;
-      font-weight:bold;
-      font-size:16.5px;
-      transition:all 0.3s ease;
-    }
-
-    .navbar i{
-      padding-right:5px;
-    }
-
-    .navbar button:hover{
-      transform:translate(0px,-5px);
-    }
-
+   
     @keyframes spin{
       0%{ transform:rotate(0deg); }
       100%{ transform:rotate(360deg); }
@@ -152,6 +129,26 @@
       font-weight: bold;
       color: var(--success);
     }
+      .btn {
+
+      margin-top:3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 16px;
+      font-size: 16.5px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.1s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
 
     @media (max-width: 768px) {
       table, thead, tbody, th, td, tr {
@@ -182,19 +179,15 @@
 </head>
 <body>
 
-<div class="navbar">
-  <h1>Xfinity Garage — Manage Service</h1>
-  <p>
-    <span class="spinner"><i class="fa-solid fa-wrench" style="font-size:25px;"></i></span>
-  </p> 
-  <a>
-    <button style="position:absolute; right:180px; bottom:19px;">
-    <i class="fa-solid fa-right-from-bracket"></i>LOG OUT</button>
-  </a>
-  <a>
-    <button><i class="fa-solid fa-house-user"></i>HOME</button>
-  </a>
-</div>
+ <div class="navbar">
+    <h1>Xfinity Garage (Service)</h1>
+      <span style="color: white;font-size:23px;font-weight:bold;">
+      <i class="fa-solid fa-location-dot"></i>  <?= $this->session->userdata('vcity'); ?>
+    </span> 
+     <a href="<?= site_url('mechanic/mdashboard'); ?>" class="btn" style="background-color: white; color: red;">
+      🏠 Home
+    </a>
+  </div>
 
 <div class="container">
   <?php if (!empty($pickups)): ?>

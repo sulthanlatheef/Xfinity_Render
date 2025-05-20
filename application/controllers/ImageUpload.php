@@ -92,6 +92,8 @@ class ImageUpload extends CI_Controller {
         $this->session->set_userdata('pickupzip', $this->input->post('pickup_zip'));
         $this->session->set_userdata('vehiclereg', $this->input->post('vehicle_reg'));
         $this->session->set_userdata('vehicletyp', $this->input->post('vehicle_typ'));
+        $this->session->set_userdata('delivery', $this->input->post('delivery_addr'));
+        log_message('info', 'Delivery address set in session: ' . $this->input->post('delivery_addr'));
         // Return a JSON response indicating success
         echo json_encode(['status' => 'success']);
     }

@@ -26,7 +26,7 @@
       padding: 0;
     }
 
-    .navbar {
+     .navbar {
       background: var(--primary);
       display:flex;
       flex-direction:row;
@@ -42,6 +42,7 @@
       font-size: 1.6rem;
       letter-spacing: 0.5px;
     }
+
 
     .container {
       padding: 2rem;
@@ -96,6 +97,26 @@
       font-weight: 600;
       margin-top: 2rem;
     }
+     .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 16px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.1s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    
+    
+  .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
 
     .action-button {
       background-color: var(--success);
@@ -116,26 +137,6 @@
       color: var(--success);
       font-weight: bold;
       font-size: 1rem;
-    }
-     .btn {
-
-      margin-top:3px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 8px 16px;
-      font-size: 16.5px;
-      font-weight: 600;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform 0.1s ease, box-shadow 0.2s ease;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     @media (max-width: 768px) {
@@ -167,7 +168,7 @@
 </head>
 <body>
 
-  <div class="navbar">
+   <div class="navbar">
     <h1>Xfinity Garage (Pickups)</h1>
      <span style="color: white;font-size:23px;font-weight:bold;">
       <i class="fa-solid fa-location-dot"></i>  <?= $this->session->userdata('vcity'); ?>
@@ -178,7 +179,7 @@
   </div>
 
   <div class="container">
-    
+    <h2>Pickups in “<?= htmlspecialchars($this->session->userdata('vcity')) ?>”</h2>
 
     <?php if (!empty($pickups)): ?>
       <table>
@@ -191,10 +192,11 @@
             <th>Customer Name</th>
             <th>Brand</th>
             <th>Model</th>
-            <th>Pickup Address</th>
+            <th>Delivery Address</th>
+          
             <th>Issue</th>
             <th>Pickup Date</th>
-            <th>Pickup Time</th>
+            <th>Promised Deadline</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -209,20 +211,29 @@
               <td data-label="Customer Name"><?= htmlspecialchars($p['name']) ?></td>
               <td data-label="Brand"><?= htmlspecialchars($p['brand']) ?></td>
               <td data-label="Model"><?= htmlspecialchars($p['model']) ?></td>
-              <td data-label="Pickup Address"><?= htmlspecialchars($p['pickup_address']) ?></td>
+              <td data-label="Delivery Address"><?= htmlspecialchars($p['delivery_address']) ?></td>
               <td data-label="Issue"><?= htmlspecialchars($p['issue']) ?></td>
               <td data-label="Pickup Date"><?= htmlspecialchars($p['pickup_date']) ?></td>
-              <td data-label="Pickup Time"><?= htmlspecialchars($p['pickup_time']) ?></td>
+               <td data-label="When">
+    <?php
+        $pickupDate = new DateTime($p['pickup_date']);
+        if ($p['service_type'] === 'Regular') {
+            $pickupDate->modify('+7 days');
+        } else {
+            $pickupDate->modify('+1 day');
+        }
+        echo htmlspecialchars($pickupDate->format('Y-m-d')) . '<br>' . htmlspecialchars($p['pickup_time']);
+    ?>
+</td>
               <td data-label="Status"><?= htmlspecialchars($p['status']) ?></td>
               <td data-label="Action">
-              <?php if ((strtolower($p['status']) !== 'Pickup Completed') && !$p['status_locked']): ?>
-  <form action="<?= site_url('Mechacontrol/complete_pickup/'.$p['pickup_id']) ?>" method="post" style="margin:0;">
-    <button type="submit" class="action-button">Mark Completed</button>
+              <?php if ((strtolower($p['status']) !== 'delivered') ): ?>
+  <form action="<?= site_url('Mechacontrol/complete_delivery/'.$p['pickup_id']) ?>" method="post" style="margin:0;">
+    <button type="submit" class="action-button">Mark As Delivered </button>
   </form>
-<?php elseif ($p['status_locked']): ?>
-  <span class="status-complete">✅ Completed (Locked)</span>
+
 <?php else: ?>
-  <span class="status-complete">✅ Completed</span>
+  <span class="status-complete">✅ Delivery Completed</span>
 <?php endif; ?>
 
               </td>

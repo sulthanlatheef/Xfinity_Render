@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <!-- Google Maps API: Replace YOUR_API_KEY with your actual key -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyNnYX9lxpsHAWG4cC2YBPYA66QoOR2ao"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   
   <style>
     /* Global Styles */
@@ -31,7 +32,7 @@
     /* Header */
     nav {
       background-color: #ff6600;
-      padding: 7px 0;
+      padding: 4px 0;
       position: sticky;
       top: 0;
       z-index: 10;
@@ -42,9 +43,9 @@
       flex-wrap: nowrap;
     }
     .navbar-logo {
-      font-size: 25px;
+      font-size: 28px;
       color: #fff;
-      font-weight: 600;
+      font-weight: 1000;
       margin-left: 30px;
       animation: bounce 1.5s ease infinite;
       white-space: nowrap;
@@ -232,7 +233,7 @@
   z-index: 2000;
   padding: 25px;
   padding-top:20px;
-  margin-top: 69px;
+  margin-top: 61px;
 }
 
 .sidebarnew.active {
@@ -282,6 +283,13 @@
   color: #666;
   margin-bottom: 10px;
 }
+.avatar-options p.upgrade {
+  color: red;
+  font-size:14.5px;
+  margin-left:12px !important;
+  display:inline-block;
+}
+
 
 .avatar-list {
   display: flex;
@@ -697,16 +705,185 @@
       .pickup-buttons { flex-direction: column; }
     }
   </style>
+  <style>
+  :root {
+    --orange: #ff6a00;
+    --orange-light: #ff8a33;
+    --orange-dark: #cc4e00;
+    --gray-bg: #fafafa;
+    --white: #ffffff;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --radius: 1rem;
+    --font-heading: 'Helvetica Neue', Arial, sans-serif;
+    --font-body: 'Roboto', sans-serif;
+    --transition: 0.3s;
+  }
+
+  /* base modal styles */
+ .modal1 {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  
+}
+.modal1.show {
+  display: flex;
+}
+
+  .modal1-content{
+    background: var(--white);
+    width: 900px;
+   
+    border-radius: var(--radius);
+    box-shadow: 0 8px 24px var(--shadow);
+    overflow: hidden;
+    transform: scale(0.9);
+    opacity: 0;
+    animation: zoomIn var(--transition) ease-out forwards;
+  }
+  @keyframes zoomIn {
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  /* Header with gradient + Lottie */
+  .modal1-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, var(--orange-light), var(--orange-dark));
+    color: var(--white);
+    font-family: var(--font-heading);
+  }
+  .modal1-header h3 {
+    margin: 0;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    flex: 1;
+  }
+  .modal1-header lottie-player {
+    width: clamp(50px, 10vw, 80px);
+    height: clamp(50px, 10vw, 80px);
+    margin-right: 1rem;
+  }
+  .modal1-header .close {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    cursor: pointer;
+    transition: transform var(--transition);
+    z-index: 1;
+  }
+  .modal1-header .close:hover { transform: rotate(90deg); }
+
+  /* Body & typography */
+  .modal1-body {
+    background: var(--gray-bg);
+    padding: 1.5rem;
+    font-family: var(--font-body);
+    color: #333;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+  }
+  .modal1-body p { margin-bottom: 1rem; }
+
+  .label {
+    display: inline;
+    margin: 1rem 0 0.5rem;
+    font-weight: bold;
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+  }
+
+  /* Issues list with SVG icons */
+  .issues-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 1rem;
+  }
+  .issues-list li {
+    background: var(--white);
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 8px var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform var(--transition), box-shadow var(--transition);
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+  }
+  .issues-list li:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+  .issues-list li svg {
+    width: 1.2em;
+    height: 1.2em;
+    fill: var(--orange);
+    flex-shrink: 0;
+  }
+
+  /* Footer & buttons */
+  .modal1-footer {
+    padding: 1rem 1.5rem;
+    background: var(--white);
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+  .btnn {
+    
+   
+   
+    border-radius:30px;
+  
+    font-size: 25px;
+    cursor: pointer;
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .btnn-primary {
+   
+    color: red;
+  }
+  .btnn-secondary {
+     background: var(--orange);
+    color: var(--white);
+  }
+  .btnn-primary:hover,
+  .btnn-secondary:hover {
+    transform: translateY(-2px);
+   
+  }
+</style>
+<svg style="display: none;">
+  <symbol id="icon-dent" viewBox="0 0 24 24">
+    <!-- placeholder: replace with your dent icon path -->
+    <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 110 16 8 8 0 010-16z"/>
+  </symbol>
+  <symbol id="icon-windscreen" viewBox="0 0 24 24">
+    <!-- placeholder -->
+    <path d="M3 3h18v4H3V3zm0 6h18v2H3V9z"/>
+  </symbol>
+  <!-- add more symbols: icon-headlight, icon-mirror, icon-door, etc. -->
+</svg>
 </head>
 <body>
   <!-- Header -->
   <nav>
-    <div class="navbar-logo">Xfinity</div>
+    <div class="navbar-logo" style="animation:none;"><i class="fa-solid fa-bolt" style="margin-right:5px;"></i>Xpress Fix</div>
     <div class="nav-links">
       <a href="#ai-features">AI Features</a>
       <a href="#schedule-pickup">Schedule Pickup</a>
       <a href="#ai-diagnosis">AI Diagnosis</a>
       <a href="#track-status">Track Status</a>
+       
     </div>
     <?php if ($this->session->userdata('name')): ?>
      
@@ -720,6 +897,46 @@
       <a href="<?php echo site_url('login'); ?>" class="button" style="margin-right:30px; color:#fff; font-size:20px; padding:10px 30px;">Login</a>
     <?php endif; ?>
   </nav>
+
+  <!-- Modals -->
+  <!-- Xpress Fix Modal -->
+<div id="express-modal" class="modal1">
+  <div class="modal1-content">
+    <div class="modal1-header">
+      <!-- Lottie animation could be a spinning wrench, car, etc. -->
+      <lottie-player
+        src="https://lottie.host/cc511c6e-fdc7-4363-928c-fc000569571f/K7WvuW62T9.json"
+        background="transparent" speed="1" loop autoplay >
+      </lottie-player>
+      <h3>Xpress Fix</h3>
+      <button class="close" data-target="express-modal">&times;</button>
+    </div>
+    <div class="modal1-body">
+      <p>
+        <strong>Fast-track repairs</strong> for minor dents & damage. Our AI auto-detects the issue & delivers an instant estimate!
+      </p>
+      <span class="label">You’re covered for:</span>
+      <ul class="issues-list">
+        <li><svg><use xlink:href="#icon-dent"/></svg>Bodypanel Dent</li>
+        <li><svg><use xlink:href="#icon-dent"/></svg>Front/Rear Windscreen</li>
+        <li><svg><use xlink:href="#icon-dent"/></svg>Head light Damage</li>
+        <li><svg><use xlink:href="#icon-dent"/></svg>Side Mirror Damage</li>
+        <li><svg><use xlink:href="#icon-dent"/></svg>Door pannel damage </li>
+        <li><svg><use xlink:href="#icon-dent"/></svg>Bumpers & Pillars</li>
+        <li><svg><use xlink:href="#icon-dent"/></svg>Quarter Panel & Roof</li>
+        <li><svg><use xlink:href="#icon-dent"/></svg>Tail light damage </li>
+         <li><svg><use xlink:href="#icon-dent"/></svg>Bonnet & Boot </li>
+         <li><svg><use xlink:href="#icon-dent"/></svg>Fender Damage </li>
+      </ul>
+      <p><span class="label">⏱️ Turnaround:</span> <strong>Within 24 Hours</strong></p>
+      <p><em>Zero downtime—get back on the road fast.</em></p>
+    </div>
+    <div class="modal1-footer">
+      <button class="btn btn-secondary" data-target="express-modal">Close</button>
+      
+    </div>
+  </div>
+</div>
 
   <div class="sidebarnew" id="sidebar">
   <div class="top-section">
@@ -784,7 +1001,8 @@
     <main class="content">
       <!-- Step 1: Upload Image -->
       <section id="step-upload" class="card step-section">
-        <h3>Step 1: Upload Fault Image</h3>
+        <h3>Step 1: Upload Fault Image <i class="fa-solid fa-circle-info" style="transform:translateY(2px);color: #ff6a00;;font-size:20px;margin-left:2px; cursor:pointer;"
+     data-open="express-modal"></i></h3>
         <form id="upload-form" enctype="multipart/form-data">
           <div class="upload-box" id="upload-box">
             <i class="fas fa-upload"></i>
@@ -793,8 +1011,11 @@
           </div>
           <!-- File status element (initially displays "No file uploaded") -->
           <div class="file-status" id="file-status">No file uploaded</div>
-          <button type="submit" class="btn"><i class="fas fa-cogs"></i> Analyze Image</button>
-          <div id="error-message" style="color:#e74c3c;margin-top:15px;display:none;"></div>
+          <button type="submit" class="btn"><i class="fas fa-cogs"></i> Analyze Image </button>
+           
+    
+  
+         <div id="error-message" style="color:#e74c3c;margin-top:15px;display:none;"></div>
         </form>
       </section>
 
@@ -986,6 +1207,22 @@
   </div>
 
   <!-- JavaScript -->
+    <script>
+    document.querySelectorAll('.close, .btn-secondary').forEach(el => {
+      el.addEventListener('click', e => {
+        const tgt = e.target.dataset.target;
+        if (tgt) document.getElementById(tgt).classList.remove('show');
+      });
+    });
+   document.querySelectorAll('[data-open]').forEach(btn => {
+  btn.addEventListener('click', e => {
+    const modalId = btn.dataset.open;
+    const modal = document.getElementById(modalId);
+    if (modal) modal.classList.add('show');
+  });
+});
+
+  </script>
   <script>
   function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('active');
@@ -1009,6 +1246,12 @@
   }
 
   function selectAvatar(src) {
+    if (membership.toLowerCase() !== 'gold membership') {
+    const promptEl = document.querySelector('.avatar-options p');
+    promptEl.textContent = 'Please upgrade to GOLD for Avatars';
+    promptEl.classList.add('upgrade');
+    return;
+  }
     document.querySelector('.profile-pic').src = src;
     fetch('<?= site_url("home/update_avatar") ?>', {
       method: 'POST',
@@ -1499,6 +1742,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var pickupCity = $("#pickup-city").val();
         var pickupState = $("#pickup-state").val();
         var pickupZip = $("#pickup-zip").val();
+        var delivery = $("#savedAddrText").text();
         
 
         // Extract diagnosed issue text from the first prediction card diagnosed box value.
@@ -1512,6 +1756,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pickup_time: pickupTime,
             pickup_address: pickupAddress,
             pickup_city: pickupCity,
+            delivery_addr: delivery,
             pickup_state: pickupState,
             pickup_zip: pickupZip,
             brand: $("#vehicle-brand").val(),
