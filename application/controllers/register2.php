@@ -1,106 +1,152 @@
-
-
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once APPPATH . '../vendor/autoload.php';
+// 1) Make sure Composer’s autoloader is loaded so Guzzle, Google_Client, etc. can be found
+require_once FCPATH . 'vendor/autoload.php';
+
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\CurlHandler;
+use Google_Client;
+use Google_Service_Oauth2;
 
-class Register extends CI_Controller {
-    public function __construct() {
+class Register2 extends CI_Controller
+{
+    public function __construct()
+    {
         parent::__construct();
-        $this->load->model('User_model');
+         $this->load->model('User_model');
         $this->load->helper(['url','form']);
         $this->load->library(['form_validation','session']);
     }
 
-    public function index() {
-        $this->load->view('register');
+    /**
+     * STEP 1: Build the Google_Client, ask for consent, then redirect to Google.
+     * This method does NOT try to handle any incoming "code" parameter.
+     */
+    public function googlecallback()
+    {
+        // Initialize Google Client
+        $client = new Google_Client();
+        $client->setPrompt('consent');
+        $client->setClientId('189704440706-qvigrqndj8sf9j934cfch69hqpd3ukkq.apps.googleusercontent.com');
+        $client->setClientSecret('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');
+        // <-- NOTE: This must match exactly your "Authorized redirect URI" in Google Console:
+        $client->setRedirectUri('http://localhost/XFINITY/index.php/register2/googlesignup');
+        $client->addScope("email");
+        $client->addScope("profile");
+
+        // ====== Disable SSL verification (DEV ONLY) ======
+        $curlHandler = new CurlHandler();
+        $handlerStack = HandlerStack::create($curlHandler);
+        $guzzleClient = new Client([
+            'handler' => $handlerStack,
+            'verify'  => false, // remove in production
+        ]);
+        $client->setHttpClient($guzzleClient);
+        // ================================================
+
+        // Create the auth URL and redirect
+        $authUrl = $client->createAuthUrl();
+        redirect($authUrl);
     }
-
-  
-
-    public function otp()
-{
-    $input = json_decode(file_get_contents('php://input'), true);
-    $email = $input['email'] ?? '';
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo json_encode(['status' => 'error', 'message' => 'Invalid email']);
-        return;
-    }
-
-    // Generate 6-digit OTP
-    $otp = rand(100000, 999999);
-
-    // Store OTP and email in session
-   $this->session->set_userdata('otp', $otp);
-$this->session->set_userdata('otp_email', $email);
-$this->session->set_userdata('otp_time', time()); // Store current timestamp
-
-
-    // Log the OTP generation event (do NOT log the actual OTP in production)
-    log_message('info', 'OTP generated for email: ' . $email . ' | OTP: ' . $otp);
-
-      $pythonExecutable = 'C:\\Users\\shanu\\AppData\\Local\\Programs\\Python\\Python38\\python.exe';
-            $pythonScriptPath = 'C:\\wamp64\\www\\XFINITY\\assets\\python\\otp.py';
-
-            // Pass parameters to the Python script
-            $cmd = $pythonExecutable . " " . $pythonScriptPath . " " . 
-                   escapeshellarg($email) . " " . 
-                  
-                   escapeshellarg($otp) . " 2>&1";
-
-           log_message('info', "Executing command: {$cmd}");
-            
-            // Execute the command and capture output
-            $output = shell_exec($cmd);
-           log_message('info', "Python script output: " . trim($output));
-
-            // Optionally, write the output to a file for later inspection
-            file_put_contents(APPPATH . 'logs/python_debug.txt', date("Y-m-d H:i:s") . " - " . trim($output) . "\n", FILE_APPEND);
-
-    // Return success response
-    echo json_encode(['status' => 'success', 'otp' => $otp]);
-}
-
-
-public function verify_otp()
-{
-    $input = json_decode(file_get_contents('php://input'), true);
-    $submittedOtp = $input['otp'] ?? '';
-
-    $storedOtp = $this->session->userdata('otp');
-    $otpTime   = $this->session->userdata('otp_time');
-
-    if (!$storedOtp || !$otpTime) {
-        echo json_encode(['status' => 'cleared', 'message' => 'Your session has expired. Please request a new OTP.']);
-        return;
-    }
-
-    // Check if OTP expired (5 minutes = 300 seconds)
-    if (time() - $otpTime > 300) {
-        $this->session->unset_userdata(['otp', 'otp_email', 'otp_time']);
-        echo json_encode(['status' => 'expired', 'message' => 'Your OTP has expired. Please request a new one.']);
-        return;
-    }
-
-    else if ($submittedOtp == $storedOtp) {
-        $this->session->unset_userdata(['otp', 'otp_email', 'otp_time']);
-        echo json_encode(['status' => 'success', 'message' => 'OTP verified']);
-    } else {
-        echo json_encode(['status' => 'invalid', 'message' => 'Incorrect OTP. Please try again.']);
-    }
-}
-
 
     /**
-     * Called via AJAX from step 2 to validate name, username, contact & password.
+     * STEP 2: Google redirects back here with “?code=…” (or ?error=…).
+     * We exchange the code, fetch profile info, and load the “collect more data” view.
      */
-   public function validate_details() {
+    public function googlesignup()
+{
+    $client = new Google_Client();
+    $client->setPrompt('consent');
+    $client->setClientId('189704440706-qvigrqndj8sf9j934cfch69hqpd3ukkq.apps.googleusercontent.com');
+    $client->setClientSecret('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');
+    $client->setRedirectUri('http://localhost/XFINITY/index.php/register2/googlesignup');
+    $client->addScope("email");
+    $client->addScope("profile");
+
+    $curlHandler = new CurlHandler();
+    $handlerStack = HandlerStack::create($curlHandler);
+    $guzzleClient = new Client([
+        'handler' => $handlerStack,
+        'verify'  => false,
+    ]);
+    $client->setHttpClient($guzzleClient);
+
+    if ($this->input->get('error')) {
+        echo "Error during Google authentication: " . htmlspecialchars($this->input->get('error'));
+        return;
+    }
+
+    if ($this->input->get('code')) {
+        $token = $client->fetchAccessTokenWithAuthCode($this->input->get('code'));
+
+        if (isset($token['error'])) {
+            echo "Error while authenticating with Google: " . htmlspecialchars($token['error']);
+            return;
+        }
+
+        $client->setAccessToken($token['access_token']);
+
+        $oauth    = new Google_Service_Oauth2($client);
+        $userInfo = $oauth->userinfo->get();
+
+        $email = $userInfo->email;
+
+        //✅ Check if email already exists
+        if (!$this->_check_email($email)) {
+        //Email already exists, show error
+         redirect('register2/emailerror');
+           
+            return;
+        }
+
+        // ✅ Store info in session and proceed
+        $this->session->set_userdata('google_user', [
+            'google_id' => $userInfo->id,
+            'name'      => $userInfo->name,
+            'email'     => $email,
+            'status'    => '1',
+            'picture'   => $userInfo->picture
+        ]);
+
+        redirect('register2/showGoogleForm');
+    } else {
+        redirect('register2/googlesignup');
+    }
+}
+public function emailerror(){
+     $this->load->view('emailerror');
+
+}
+
+public function _check_email($email)
+{
+    if ($this->User_model->check_email_exists($email)) {
+        // Set flash data or log if needed
+        return FALSE; // ❌ Email already exists
+    }
+    return TRUE; // ✅ Email is unique
+}
+
+
+
+    public function showGoogleForm()
+{
+   $data = $this->session->userdata('google_user');
+if ($data && isset($data['status']) && $data['status'] == 1) {
+  
+    $data['status'] = '2';
+$this->session->set_userdata('google_user', $data);
+
+   $this->load->view('goolgesignup', ['data' => $data]);
+} else {
+     $this->load->view('refresh_error');// fallback if no session or status not 1
+}
+
+}
+
+ public function validate_details() {
     $input = json_decode(file_get_contents('php://input'), true);
     $_POST = $input;
 
@@ -177,50 +223,7 @@ public function _check_username($username) {
 
     return TRUE;
 }
-
-
-public function _check_email($email) {
-    if ($this->User_model->check_email_exists($email)) {
-        $this->form_validation->set_message('_check_email', 'This email is already registered with us, please login');
-        return FALSE;
-    }
-    return TRUE;
-}
-
- public function validate_email() {
-    $input = json_decode(file_get_contents('php://input'), true);
-    $_POST = $input;
-
-    $this->form_validation->set_rules('email',    'Email',           'required|valid_email|callback__check_email');
-   
-
-    if ($this->form_validation->run() === FALSE) {
-        $errors = [];
-        foreach (['email'] as $f) {
-            $msg = form_error($f);
-            if ($msg) {
-                $errors[$f] = strip_tags($msg);
-            }
-        }
-        header('Content-Type: application/json');
-        echo json_encode(['status'=>'error','errors'=>$errors]);
-    } else {
-        header('Content-Type: application/json');
-        echo json_encode(['status'=>'success']);
-    }
-}
-
-
-public function testGoogleClient()
-{
-    $client = new Google_Client();
-    $client->setApplicationName("Test App");
-    echo "Google Client initialized!";
-}
-    /**
-     * Final submission (after OTP & confirmation)
-     */
-   public function submit()
+ public function submit()
 {
     // 1) Server-side validation
     $this->form_validation->set_rules('email',    'Email',          'required|valid_email');
@@ -306,5 +309,4 @@ public function testGoogleClient()
                 ->set_content_type('application/json')
                 ->set_output(json_encode($resp));
 }
-
 }

@@ -396,6 +396,8 @@
     .prediction-list {
       list-style: none;
       padding-left: 0;
+      text-align:justify;
+      
     }
     .prediction-card {
       background: linear-gradient(135deg, #ffffff, #f7f7f7);
@@ -1602,7 +1604,7 @@ document.addEventListener('DOMContentLoaded', () => {
               $("#prediction-list").empty();
               if (response.predictions && response.predictions.length > 0) {
                 if(response.predictions.length > 1) {
-                  $("#prediction-list").append("<li style='color:red;font-weight:bold;'>Multiple issues. Not supported</li>");
+                  $("#prediction-list").append("<li style='color:red;font-weight:bold;'>Our system has detected mutiple issues from the image you have uploaded,at this moment Xpress Fix is only capable to handle single issue/damage associated with your vehicle.So we request you to kindly visit our Prime Care portal and create a service request for the same,explaining your vehicle's issue. </li>");
                   $("#to-vehicle-btn").hide();
                   if($("#force-pickup-btn").length === 0) {
                     var forcePickupBtn = $("<button id='force-pickup-btn' class='btn'>Force Pickup</button>");
