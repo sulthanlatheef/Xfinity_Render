@@ -173,7 +173,7 @@
       border-radius: 50px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       box-shadow: 0 0 15px rgba(255, 98, 0, 0.23);
-      cursor: pointer;
+      
       transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, opacity 0.3s ease;
       animation: float 3s infinite ease-in-out;
       /* Start hidden by default */
@@ -896,14 +896,14 @@ footer .social-icons i:hover {
     <div class="chat-container hidden">
       <span class="chat-caption">Need a Hand? XYLE’s Here!</span>
       <button id="xyle" class="chat-icon" style="border:none;">
-      <i class="fa-solid fa-ghost" style="font-size:40px;color:rgb(255, 255, 255);"></i>
+      <i class="fa-solid fa-ghost" style="cursor:pointer;font-size:40px;color:rgb(255, 255, 255);"></i>
       
   </button>
     </div>
   </div>
   <!-- Footer Section -->
   <footer>
-    <p>&copy; 2024 AI Powered Automobile Workshop. All rights reserved.</p>
+    <p>&copy; 2025 XFINITY.IN. All rights reserved.</p>
     <p>
       Follow us on:
       <span class="social-icons">
@@ -929,7 +929,7 @@ footer .social-icons i:hover {
     // Optional: give some feedback (e.g. animation/spinner/message) here
     setTimeout(function () {
        $('#paymentOverlay').fadeOut('fast');
-      window.location.href = "<?php echo site_url('chatbot'); ?>";
+      window.location.href = "<?php echo site_url('Chat'); ?>";
     }, 4000); // 6000 milliseconds = 6 seconds
   });
 </script>

@@ -107,19 +107,6 @@
       align-items: center;
       justify-content: center;
     }
-     #goldOverlay {
-      display: none; /* Initially hidden */
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(7px);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-    }
     /* Container for processing animation */
     .processing-container {
       margin-left:0px;
@@ -563,7 +550,8 @@
       font-weight: 700; color: #333;
     }
     .membership-badge {
-      display: inline-block; padding: 7px 16px;
+     
+      display: inline-block; padding: 6px 16px;
       font-weight: 600; font-size: 0.95rem;
       border-radius: 20px; margin-bottom: 18px;
       color: #fff;
@@ -571,7 +559,8 @@
       text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
     }
     .membership-card.gold .membership-badge {
-      background: linear-gradient(to right, #ffd700, #ffb800);position:relative;
+      box-sizing:border-box;
+      background: linear-gradient(to right, #ffd700, #ffb800);
     }
     .membership-card.silver .membership-badge {
       background: linear-gradient(to right, #c0c0c0, #a9a9a9);
@@ -745,6 +734,7 @@
       padding: 10px 40px 10px 15px;
       font-size: 16px; width: 100%; cursor: pointer;
       transition: border-color 0.3s;
+      
     }
     .select-wrapper::after {
       content: '▼'; position: absolute;
@@ -935,32 +925,34 @@
       <div class="membership-card <?= strtolower($user['membership_type']) === 'gold membership' ? 'gold' : 'silver' ?>">
 
         <h3 style="margin-top:-10px;">Know Your Plan</h3>
-   
-        <span class="membership-badge" style="font-weight:bold;margin-top:-3px;margin-left:5px;">
+        <div style="display:flex;gap:0px;">
+        <div class="membership-badge" style="font-weight:bold;margin-top:-3px;margin-left:5px;padding:9px 16px;height:40px; ">
           <?= html_escape(strtolower($user['membership_type']) === 'gold membership'
              ? '🥇 Gold Member'
-             : '🥈 Silver Member') ?>
-        </span>
-           <?php if (strtolower($user['membership_type']) === 'gold membership'): ?>
+             : '🥈 Silver Member ')
+              ?>
+             
+  </div>
+
+      <div  <?php if (strtolower($user['membership_type']) === 'regular membership'): ?>>
+
+
+      
+
+    
+       
         <lottie-player
-            src="https://lottie.host/d199c7e1-8720-41af-93e8-f131817a215b/gLdNqhXISz.json"
-            background="transparent"
-            speed="1"
-            style="position:absolute; top:169px;left:810px; width: 90px; height: 90px; transform:translateY(-28px);margin-bottom:-25px;margin-left:-10px;"
-            loop
-            autoplay>
-        </lottie-player>
-      <?php else: ?>
-       <lottie-player
             src="https://lottie.host/10b43110-f5e8-4c3e-b3fe-159e9ed4b08f/mncWu8dM8x.json"
             background="transparent"
             speed="1"
-            style="position:absolute; top:169px;left:815px; width: 90px; height: 90px; transform:translateY(-28px);margin-bottom:-25px;margin-left:-10px;"
+            style="width: 90px; height: 90px; transform:translateY(-28px);margin-bottom:-25px;margin-left:-10px;"
             loop
             autoplay>
         </lottie-player>
-
-          <?php endif; ?>
+      </div>
+      </div>
+<?php endif; ?>
+        
 
         <?php if (strtolower($user['membership_type']) === 'gold membership'): ?>
          
@@ -1259,18 +1251,7 @@
   Connecting To Razorpay.....
   
 </div>
-      </div>
-      </div>
 
-        <div id="goldOverlay">
-    <div class="processing-container">
-       <lottie-player src="https://lottie.host/6d35bf79-dd97-4e1f-a266-dc1a263dbfcd/4BElhbmA5r.json"background="transparent" speed="1" loop autoplay style=" display:inline-block;width: 200px; height:200px;"></lottie-player>
-      <div class="processing-text animate__animated animate__headShake animate__infinite animate__slow">
- 
-  
-</div>
-      </div>
-      </div>
 
 <script>
   function copyToClipboard(text) {
@@ -1730,11 +1711,7 @@ prefill: {
 
     // Open the Gold-Upgrade Modal
 function openGoldModal() {
-  $('#goldOverlay').css('display', 'flex').hide().fadeIn();
-  setTimeout(() => {
-     $('#goldOverlay').fadeOut('fast');
   document.getElementById('goldModal').style.display = 'flex';
-   }, 2500);
 }
 
 // Close the Gold-Upgrade Modal

@@ -208,11 +208,11 @@
         <div class="input-box">
           <select name="city" required>
             <option value="" disabled selected>Select City</option>
-            <option value="mumbai">Mumbai</option>
-            <option value="delhi">Delhi</option>
-            <option value="bangalore">Bangalore</option>
-            <option value="hyderabad">Hyderabad</option>
-            <option value="chennai">Chennai</option>
+            <option value="Kayamkulam">Kayamkulam</option>
+            <option value="Haripad">Haripad</option>
+            <option value="Kollam">Kollam</option>
+            <option value="Karunagapally">Karunagapally</option>
+            <option value="Chavara">Chavara</option>
           </select>
           <i class='bx bxs-map'></i>
         </div>
@@ -247,11 +247,11 @@
         <div class="input-box">
           <select name="city" required>
             <option value="" disabled selected>Select City</option>
-            <option value="mumbai">Mumbai</option>
-            <option value="delhi">Delhi</option>
-            <option value="bangalore">Bangalore</option>
-            <option value="hyderabad">Hyderabad</option>
-            <option value="chennai">Chennai</option>
+            <option value="Kayamkulam">Kayamkulam</option>
+            <option value="Haripad">Haripad</option>
+            <option value="Karunagapally">Karunagapally</option>
+            <option value="Kollam">Kollam</option>
+            <option value="chavara">Chavara</option>
           </select>
           <i class='bx bxs-map'></i>
         </div>

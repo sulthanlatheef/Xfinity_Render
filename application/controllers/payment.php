@@ -164,9 +164,9 @@ class Payment extends CI_Controller {
                 $this->load->database();
             
                 // Update membership_type in 'users' table
-                //$this->db->where('id', $user_id);
-                //$this->db->update('users', ['membership_type' => 'Gold Membership']);
-                //$this->session->set_userdata('membership', 'Gold Membership');
+                $this->db->where('id', $user_id);
+                $this->db->update('users', ['membership_type' => 'Gold Membership']);
+                $this->session->set_userdata('membership', 'Gold Membership');
 
                   // Mark the promocode as expired
                   $this->db->where('promocode', $promocode);

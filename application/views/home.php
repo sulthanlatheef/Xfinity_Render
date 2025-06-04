@@ -474,7 +474,7 @@ nav ul li a:hover::before {
 .login-container button {
     padding: 15px 30px;
     
-    width: 430px;
+ 
     background-color:rgb(255, 119, 0);
     color: white;
     border: none;
@@ -483,11 +483,11 @@ nav ul li a:hover::before {
     border-radius: 10px;
     cursor: pointer;
     
-    transition: background-color 0.3s,all .5s ease;;
+    transition:  0.3s,all .5s ease;;
 }
 
 .login-container button:hover {
-    background-color:rgb(255, 102, 0);
+
     transform:scale(1.02);
 }
 
@@ -1243,6 +1243,35 @@ input:focus{
   font-weight: 600;
   font-size: 1.1rem;
 }
+
+.separator {
+  position: relative;
+  text-align: center;
+  margin: 20px 0;          /* vertical spacing above/below */
+  font-size: 14px;         /* or whatever font size you prefer */
+  color: #000;             /* text color for “or” */
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  position: absolute;
+  top: 50%;                /* vertically center the line */
+  width: 40%;              /* length of each line (40% of container) */
+  height: 1px;             /* thickness of the line */
+  background-color: rgba(0, 0, 0, 0.2); /* light black/gray line */
+}
+
+.separator::before {
+  left: 0px;                 /* line starts at the left edge */
+  transform: translateY(-50%);
+}
+
+.separator::after {
+  right: 0;                /* line ends at the right edge */
+  transform: translateY(-50%);
+}
+
 </style>
 
 
@@ -1744,7 +1773,7 @@ input:focus{
            </video>
        </div>
 
-       <div class="login-container">
+       <div style="margin-top:65px;"class="login-container">
            <h2 style="font-size:36px;margin-left:20px;"> <lottie-player
         src="https://lottie.host/97e1822f-434c-471b-8696-6c038327a11c/GhOZRTXDjE.json"
         background="transparent" speed="1" loop autoplay style="width:130px;height:130px;margin-bottom:5px; margin-left:126px;margin-top:-90px;transform:translateY(20px);">
@@ -1760,10 +1789,17 @@ input:focus{
         <i class="fa-solid fa-eye"></i>
       </span>
     </div>
-               <button type="submit">Sign In</button>
+
+    <div style="display:flex;flex-direction:column;gap:0px;  width: 430px;">
+               <button style="margin-top:10px;"type="submit"><i style="margin-right:8px;"class="fa-solid fa-right-to-bracket"></i>Sign In</button>
+             <p class="separator">or</p>
+
+
+                <button style="position:relative;margin-top:0px;" type="button" onclick="window.location.href='<?= site_url('Google_signin/googlecallback') ?>'"> <img style= "padding:2px 2px;background:white;border-radius:7px;width:26px; height:26px;position:absolute;top:12px;left:77px;" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>Log in with Google</button>
+</div>
            </form>
 
-           <p>Don't have an account? <a href="<?php echo site_url('register'); ?>">Create an Account</a></p>
+           <p style="margin-bottom:-3.5px;">Don't have an account? <a href="<?php echo site_url('register'); ?>">Create an Account</a></p>
 
            
            

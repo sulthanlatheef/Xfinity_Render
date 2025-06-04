@@ -11,7 +11,7 @@ model_path = r'E:\cardata\yolov5\runs\train\exp22\weights\best.pt'
 
 # Load the YOLOv5 model with custom weights
 model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path)
-model.conf = 0.25
+model.conf = 0.30
 
 # Define a custom output mapping for all 17 classes (indices 0 to 16)
 custom_labels = {
@@ -66,7 +66,7 @@ def predict():
         return jsonify({"error": "Failed to extract predictions", "exception": str(e)}), 500
 
     if not predictions:
-        predictions = [{"custom": "Please upload much closer version of the issue,If problem persists kindly consider the Regular Service option", "original": "", "confidence": 0.0}]
+        predictions = [{"custom": "Please upload slightly closer version of the issue,If problem persists kindly consider the Regular Service (prime care) option", "original": "Unable to detect an issue", "confidence": 0.0}]
 
     return jsonify({"predictions": predictions})
 
