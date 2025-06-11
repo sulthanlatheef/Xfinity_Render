@@ -987,7 +987,7 @@
       </div>
       <div class="step" data-step="invoice">
         <i class="fas fa-file-invoice-dollar"></i>
-        <span>Invoice Preview</span>
+        <span>Estimate Preview</span>
       </div>
       <div class="step" data-step="pickup-location">
         <i class="fas fa-map-marker-alt"></i>
@@ -1042,18 +1042,19 @@
 
       <!-- Step 4: Invoice Preview -->
       <section id="step-invoice" class="card step-section" style="display:none;">
-        <h3>Step 4: Invoice Preview</h3>
+        <h3>Step 4: Estimate Preview</h3>
         <div class="preview-info">
         This detailed repair estimate is generated based on our advanced AI damage detection system. Prices are calculated considering the severity of the damage and your  selected vehicle model. For any inquiries or assistance, feel free to contact our support team.  We ensure transparent and accurate pricing for your vehicle's best care.
         </div>
-        <div id="invoice-modal" title="XFINITY INVOICE">
+        <div id="invoice-modal" title="XFINITY ">
           <div class="modal-content">
             <div class="invoice-header">
               <div class="invoice-logo">
-                <img src="/XFINITY/assets/images/creative ai (2).png" alt="XFINITY Logo">
+                <img src="<?php echo base_url('assets/images/creative ai (2).png'); ?>" alt="XFINITY Logo">
+
               </div>
               <div class="invoice-title">
-                <h2>XFINITY INVOICE</h2>
+                <h2 style="text-align:center;">XFINITY </h2>
                 <p>123 Demo Street, City, State - PIN</p>
               </div>
             </div>
@@ -1146,10 +1147,14 @@
   <h3>Schedule Pickup</h3>
   <form id="schedule-form">
     <div class="pickup-form">
-      <label for="pickup-date">Pickup Date:</label>
-      <input type="date" id="pickup-date" name="pickup_date" required>
-      <label for="pickup-time">Pickup Time:</label>
-      <input type="time" id="pickup-time" name="pickup_time" required>
+   <label for="pickup-date">Pickup Date:</label>
+<input type="date" id="pickup-date" name="pickup_date" required>
+
+<label for="pickup-time">Pickup Time (hourly):</label>
+<select id="pickup-time" name="pickup_time" required disabled>
+  <!-- Options will be populated dynamically -->
+</select>
+<span id="time-message" style="color: red; margin-left: 8px;"></span>
     </div>
 
     <!-- Saved Address with Edit -->
@@ -1186,7 +1191,7 @@
       <div style="margin-top:12px; text-align:right;">
         <button type="button" id="cancelSavedAddr" class="btn" 
                 style="background:#ccc; color:#333; margin-right:8px;">Cancel</button>
-        <button type="button" id="saveSavedAddr" class="btn">Save </button>
+        <button type="button" id="saveSavedAddr" class="btn">Save Address </button>
        
       </div>
     </div>
@@ -1209,6 +1214,108 @@
   </div>
 
   <!-- JavaScript -->
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const dateInput = document.getElementById("pickup-date");
+  const timeSelect = document.getElementById("pickup-time");
+  const timeMessage = document.getElementById("time-message");
+
+  // Define working hours:
+  const WORK_START = 8;   // 08:00
+  const WORK_END = 18;    // 20:00
+
+  // Disable past dates: set min = today
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  const minDateStr = `${yyyy}-${mm}-${dd}`;
+  dateInput.setAttribute("min", minDateStr);
+
+  // Helper to pad numbers to two digits
+  function pad(num) {
+    return String(num).padStart(2, '0');
+  }
+
+  // Populate <select> with hours from startHour to WORK_END
+  function populateHourOptions(startHour) {
+    timeSelect.innerHTML = "";
+    for (let h = startHour; h <= WORK_END; h++) {
+      const hh = pad(h);
+      const option = document.createElement("option");
+      option.value = `${hh}:00`;
+      option.textContent = `${hh}:00`;
+      timeSelect.appendChild(option);
+    }
+  }
+
+  function updateTimeOptions() {
+    timeMessage.textContent = ""; // clear previous message
+
+    const dateVal = dateInput.value;
+    if (!dateVal) {
+      // No date chosen: disable select and clear options
+      timeSelect.disabled = true;
+      timeSelect.innerHTML = "";
+      return;
+    }
+
+    // Parse selected date
+    const [year, month, day] = dateVal.split('-').map(Number);
+    const selectedDate = new Date(year, month - 1, day);
+    const now = new Date();
+
+    const isToday =
+      selectedDate.getFullYear() === now.getFullYear() &&
+      selectedDate.getMonth() === now.getMonth() &&
+      selectedDate.getDate() === now.getDate();
+
+    if (isToday) {
+      // Compute next hour relative to now
+      let nextHour = now.getHours() + 1;
+      // If you want to allow current hour when exactly on the hour,
+      // you could adjust: 
+      // let nextHour = (now.getMinutes() === 0 ? now.getHours() : now.getHours() + 1);
+
+      // Ensure start at least WORK_START
+      let startHour = Math.max(nextHour, WORK_START);
+
+      if (startHour > WORK_END) {
+        // No working-hour slots remain today
+        timeSelect.disabled = true;
+        timeSelect.innerHTML = "";
+        timeMessage.textContent = "No pickup slots remain within working hours today; please choose a future date.";
+      } else {
+        // Populate from startHour up to WORK_END
+        populateHourOptions(startHour);
+        timeSelect.disabled = false;
+        // If previously selected value is now invalid, clear it
+        if (timeSelect.value) {
+          const prevHour = parseInt(timeSelect.value.split(':')[0], 10);
+          if (prevHour < startHour || prevHour > WORK_END) {
+            timeSelect.value = "";
+          }
+        }
+      }
+    } else {
+      // Future date: allow all working-hour slots 08:00–20:00
+      populateHourOptions(WORK_START);
+      timeSelect.disabled = false;
+      // Clear previous value if any
+      timeSelect.value = "";
+    }
+  }
+
+  // Attach listener
+  dateInput.addEventListener("change", updateTimeOptions);
+
+  // If you want date defaulted to today on load, uncomment:
+  // dateInput.value = minDateStr;
+
+  // Initial call in case date is pre-filled
+  updateTimeOptions();
+});
+</script>
     <script>
     document.querySelectorAll('.close, .btn-secondary').forEach(el => {
       el.addEventListener('click', e => {

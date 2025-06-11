@@ -57,6 +57,7 @@ $route['user/update_avatar'] = 'home/update_avatar';
 
 // Add your route for the register page
 $route['register'] = 'register'; 
+$route['home/login'] = 'Home/login'; 
 $route['Advaned123'] = 'home'; 
 
  // Maps to Register controller (register method)

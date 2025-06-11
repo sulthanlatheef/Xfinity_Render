@@ -1301,7 +1301,7 @@ input:focus{
     <a href="#login" class="loginbutton">
       Login
     </a>
-    <a href="#signup" class="signupbutton">
+   <a href="<?php echo site_url('register'); ?>" class="signupbutton">
       Signup
     </a>
   </div>
@@ -1310,7 +1310,7 @@ input:focus{
    <!-- Hero Section -->
    <section class="hero-section" id="home">
        <video autoplay muted loop class="hero-video">
-           <source src="<?php echo base_url('assets/videos/12433560_3840_2160_25fps.mp4'); ?>" type="video/mp4">
+        <source src="https://res.cloudinary.com/dyjxrihpj/video/upload/v1749470817/12433560_3840_2160_25fps_1_n5ctu5.mp4" type="video/mp4">
            Your browser does not support the video tag.
        </video>
        <div class="hero-content">
@@ -1768,7 +1768,7 @@ input:focus{
    <section id="login" class="login-section">
        <div class="login-video-wrapper">
            <video autoplay muted loop class="login-video">
-               <source src="<?php echo base_url('assets/videos/12432621_1920_1080_30fps.mp4'); ?>" type="video/mp4">
+              <source src="https://res.cloudinary.com/dyjxrihpj/video/upload/v1749537237/12432621_1920_1080_30fps_tgxwkz.mp4" type="video/mp4">
                Your browser does not support the video tag.
            </video>
        </div>

@@ -491,10 +491,10 @@
     </section>
     
     <div class="btn-wrapper">
-      <button class="btn-track animate__animated animate__fadeInUp">
+      <button class="btn-track animate__animated animate__fadeInUp" onclick="window.location.href='<?= site_url('Tracking') ?>'">
         <i class="fas fa-tachometer-alt"></i> Track Service
       </button>
-      <button class="btn-home animate__animated animate__fadeInUp">
+      <button class="btn-home animate__animated animate__fadeInUp" onclick="window.location.href='<?= site_url('Advanced') ?>'">
         <i class="fas fa-home"></i> Back to Home
       </button>
     </div>
