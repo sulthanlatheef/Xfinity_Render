@@ -763,7 +763,7 @@ footer .social-icons i:hover {
   <div class="menu">
     <a href="<?= site_url('home/profile') ?>"><i class="fa-solid fa-address-card"></i></i>Profile</a>
     <a href="<?= site_url('advanced') ?>"><i class="fa-solid fa-house-user"></i> Home</a>
-    <a href="<?= site_url('home/support') ?>"><i class="fas fa-headset"></i>Support</a>
+    <a href="<?= site_url('Chat') ?>"><i class="fas fa-headset"></i>Support</a>
   </div>
 
   <a href="<?php echo site_url('home/logout'); ?>">
@@ -777,7 +777,7 @@ footer .social-icons i:hover {
   <header>
     <!-- Background Video -->
     <video autoplay muted loop id="background-video">
-      <source src="<?php echo base_url('assets/videos/4488720-uhd_4096_2160_25fps.mp4'); ?>" type="video/mp4" />
+       <source src="https://res.cloudinary.com/dyjxrihpj/video/upload/v1749537458/4488720-uhd_4096_2160_25fps_xu259w.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
     <h1 class="smooth-text">Redifining Auto Care Through Innovation!</h1>

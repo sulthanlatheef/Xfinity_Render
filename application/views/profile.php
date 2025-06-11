@@ -904,7 +904,7 @@
     <div class="nav-container">
       <a href="#" class="brand">Xfinity</a>
       <ul class="nav-links">
-        <li><a href="#">Home</a></li>
+        <li><a href="<?php echo site_url('Advanced'); ?>">Home</a></li>
         <li><a href="#">Services</a></li>
         <li><a href="#">About Us</a></li>
         <li><a href="#">Contact</a></li>
@@ -1055,7 +1055,7 @@
         <i class="fas fa-envelope"></i>
         <div class="detail-text">
           <div class="detail-label">Email</div>
-          <div class="detail-value"><?= html_escape($user['email']) ?></div>
+          <div class="detail-value" style="font-size:13.8px;"><?= html_escape($user['email']) ?></div>
         </div>
       </div>
       <div class="detail-item">

@@ -784,7 +784,7 @@ footer .social-icons a:hover {
                     <i class="fas fa-calendar-alt"></i>
                     <span>Created At: <?php echo isset($pickup->created_at) ? htmlspecialchars($pickup->created_at, ENT_QUOTES, 'UTF-8') : 'N/A'; ?></span>
                   </div>
-                  <?php if (isset($pickup->service_type) && strtolower($pickup->status) != 'completed'): ?>
+                  <?php if (isset($pickup->service_type) && strtolower($pickup->status) != 'delivered'): ?>
                     <div class="in-progress">
                       <div class="spinner">
                         <i class="fa fa-wrench"></i>

@@ -102,7 +102,7 @@
         </div>
       </div>
       <div class="invoice-info">
-        <div class="number-label">Estimate #: <span id="invoice-number-display"></span></div>
+        <div class="number-label">Invoice No: <span id="invoice-number-display"></span></div>
         <div>Date: <span id="invoice-date"></span></div>
       </div>
 
