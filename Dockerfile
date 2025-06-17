@@ -1,5 +1,5 @@
 # Use official PHP + Apache image
-FROM php:8.2-apache
+FROM php:8.0-apache
 
 # Install Python 3, pip, Composer dependencies
 RUN apt-get update && apt-get install -y \
