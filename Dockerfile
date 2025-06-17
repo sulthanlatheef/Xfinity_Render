@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Enable Apache mod_rewrite
-RUN a2enmod rewrite
+
 
 # Set working directory
 WORKDIR /var/www/html/
