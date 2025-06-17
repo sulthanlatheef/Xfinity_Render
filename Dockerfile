@@ -5,6 +5,7 @@ FROM php:8.0-apache
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
+    python3-venv \
     curl \
     unzip \
     git \
@@ -22,16 +23,25 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Copy all project files
+# Set working directory
+WORKDIR /var/www/html/
+
+# Copy project files
 COPY . /var/www/html/
 
 # Run Composer install
-WORKDIR /var/www/html/
 RUN composer install --no-dev --optimize-autoloader
 
-# Install Python dependencies
+# Copy Python requirements file
 COPY requirements.txt /tmp/requirements.txt
-RUN pip3 install --no-cache-dir --break-system-packages -r /tmp/requirements.txt
 
-# Set permissions
+# Create virtual environment and install Python packages
+RUN python3 -m venv /opt/venv \
+    && /opt/venv/bin/pip install --upgrade pip \
+    && /opt/venv/bin/pip install --no-cache-dir -r /tmp/requirements.txt
+
+# Set venv Python as default
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Fix permissions
 RUN chown -R www-data:www-data /var/www/html/
