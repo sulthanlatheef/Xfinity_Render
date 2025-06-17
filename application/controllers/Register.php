@@ -45,8 +45,8 @@ $this->session->set_userdata('otp_time', time()); // Store current timestamp
     // Log the OTP generation event (do NOT log the actual OTP in production)
     log_message('info', 'OTP generated for email: ' . $email . ' | OTP: ' . $otp);
 
-      $pythonExecutable = 'C:\\Users\\shanu\\AppData\\Local\\Programs\\Python\\Python38\\python.exe';
-            $pythonScriptPath = 'C:\\wamp64\\www\\XFINITY\\assets\\python\\otp.py';
+           $pythonExecutable = 'python3';
+           $pythonScriptPath = '/var/www/html/assets/python/send_otp_email.py';
 
             // Pass parameters to the Python script
             $cmd = $pythonExecutable . " " . $pythonScriptPath . " " . 
