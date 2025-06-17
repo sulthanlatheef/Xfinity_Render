@@ -1,7 +1,7 @@
 # Use official PHP + Apache image
 FROM php:8.2-apache
 
-# Install Python 3, pip, and required system libraries
+# Install Python 3, pip, and required libraries
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
@@ -16,12 +16,12 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache mod_rewrite for CodeIgniter URLs
 RUN a2enmod rewrite
 
-# Copy all project files to Apache web root
+# Copy all project files
 COPY . /var/www/html/
 
-# Copy Python requirements and install them
+# Install Python dependencies with override
 COPY requirements.txt /tmp/requirements.txt
-RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
+RUN pip3 install --no-cache-dir --break-system-packages -r /tmp/requirements.txt
 
-# Set correct permissions
+# Set permissions
 RUN chown -R www-data:www-data /var/www/html/
