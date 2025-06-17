@@ -92,11 +92,11 @@ class Home extends CI_Controller {
                 if ($this->input->is_ajax_request()) {
                     echo json_encode([
                         'status' => 'success',
-                        'redirect_url' => site_url('Advanced')
+                        'redirect_url' => site_url('advanced')
                     ]);
                     return;
                 } else {
-                    redirect('advanced');
+                    redirect('home/advanced');
                 }
             } else {
                 log_message('error', 'Invalid login attempt for username: ' . $username);
