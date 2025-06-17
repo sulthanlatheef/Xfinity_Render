@@ -40,7 +40,7 @@ $config['base_url'] = (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HT
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
