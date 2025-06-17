@@ -660,7 +660,7 @@
 
   <!-- Navbar -->
   <nav>
-    <div class="navbar-logo" style="animation:none;"><i class="fa-solid fa-bolt" style="margin-right:5px;"></i>Xpress Fix</div>
+    <div class="navbar-logo" style="animation:none;"></i>Xfinity</div>
     <div style=""class="nav-links">
       <a href="#ai-features">AI Features</a>
       <a href="#schedule-pickup">Schedule Pickup</a>
