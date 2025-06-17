@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
     'dsn'   => '',
-    'hostname' => 'localhost',
-    'username' => 'root',  // Replace with your database username
-    'password' => '',  // Replace with your database password
-    'database' => 'base',              // Replace with your database name
+    'hostname' => 'sql12.freesqldatabase.com',
+    'username' => 'sql12784901',  // Replace with your database username
+    'password' => 'n3UTygEfUU',  // Replace with your database password
+    'database' => 'sql12784901',              // Replace with your database name
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,
