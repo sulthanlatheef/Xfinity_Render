@@ -23,9 +23,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https' ? "https" : "http")
-                    . "://" . $_SERVER['HTTP_HOST']
-                    . str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
+if (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'onrender.com') !== false) {
+    $config['base_url'] = 'https://xfinity-l6rj.onrender.com/';
+} else {
+    $config['base_url'] = (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https' ? "https" : "http")
+        . "://" . $_SERVER['HTTP_HOST']
+        . str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
+}
+
 
 
 
@@ -40,7 +45,7 @@ $config['base_url'] = (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HT
 | variable so that it is blank.
 |
 */
-$config['index_page'] = '';
+$config['index_page'] = 'index.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -390,7 +395,7 @@ $config['encryption_key'] = '';
 */
 $config['sess_driver'] = 'database';
 $config['sess_cookie_name'] = 'ci_session_xfinity';   // Unique name
-$config['sess_save_path'] = 'ci_sessions';            // Table name
+$config['sess_save_path'] = 'sql12784901.ci_sessions';            // Table name
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
