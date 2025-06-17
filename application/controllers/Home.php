@@ -92,7 +92,7 @@ class Home extends CI_Controller {
                 if ($this->input->is_ajax_request()) {
                     echo json_encode([
                         'status' => 'success',
-                        'redirect_url' => site_url('advanced')
+                        'redirect_url' => site_url('Advanced')
                     ]);
                     return;
                 } else {
