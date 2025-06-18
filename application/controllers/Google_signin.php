@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 // 1) Make sure Composer’s autoloader is loaded so Guzzle, Google_Client, etc. can be found
-require_once FCPATH . 'vendor/autoload.php';
+require_once(APPPATH.'../assets/vendor2/autoload.php');
 
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
