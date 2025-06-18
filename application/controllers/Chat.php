@@ -7,7 +7,7 @@ class Chat extends CI_Controller {
         parent::__construct();
           $this->load->helper('url');
                $this->load->library('session');
-        $this->load->model('Chat_model');
+        $this->load->model('chat_model');
     }
 
     public function index() {

@@ -879,7 +879,7 @@ footer .social-icons i:hover {
       
       <!-- Locate Ventures Card -->
       <div class="feature-card">
-        <img src="<?php echo base_url('assets/images/image-250x150 (4).JPG'); ?>" alt="Locate Ventures" class="card-img" />
+        <img src="<?php echo base_url('assets/images/image-250x150 (4).jpg'); ?>" alt="Locate Ventures" class="card-img" />
         <h3>Locate Ventures</h3>
         <p>
           Need assistance locating a nearby venture? Our AI will guide you to the nearest workshop, service center, or partner.
