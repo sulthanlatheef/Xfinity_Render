@@ -44,7 +44,7 @@ $this->session->set_userdata('otp_time', time()); // Store current timestamp
     log_message('info', 'OTP generated for email: ' . $email . ' | OTP: ' . $otp);
 
            $pythonExecutable = 'python3';
-           $pythonScriptPath = '/var/www/html/assets/python/send_otp_email.py';
+           $pythonScriptPath = '/var/www/html/assets/python/otp.py';
 
             // Pass parameters to the Python script
             $cmd = $pythonExecutable . " " . $pythonScriptPath . " " . 
