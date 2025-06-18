@@ -23,7 +23,7 @@ class Tracking extends CI_Controller {
         }
 
         // Retrieve all pickup_ids for the current user from the 'tracking' table
-        $data['pickup_ids'] = $this->tracking_model->get_pickup_ids_by_user($user_id);
+        $data['pickup_ids'] = $this->Tracking_model->get_pickup_ids_by_user($user_id);
 
         // Load the view and pass the data
         $this->load->view('tracking_view', $data);
@@ -32,7 +32,7 @@ class Tracking extends CI_Controller {
     public function details($pickup_id)
     {
         // 1. Load your model up front
-        $this->load->model('tracking_model');
+        $this->load->model('Tracking_model');
     
         // 2. Get current user
         $user_id = $this->session->userdata('user_id');
@@ -41,13 +41,13 @@ class Tracking extends CI_Controller {
         }
     
         // 3. Fetch pickup details
-        $pickup_details = $this->tracking_model->get_pickup_details($user_id, $pickup_id);
+        $pickup_details = $this->Tracking_model->get_pickup_details($user_id, $pickup_id);
         if (empty($pickup_details)) {
             show_404();
         }
     
         // 4. Fetch payment record for this user & pickup
-        $payment = $this->tracking_model->get_by_pickup_and_user($pickup_id, $user_id);
+        $payment = $this->Tracking_model->get_by_pickup_and_user($pickup_id, $user_id);
         $is_paid = ($payment && $payment->status === 'paid');
     
         // 5. Inject the flag into your details object
