@@ -1,7 +1,6 @@
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-python_dir = os.path.join(BASE_DIR, 'assets', 'python')
-os.chdir(python_dir)
+os.chdir(BASE_DIR)
 import sys
 import base64
 from google.auth.transport.requests import Request
