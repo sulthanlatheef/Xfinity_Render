@@ -704,7 +704,7 @@
     <a href="<?= site_url('home/support') ?>"><i class="fas fa-headset"></i> Support</a>
   </div>
 
-  <a href="<?php echo site_url('home/logout'); ?>">
+  <a href="<?php echo site_url('Home/logout'); ?>">
     <button class="logout-btn">Logout</button>
   </a>
 </div>
@@ -900,7 +900,7 @@
     return;
   }
     document.querySelector('.profile-pic').src = src;
-    fetch('<?= site_url("home/update_avatar") ?>', {
+    fetch('<?= site_url("Home/update_avatar") ?>', {
       method: 'POST',
       credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json' },
@@ -963,7 +963,7 @@
     // Delay the payment process for 7 seconds
     setTimeout(function() {
       $.ajax({
-        url: "<?php echo site_url('payment/create_order'); ?>",
+        url: "<?php echo site_url('Payment/create_order'); ?>",
         type: "GET",
         dataType: "json",
         success: function(result) {
@@ -978,7 +978,7 @@
               "order_id": orderData.order_id,
               "handler": function (response) {
                 $.ajax({
-                  url: "<?php echo site_url('payment/verify_payment'); ?>",
+                  url: "<?php echo site_url('Payment/verify_payment'); ?>",
                   type: "POST",
                   dataType: "json",
                   contentType: "application/json",
@@ -1072,7 +1072,7 @@ setTimeout(function() {
                   // Wait for 3 seconds before proceeding with the status check
                   setTimeout(function() {
                     $.ajax({
-                      url: "<?php echo site_url('payment/check_status'); ?>",
+                      url: "<?php echo site_url('Payment/check_status'); ?>",
                       type: "GET",
                       dataType: "json",
                       data: {
