@@ -1338,7 +1338,7 @@
   promoCodeInput.style.border = "";
 
   $.ajax({
-    url: '<?= site_url("payment/promocode") ?>',
+    url: '<?= site_url("Payment/promocode") ?>',
     type: 'POST',
     dataType: 'json',
     data: { code: code },
@@ -1677,7 +1677,7 @@ prefill: {
     ondismiss: function () {
       // re-verify membership
       $.ajax({
-        url: '<?= site_url("payment/verify_sub") ?>',
+        url: '<?= site_url("Payment/verify_sub") ?>',
         type: 'POST',
         dataType: 'json'
       }).done(function(subRes) {
@@ -1792,7 +1792,7 @@ function openAvatarModal() {
         img.onclick = () => {
           currentAvatar.src = url;
           document.querySelector('.profile-sidebar img').src = url;
-          fetch('<?= site_url("home/update_avatar") ?>', {
+          fetch('<?= site_url("Home/update_avatar") ?>', {
     method: 'POST',
     credentials: 'same-origin',
     headers: { 'Content-Type':'application/json' },
