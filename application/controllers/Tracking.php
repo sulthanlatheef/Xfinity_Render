@@ -8,7 +8,7 @@ class Tracking extends CI_Controller {
         parent::__construct();
         // Load the session library and the tracking model
         $this->load->library('session');
-        $this->load->model('tracking_model');
+        $this->load->model('Tracking_model');
         $this->load->helper('url'); // Load the URL helper here
     }
     
