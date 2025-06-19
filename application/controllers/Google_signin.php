@@ -28,7 +28,7 @@ class Google_signin extends CI_Controller
         $client->setClientId('189704440706-5en0i2sjfn5tndacdjllimgg07piaug9.apps.googleusercontent.com');
         $client->setClientSecret('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');
         // <-- NOTE: This must match exactly your "Authorized redirect URI" in Google Console:
-        $client->setRedirectUri('http://localhost/XFINITY/index.php/Google_signin/google_login');
+        $client->setRedirectUri('https://xfinity-l6rj.onrender.com/index.php/Google_signin/google_login');
         $client->addScope("email");
         $client->addScope("profile");
 
@@ -53,7 +53,7 @@ class Google_signin extends CI_Controller
     $client->setPrompt('consent');
     $client->setClientId('189704440706-5en0i2sjfn5tndacdjllimgg07piaug9.apps.googleusercontent.com');
     $client->setClientSecret('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');
-    $client->setRedirectUri('http://localhost/XFINITY/index.php/Google_signin/google_login');
+    $client->setRedirectUri('https://xfinity-l6rj.onrender.com/index.php/Google_signin/google_login');
     $client->addScope("email");
     $client->addScope("profile");
 

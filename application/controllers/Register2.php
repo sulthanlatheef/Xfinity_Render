@@ -32,7 +32,7 @@ class Register2 extends CI_Controller
         $client->setClientId('189704440706-qvigrqndj8sf9j934cfch69hqpd3ukkq.apps.googleusercontent.com');
         $client->setClientSecret('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');
         // <-- NOTE: This must match exactly your "Authorized redirect URI" in Google Console:
-        $client->setRedirectUri('http://localhost/XFINITY/index.php/register2/googlesignup');
+        $client->setRedirectUri('https://xfinity-l6rj.onrender.com/index.php/register2/googlesignup');
         $client->addScope("email");
         $client->addScope("profile");
 
@@ -61,7 +61,7 @@ class Register2 extends CI_Controller
     $client->setPrompt('consent');
     $client->setClientId('189704440706-qvigrqndj8sf9j934cfch69hqpd3ukkq.apps.googleusercontent.com');
     $client->setClientSecret('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');
-    $client->setRedirectUri('http://localhost/XFINITY/index.php/register2/googlesignup');
+    $client->setRedirectUri('https://xfinity-l6rj.onrender.com/index.php/register2/googlesignup');
     $client->addScope("email");
     $client->addScope("profile");
 
