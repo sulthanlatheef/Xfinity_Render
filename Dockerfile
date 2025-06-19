@@ -20,17 +20,17 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Enable Apache mod_rewrite
-
-
 # Set working directory
 WORKDIR /var/www/html/
 
-# Copy project files
-COPY . /var/www/html/
+# COPY ONLY composer files first (layer caching)
+COPY composer.json composer.lock ./
 
 # Run Composer install
 RUN composer install --no-dev --optimize-autoloader
+
+# Now copy the rest of the project (including your CodeIgniter app)
+COPY . .
 
 # Copy Python requirements file
 COPY requirements.txt /tmp/requirements.txt

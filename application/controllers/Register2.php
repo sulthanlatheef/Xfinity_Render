@@ -7,8 +7,8 @@ require_once FCPATH . 'vendor/autoload.php';
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\CurlHandler;
-use Google_Client;
-use Google_Service_Oauth2;
+use Google\Client as Google_Client;
+use Google\Service\Oauth2 as Google_Service_Oauth2;
 
 class Register2 extends CI_Controller
 {
