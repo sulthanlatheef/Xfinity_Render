@@ -222,8 +222,8 @@ public function finvoice() {
                 $invoice_number = $pickup_row->invoice_number;
                 $this->add_log("Retrieved invoice number: {$invoice_number}");
 
-                $pythonExecutable = 'C:\\Users\\shanu\\AppData\\Local\\Programs\\Python\\Python38\\python.exe';
-                $pythonScriptPath = 'C:\\wamp64\\www\\XFINITY\\assets\\python\\test.py';
+              $pythonExecutable = 'python3';
+           $pythonScriptPath = '/var/www/html/assets/python/test.py';
         
                 // Pass parameters to the Python script
                 $cmd = $pythonExecutable . " " . $pythonScriptPath . " " . 
