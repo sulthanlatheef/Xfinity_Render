@@ -30,32 +30,98 @@ class ImageUpload extends CI_Controller {
     }
 
     // Function to handle the upload and prediction logic
-    public function predict() {
-        if (empty($_FILES['image']['name'])) {
-            echo json_encode(['error' => 'Please select an image to upload.']);
-            return;
-        }
-        $filePath = $_FILES['image']['tmp_name'];
-        $fileType = $_FILES['image']['type'];
-        $fileName = $_FILES['image']['name'];
-        $cfile = new CURLFile($filePath, $fileType, $fileName);
-        $data = array('image' => $cfile);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://127.0.0.1:5000/predict"); // Flask API endpoint URL
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = curl_exec($ch);
-        if (curl_errno($ch)) {
-            $error_msg = curl_error($ch);
-            curl_close($ch);
-            echo json_encode(['error' => $error_msg]);
-            return;
-        }
-        curl_close($ch);
-        header('Content-Type: application/json');
-        echo $result;
+     public function predict() {
+    // Log entry into the method
+    log_message('info', '[Predict] Entry into predict()');
+
+    // Check if file is provided
+    if (empty($_FILES['image']['name'])) {
+        log_message('error', '[Predict] No image file in request.');
+        echo json_encode(['error' => 'Please select an image to upload.']);
+        return;
     }
+
+    // Retrieve file info
+    $filePath = $_FILES['image']['tmp_name'];
+    $fileType = $_FILES['image']['type'];
+    $fileName = $_FILES['image']['name'];
+    log_message('debug', "[Predict] Received file: name={$fileName}, type={$fileType}, tmp_path={$filePath}");
+
+    // Prepare CURLFile
+    try {
+        $cfile = new CURLFile($filePath, $fileType, $fileName);
+    } catch (Exception $e) {
+        log_message('error', '[Predict] Failed to create CURLFile: ' . $e->getMessage());
+        echo json_encode(['error' => 'Internal error preparing file upload.']);
+        return;
+    }
+    $data = ['image' => $cfile];
+
+    // Endpoint URL
+    $url = "https://yolo-host.onrender.com/predict";
+    log_message('info', "[Predict] Preparing cURL request to URL: {$url} (SSL verification disabled)");
+
+    // Initialize cURL
+    $ch = curl_init();
+    if ($ch === false) {
+        log_message('error', '[Predict] curl_init() returned false.');
+        echo json_encode(['error' => 'Failed to initialize request.']);
+        return;
+    }
+
+    // Set cURL options
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Disable SSL verification (INSECURE: only for dev/test)
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    // Log as 'error' since CI3 does not have 'warning'
+    log_message('error', '[Predict] SSL verification disabled (CURLOPT_SSL_VERIFYPEER=false, CURLOPT_SSL_VERIFYHOST=0).');
+
+    // Optionally, set timeouts:
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+    log_message('debug', '[Predict] cURL options set: POSTFIELDS with image, RETURNTRANSFER enabled, timeouts set.');
+
+    // Execute
+    $result = curl_exec($ch);
+    $curlErrNo = curl_errno($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    log_message('debug', "[Predict] curl_exec completed. HTTP code: {$httpCode}, curl_errno: {$curlErrNo}");
+
+    if ($curlErrNo) {
+        $error_msg = curl_error($ch);
+        curl_close($ch);
+        log_message('error', "[Predict] cURL error ({$curlErrNo}): {$error_msg}");
+        echo json_encode(['error' => $error_msg]);
+        return;
+    }
+
+    // Close cURL handle
+    curl_close($ch);
+    log_message('info', "[Predict] cURL request successful. Response length: " . strlen($result));
+
+    // Optionally: Validate that result is valid JSON
+    $decoded = json_decode($result, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        $jsonErr = json_last_error_msg();
+        log_message('error', "[Predict] Response is not valid JSON: {$jsonErr}. Raw response: {$result}");
+        echo json_encode([
+            'error' => 'Invalid response from prediction service',
+            'raw_response' => $result
+        ]);
+        return;
+    }
+    log_message('debug', '[Predict] Response decoded as JSON successfully.');
+
+    // Return JSON response
+    header('Content-Type: application/json');
+    echo $result;
+    log_message('info', '[Predict] Response sent back to client. Exiting predict().');
+}
 
     // AJAX method to fetch brands matching the search term
     public function get_brands() {

@@ -1326,16 +1326,18 @@
   // Handle Apply click
   applyPromoBtn.addEventListener("click", function() {
   const code = promoCodeInput.value.trim().toUpperCase();
+  applyPromoBtn.innerHTML = '<i style="padding-right:12px;padding-left:12px;"class="fas fa-spinner fa-spin"></i>';
 
 
   if (code === "") {
+     applyPromoBtn.textContent = 'Apply'; 
     promoCodeInput.style.border = "none"; // Remove existing border
     promoCodeInput.placeholder = "Please enter a promocode";
     promoCodeInput.style.border = "2px solid orange";
     return;
   }
 
-  promoCodeInput.style.border = "";
+  promoCodeInput.style.border = "2px solid orange";
 
   $.ajax({
     url: '<?= site_url("Payment/promocode") ?>',
@@ -1368,6 +1370,7 @@
     myConfetti({ particleCount: 200, spread: 100 });
   }
       } else {
+        applyPromoBtn.textContent = 'Apply'; 
         promoCodeInput.value = "";
         promoCodeInput.placeholder = response.message || "Invalid Promocode!Try Again";
         promoCodeInput.style.border = "none"; 

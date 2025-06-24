@@ -15,7 +15,7 @@ class Invoice extends CI_Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_FILES['invoice']) && $_FILES['invoice']['error'] == 0) {
                 // Set upload configuration
-                $uploadPath = './invoices/';  // Make sure this directory exists and is writable.
+                $uploadPath = '/tmp/';  // Make sure this directory exists and is writable.
                 if (!is_dir($uploadPath)) {
                     mkdir($uploadPath, 0777, true);
                 }

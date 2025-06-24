@@ -1791,7 +1791,7 @@ input:focus{
     </div>
 
     <div style="display:flex;flex-direction:column;gap:0px;  width: 430px;">
-               <button style="margin-top:10px;"type="submit"><i style="margin-right:8px;"class="fa-solid fa-right-to-bracket"></i>Sign In</button>
+               <button id="nextBtn2" style="margin-top:10px;"type="submit"><i style="margin-right:8px;"class="fa-solid fa-right-to-bracket"></i>Sign In</button>
              <p class="separator">or</p>
 
 
@@ -1872,6 +1872,9 @@ function togglePassword() {
         
         $('#loginForm').on('submit', function(e){
             e.preventDefault(); // Prevent the default form submission
+            const nextBtn = document.getElementById('nextBtn2');
+       nextBtn.disabled = true; // Disable the button immediately
+      nextBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Hold On!';
             
             // Stop any ongoing animations and show a clean error container
             $('#ajax-error-message').stop(true, true).text('').show();
@@ -1886,6 +1889,8 @@ function togglePassword() {
                         // Redirect on successful login
                         window.location.href = response.redirect_url;
                     } else {
+                       nextBtn.disabled = false; // Disable the button immediately
+      nextBtn.innerHTML = '<i style="margin-right:2px;"class="fa-solid fa-right-to-bracket"></i> Sign In';
                         // Display the error message and clear it after 3 seconds
                         $('#ajax-error-message').text(response.message).show();
                         
