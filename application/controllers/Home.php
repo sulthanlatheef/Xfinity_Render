@@ -15,6 +15,11 @@ class Home extends CI_Controller {
     public function index() {
         $this->load->view('home');
     }
+    public function ping()
+{
+    echo "pong";
+}
+
 
     // Handle login form submission via AJAX (or regular POST)
     public function login() {

@@ -863,6 +863,27 @@
     transform: translateY(-2px);
    
   }
+   #goldOverlay {
+      display: none; /* Initially hidden */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(7px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Container for processing animation */
+    .processing-container {
+      margin-left:0px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
 </style>
 <svg style="display: none;">
   <symbol id="icon-dent" viewBox="0 0 24 24">
@@ -1212,6 +1233,17 @@
   <div id="preview-modal" title="Image Preview" style="display:none; text-align:center;">
     <img id="preview-image" src="" alt="Uploaded Image Preview" style="max-width:100%; height:auto;">
   </div>
+
+   <div id="goldOverlay">
+    <div class="processing-container">
+       <lottie-player src="https://lottie.host/399baed7-9d74-4c24-8f68-f3280ad0ead4/6hcsYheXxl.json"background="transparent" speed="1" loop autoplay style=" display:inline-block;width: 330px; height:330px;"></lottie-player>
+
+      <div style="color:white;font-size:23px;transform:translateY(-40px);" class="processing-text animate__animated animate__headShake animate__infinite animate__slow">
+ 
+ <i class="fas fa-spinner fa-spin"></i> Analyzing Image
+</div>
+      </div>
+      </div>
 
   <!-- JavaScript -->
   <script>
@@ -1696,10 +1728,11 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append("image", imageFile);
 
         var $icon = $(this).find("button.btn i.fa-cogs");
-        $icon.addClass("spinning");
+  
+         $('#goldOverlay').css('display', 'flex').hide().fadeIn();
 
-        setTimeout(function(){
-          $icon.removeClass("spinning");
+       
+     
           $.ajax({
             url: "<?php echo site_url('imageUpload/predict'); ?>",
             type: "POST",
@@ -1707,6 +1740,7 @@ document.addEventListener('DOMContentLoaded', () => {
             processData: false,
             contentType: false,
             success: function(response){
+                $('#goldOverlay').fadeOut('fast');
               $("#error-message").hide();
               $("#prediction-list").empty();
               if (response.predictions && response.predictions.length > 0) {
@@ -1791,7 +1825,7 @@ document.addEventListener('DOMContentLoaded', () => {
               $("#error-message").text("Error: " + xhr.responseText).show();
             }
           });
-        }, 3000);
+       
       });
       
       $("#to-vehicle-btn").click(function(){

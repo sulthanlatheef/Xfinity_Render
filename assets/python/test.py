@@ -1,5 +1,6 @@
 import os
-os.chdir(r'C:\wamp64\www\XFINITY\assets\python')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+os.chdir(BASE_DIR)
 import sys
 import base64
 from google.auth.transport.requests import Request
@@ -26,7 +27,7 @@ pickup_id       = sys.argv[3]
 invoice_id      = sys.argv[4]
 
 # Path to invoice PDF
-invoice_folder = r"C:\wamp64\www\XFINITY\invoices"
+invoice_folder = '/tmp/invoices/'
 invoice_filename = f"{invoice_id}.pdf"
 invoice_path = os.path.join(invoice_folder, invoice_filename)
 
