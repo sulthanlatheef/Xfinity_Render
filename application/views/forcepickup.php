@@ -12,7 +12,7 @@
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <!-- Google Maps API: Replace YOUR_API_KEY with your actual key -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyNnYX9lxpsHAWG4cC2YBPYA66QoOR2ao"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5sQ89Ap2Q93cbNV54D4oYH5kT-FANMLA"></script>
    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   
   <style>
@@ -286,6 +286,7 @@
       padding: 40px;
     }
     .card {
+      position:relative;
       background: #fdfdfd;
       border-radius: 8px;
       padding: 20px;
@@ -370,6 +371,34 @@ gap:10px;
       box-shadow: 0 0 5px rgba(255,102,0,0.4);
       outline: none;
     }
+     .input-wrapper{
+      width: calc(50% - 10px);
+      position:Relative;
+    }
+    .input-wrapper input {
+  width: 100%;
+  padding-right: 35px; /* space for the spinner */
+}
+ .vehicle-brand-spinner {
+  
+  display: none; /* hidden initially */
+  position: absolute;
+  top: 32%;
+  right: 10px;
+ 
+  color: #888;
+  pointer-events: none;
+}
+.vehicle-brand-spinner2 {
+  display: none; /* hidden initially */
+  position: absolute;
+  top: 32%;
+  right: 10px;
+ 
+  color: #888;
+  pointer-events: none;
+}
+
     .vehicle-logo img {
       max-width: 420px;
       width: 100%;
@@ -938,8 +967,14 @@ gap:10px;
      data-open="prime-modal"></i></h3>
         <div class="vehicle-details-container">
           <div class="vehicle-details">
-            <input type="text" id="vehicle-brand" placeholder="Vehicle Brand" autocomplete="off">
-            <input type="text" id="vehicle-model" placeholder="Vehicle Model" autocomplete="off">
+            <div  class="input-wrapper">
+      <input type="text" id="vehicle-brand" placeholder="Vehicle Brand" autocomplete="off">
+       <i class="fa-solid fa-spinner fa-spin vehicle-brand-spinner"></i>
+    </div>
+             <div  class="input-wrapper">
+          <input type="text" id="vehicle-model" placeholder="Vehicle Model" autocomplete="off">
+          <i class="fa-solid fa-spinner fa-spin vehicle-brand-spinner2"></i>
+          </div>
             <input type="text" id="vehicle-reg" placeholder="Vehicle Registration No" autocomplete="off">
             <input type="text" id="vehicle-typ" placeholder="Gasoline type" autocomplete="off">
           </div>
@@ -964,7 +999,14 @@ gap:10px;
       <!-- Step 3: Pickup Location -->
       <section id="step-pickup-location" class="card step-section" style="display:none;">
         <div class="pickup-header">
-          <i class="fas fa-map-marked-alt"></i>
+           <lottie-player
+            src="https://lottie.host/934f41e2-793c-4b45-8876-81ce80ceb3b3/ZY7ZkFj7rG.json"
+            background="transparent"
+            speed="1"
+             style=" width: 108px; height: 108px; margin-bottom:-10px;margin-left:420px;margin-top:-44px;"
+            loop
+            autoplay>
+        </lottie-player>
           <h3>Where Should We Pick You Up?</h3>
           <p>Enter your location details below and let us handle the rest.</p>
         </div>
@@ -1004,7 +1046,15 @@ gap:10px;
       <!-- Step 4: Schedule Pickup -->
 <!-- Step 4: Schedule Pickup -->
 <section id="step-schedule" class="card step-section" style="display:none;">
-  <h3>Schedule Pickup</h3>
+   <lottie-player
+            src="https://lottie.host/4b4552e4-3953-4f52-bbd8-2c4678b87ed4/adP8N01WGY.json"
+            background="transparent"
+            speed=".5"
+             style=" position:absolute;width: 190px; height: 190px;top:-65px;"
+            loop
+            autoplay>
+        </lottie-player>
+  <h3 style="margin-top:28px;">Schedule Pickup</h3>
   <form id="schedule-form">
     <div class="pickup-form">
       <label for="pickup-date">Pickup Date:</label>
@@ -1051,7 +1101,7 @@ gap:10px;
       <div style="margin-top:12px; text-align:right;">
         <button type="button" id="cancelSavedAddr" class="btn" 
                 style="background:#ccc; color:#333; margin-right:8px;">Cancel</button>
-        <button type="button" id="saveSavedAddr" class="btn">Save </button>
+        <button type="button" id="saveSavedAddr" class="btn">Save Address</button>
        
       </div>
     </div>
@@ -1059,7 +1109,7 @@ gap:10px;
 </div>
 
 
-    <button type="submit" class="btn">Confirm &amp; Schedule Pickup </button>
+    <button style="" type="submit" id="confirm" class="btn">Confirm &amp; Schedule Pickup </button>
    
   </form>
 </section>
@@ -1260,6 +1310,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Save via AJAX
   saveBtn.addEventListener('click', () => {
+  saveBtn.innerHTML = '<i style="margin-right:5px;" class="fas fa-spinner fa-spin"></i><span style="padding-right:12px;">Updating</span>';
     const newAddr = inputField.value.trim();
     if (!newAddr) {
       alert('Address cannot be empty.');
@@ -1276,13 +1327,20 @@ document.addEventListener('DOMContentLoaded', () => {
       return res.text();
     })
     .then(() => {
+
+       saveBtn.innerHTML = '<i style="margin-right:5px;" class="fas fa-circle-check"></i><span style="padding-right:15px;">Success</span>';
+      setTimeout(function(){
+      saveBtn.innerHTML = 'Save Address';
       // Update UI
       addrText.textContent = newAddr;
       editPane.style.display = 'none';
       viewPane.style.display = 'block';
+       
+           }, 1500);
+      
 
       // Show & auto-hide success banner
-      successMsg.style.display = 'block';
+      successMsg.style.display = 'none';
       setTimeout(() => successMsg.style.display = 'none', 3000);
     })
     .catch(err => {
@@ -1330,11 +1388,13 @@ document.addEventListener('DOMContentLoaded', () => {
       // Autocomplete for Vehicle Brand & Model
       $("#vehicle-brand").autocomplete({
         source: function(request, response) {
+           document.querySelector('.vehicle-brand-spinner').style.display = 'inline-block';
           $.ajax({
             url: "<?php echo site_url('imageUpload/get_brands'); ?>",
             dataType: "json",
             data: { term: request.term },
             success: function(data) {
+               document.querySelector('.vehicle-brand-spinner').style.display = 'none';
               response($.map(data, function(item) {
                 return { label: item.name, value: item.name, id: item.id };
               }));
@@ -1351,6 +1411,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       $("#vehicle-model").autocomplete({
         source: function(request, response) {
+           document.querySelector('.vehicle-brand-spinner2').style.display = 'inline-block';
           var brandId = $("#vehicle-brand").data("brand-id");
           if (!brandId) { response([]); return; }
           $.ajax({
@@ -1358,6 +1419,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dataType: "json",
             data: { term: request.term, brand_id: brandId },
             success: function(data) {
+               document.querySelector('.vehicle-brand-spinner2').style.display = 'none';
               response($.map(data, function(item) {
                 return { label: item.name, value: item.name, id: item.id };
               }));
@@ -1500,6 +1562,8 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Schedule Pickup form submission via AJAX
       $("#schedule-form").submit(function(e){
+         const conbtn = document.getElementById('confirm');
+        conbtn.innerHTML = 'Confirming Request <i style="font-size:15px;margin-left:4px;"class="fas fa-spinner fa-spin"></i>';
         e.preventDefault();
         var pickupDate = $("#pickup-date").val();
       

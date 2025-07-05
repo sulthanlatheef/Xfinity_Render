@@ -58,7 +58,7 @@ class ImageUpload extends CI_Controller {
     $data = ['image' => $cfile];
 
     // Endpoint URL
-    $url = "https://yolo-host.onrender.com/predict";
+    $url = "https://yolo-host2.onrender.com/predict";
     log_message('info', "[Predict] Preparing cURL request to URL: {$url} (SSL verification disabled)");
 
     // Initialize cURL

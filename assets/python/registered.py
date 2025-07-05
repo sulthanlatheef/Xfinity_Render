@@ -1,5 +1,6 @@
 import os
-os.chdir(r'C:\wamp64\www\XFINITY\assets\python')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+os.chdir(BASE_DIR)
 import sys
 import base64
 from google.auth.transport.requests import Request

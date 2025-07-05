@@ -554,6 +554,7 @@
           input.classList.remove('shake');
           input.placeholder = input.getAttribute('data-original-placeholder') || '';
         });
+       
 
         const payload = {
           name:     document.getElementById('name').value.trim(),
@@ -563,6 +564,8 @@
         };
 
         try {
+           const nxt2     = document.getElementById("nextBtn2"); 
+           nxt2.innerHTML = '<i style="font-size:15px;padding-bottom:-5px;padding-right:17.5px;padding-left:17.5px;"class="fas fa-spinner fa-spin"></i>';
           const res  = await fetch('validate_details', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -571,6 +574,7 @@
           const data = await res.json();
 
           if (data.status === 'error') {
+             nextBtn2.innerHTML = 'Next <i style="margin-left:7px;"class="fas fa-arrow-right"></i> ';
             for (let [field, msg] of Object.entries(data.errors)) {
               const input = document.getElementById(field);
               const errorElem = document.getElementById(field + 'Error');
@@ -604,10 +608,11 @@
 
       // Final “Register” button
       document.getElementById('registerBtn').addEventListener('click', async function(e) {
+        const nxt4     = document.getElementById("registerBtn"); 
         const stepEl  = this.closest('.form-step');
         const btnGroup = stepEl.querySelector('.btn-group');
         const confMsg  = stepEl.querySelector('#confirmationMessage');
-
+        nxt4.innerHTML = '<i style="font-size:15px;padding-bottom:-5px;padding-right:18px;padding-left:18px;"class="fas fa-spinner fa-spin"></i>';
         btnGroup.querySelectorAll('button').forEach(btn => btn.disabled = true);
 
         const formEl   = document.getElementById('regForm');
@@ -627,6 +632,7 @@
             btnGroup.style.display = 'none';
             confMsg.style.display  = 'block';
           } else {
+             nxt4.innerHTML = ' <i class="fas fa-user-check" style="margin-right:8px"></i>Register';
             alert(data.message || 'Registration failed. Please try again.');
             btnGroup.querySelectorAll('button').forEach(btn => btn.disabled = false);
           }

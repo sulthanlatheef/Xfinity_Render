@@ -4,7 +4,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-based Fault Prediction</title>
+    <title>Xfinity_Render</title>
     <!-- SEO Meta Tags -->
     <meta name="description" content="AI-based fault prediction system for automobiles to predict and prevent vehicle failures before they happen.">
     <meta name="keywords" content="AI, fault prediction, automobile, maintenance, data science">

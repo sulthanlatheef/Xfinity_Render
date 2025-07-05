@@ -162,8 +162,8 @@ public function finvoice() {
         $this->add_log("Retrieved mail_id: {$email}");
 
 
-          $pythonExecutable = 'C:\\Users\\shanu\\AppData\\Local\\Programs\\Python\\Python38\\python.exe';
-                $pythonScriptPath = 'C:\\wamp64\\www\\XFINITY\\assets\\python\\delivery.py';
+          $pythonExecutable = 'python3';
+           $pythonScriptPath = '/var/www/html/assets/python/delivery.py';
         
                 // Pass parameters to the Python script
                 $cmd = $pythonExecutable . " " . $pythonScriptPath . " " . 

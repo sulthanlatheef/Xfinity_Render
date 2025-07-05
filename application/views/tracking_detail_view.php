@@ -713,10 +713,30 @@
   <main>
     <div class="container tracking-container">
       <div class="tracking-card">
+        <?php if ($pickup_details->status!=='Delivered'): ?>
         <h2>
-          <i class="fa fa-cog fa-spin"></i> Hold On ! Service In Progress
+           <lottie-player
+            src="https://lottie.host/afe3aad2-0f57-4347-bdb0-c9d8bf8372b5/sMfWiiolRL.json"
+            background="transparent"
+            speed="1"
+             style="position:absolute;width: 60px; height: 60px;top:25px;left:177px;"
+            loop
+            autoplay>
+        </lottie-player> Hold On ! Service In Progress
+        </h2>
+        <?php else: ?>
+        <h2>
+           <lottie-player
+            src="https://lottie.host/62dc6b30-e87b-4cbc-b065-b9e33d9c74de/4Sy9pmUCL4.json"
+            background="transparent"
+            speed="1"
+             style="position:absolute;width: 135px; height: 135px;top:-10px;left:138px;"
+            loop
+            autoplay>
+        </lottie-player> Hooray !<span style=""> Service Completed</span>
         </h2>
 
+         <?php endif; ?>
         <!-- Animated Timeline -->
         <div class="timeline">
           <div class="timeline-progress" style="width: <?php 
@@ -815,6 +835,7 @@
 
             <div id="currentStatusCard" class="detail-card">
               <h5><i class="fas fa-clock"></i> Current Status</h5>
+               <?php if ($pickup_details->status!=='Delivered'): ?>
               <div class="status-display">
                 <span class="status-badge">
                   <i class="fas fa-<?php echo ($pickup_details->status==='Delivered')?'check':'sync-alt'; ?> <?php echo ($pickup_details->status!=='Delivered')?'spin':''; ?>"></i>
@@ -827,7 +848,22 @@
           </div>
         </div>
       </div>
+       <?php else: ?>
+         <div style="position:relative;"class="status-display">
+
+             <lottie-player
+            src="https://lottie.host/bd13c470-ad06-4eee-bb92-96f941060f09/3vm6AR13Us.json"
+            background="transparent"
+            speed="1"
+             style="position:absolute;width: 250px; height: 230px;top:-80px;left:40px;"
+            loop
+            autoplay>
+        </lottie-player>  
+        <p style="color:green;position:absolute;top:90px;left:45px;"><i style="padding-right:4px;"class="fa-solid fa-circle-check"></i>Vehicle Delivered as Scheduled</p> 
+      </div>
+      <?php endif; ?>
     </div>
+    
   </main>
 
   <!-- Payment Processing Overlay with Two Concentric Spinning Circles -->

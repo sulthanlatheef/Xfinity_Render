@@ -277,8 +277,8 @@ public function testGoogleClient()
       $username=$user_data['username'];
 
     log_message('info', 'Name retrieved for suucess mail: ' . $email . ' | Name: ' . $name);
-   $pythonExecutable = 'C:\\Users\\shanu\\AppData\\Local\\Programs\\Python\\Python38\\python.exe';
-            $pythonScriptPath = 'C:\\wamp64\\www\\XFINITY\\assets\\python\\registered.py';
+   $pythonExecutable = 'python3';
+           $pythonScriptPath = '/var/www/html/assets/python/registered.py';
 
             // Pass parameters to the Python script
             $cmd = $pythonExecutable . " " . $pythonScriptPath . " " . 

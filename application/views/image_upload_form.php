@@ -15,8 +15,9 @@
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <!-- Google Maps API: Replace YOUR_API_KEY with your actual key -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyNnYX9lxpsHAWG4cC2YBPYA66QoOR2ao"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5sQ89Ap2Q93cbNV54D4oYH5kT-FANMLA"></script>
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   
   <style>
     /* Global Styles */
@@ -152,6 +153,7 @@
       padding: 40px;
     }
     .card {
+      position:relative;
       background: #fdfdfd;
       border-radius: 8px;
       padding: 30px;
@@ -577,6 +579,11 @@
       margin-bottom: 20px;
     }
     .invoice-logo img { max-width: 100px; }
+    .imgwrap{
+      display:flex;
+      justify-content:flex-end;
+    }
+    .invoice-logo2 img { margin-bottom:-20px; max-width: 100px;max-height:150px;}
     .invoice-title h2 {
       margin: 0;
       color: #ff6600;
@@ -594,7 +601,7 @@
     .invoice-table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 20px;
+      margin-bottom: 8px;
     }
     .invoice-table th, .invoice-table td {
       padding: 10px;
@@ -673,6 +680,7 @@
     
     /* Vehicle Details */
     .vehicle-details input {
+      
       width: calc(50% - 10px);
       padding: 10px;
       margin: 10px 5px 20px;
@@ -686,6 +694,35 @@
       box-shadow: 0 0 5px rgba(255,102,0,0.4);
       outline: none;
     }
+    .input-wrapper{
+      width: calc(50% - 10px);
+      position:Relative;
+    }
+    .input-wrapper input {
+  width: 100%;
+  padding-right: 35px; /* space for the spinner */
+}
+ .vehicle-brand-spinner {
+  
+  display: none; /* hidden initially */
+  position: absolute;
+  top: 32%;
+  right: 10px;
+ 
+  color: #888;
+  pointer-events: none;
+}
+.vehicle-brand-spinner2 {
+  display: none; /* hidden initially */
+  position: absolute;
+  top: 32%;
+  right: 10px;
+ 
+  color: #888;
+  pointer-events: none;
+}
+
+
     
     /* Schedule Pickup Form */
     .pickup-form input, .pickup-form select {
@@ -876,6 +913,19 @@
       align-items: center;
       justify-content: center;
     }
+     #goldOverlay2 {
+      display: none; /* Initially hidden */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(7px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
     /* Container for processing animation */
     .processing-container {
       margin-left:0px;
@@ -1054,9 +1104,16 @@
       <section id="step-vehicle" class="card step-section" style="display:none;">
         <h3>Step 3: Enter Vehicle Details</h3>
         <div class="vehicle-details">
-          <input type="text" id="vehicle-brand" placeholder="Vehicle Brand" autocomplete="off">
+        
+         <div  class="input-wrapper">
+      <input type="text" id="vehicle-brand" placeholder="Vehicle Brand" autocomplete="off">
+       <i class="fa-solid fa-spinner fa-spin vehicle-brand-spinner"></i>
+    </div>
+     <div  class="input-wrapper">
           <input type="text" id="vehicle-model" placeholder="Vehicle Model" autocomplete="off">
-          <input type="text" id="vehicle-reg" placeholder="Vehicle Registration No" autocomplete="off">
+          <i class="fa-solid fa-spinner fa-spin vehicle-brand-spinner2"></i>
+          </div>
+          <input type="text" id="vehicle-reg" placeholder="Vehicle Registration No" autocomplete="off" >
         </div>
         <button id="show-price-button" class="btn">Get Price Estimate</button>
       </section>
@@ -1118,17 +1175,31 @@
                 </tr>
               </tfoot>
             </table>
+            <div class="imgwrap">
+            <div class="invoice-logo2">
+             <p style="font-size:11px;font-weight:bold;margin-bottom:3px;">Authorised Signatory</p>
+                <img  src="<?php echo base_url('assets/images/ChatGPT Image Jun 27, 20025, 10_57_40 PM.png'); ?>" alt="XFINITY Logo">
+                  
+              </div>
+              </div>
           </div>
         </div>
-        <button id="view-invoice-btn" class="btn">View Invoice</button>
+        <button id="view-invoice-btn" class="btn">View Estimate</button>
       </section>
 
       <!-- Step 5: Pickup Location -->
       <!-- Step 3: Pickup Location -->
       <section id="step-pickup-location" class="card step-section" style="display:none;">
         <div class="pickup-header">
-          <i class="fas fa-map-marked-alt"></i>
-          <h3>Where Should We Pick You Up?</h3>
+          <lottie-player
+            src="https://lottie.host/934f41e2-793c-4b45-8876-81ce80ceb3b3/ZY7ZkFj7rG.json"
+            background="transparent"
+            speed="1"
+             style=" width: 108px; height: 108px; margin-bottom:-10px;margin-left:420px;margin-top:-44px;"
+            loop
+            autoplay>
+        </lottie-player>
+          <h3 style="">Where Should We Pick You Up?</h3>
           <p>Enter your location details below and let us handle the rest.</p>
         </div>
         <form id="pickup-location-form" class="pickup-location-form">
@@ -1165,7 +1236,15 @@
 
       <!-- Step 6: Schedule Pickup -->
       <section id="step-schedule" class="card step-section" style="display:none;">
-  <h3>Schedule Pickup</h3>
+        <lottie-player
+            src="https://lottie.host/4b4552e4-3953-4f52-bbd8-2c4678b87ed4/adP8N01WGY.json"
+            background="transparent"
+            speed=".5"
+             style=" position:absolute;width: 190px; height: 190px;top:-65px;"
+            loop
+            autoplay>
+        </lottie-player>
+  <h3 style="margin-top:25px;">Schedule Pickup</h3>
   <form id="schedule-form">
     <div class="pickup-form">
    <label for="pickup-date">Pickup Date:</label>
@@ -1220,7 +1299,7 @@
 </div>
 
 
-    <button type="submit" class="btn">Confirm &amp; Schedule Pickup </button>
+    <button type="submit" id="confirm" class="btn">Confirm &amp; Schedule Pickup </button>
    
   </form>
 </section>
@@ -1241,6 +1320,17 @@
       <div style="color:white;font-size:23px;transform:translateY(-40px);" class="processing-text animate__animated animate__headShake animate__infinite animate__slow">
  
  <i class="fas fa-spinner fa-spin"></i> Analyzing Image
+</div>
+      </div>
+      </div>
+
+ <div id="goldOverlay2">
+    <div class="processing-container">
+       <lottie-player src="https://lottie.host/6a310094-6058-44d6-9a5c-e25895626f22/pOtHMoQoy8.json"background="transparent" speed="1" loop autoplay style=" display:inline-block;width: 300px; height:300px;"></lottie-player>
+
+      <div style="color:white;font-size:23px;transform:translateY(-7px);" class="processing-text animate__animated animate__headShake animate__infinite animate__slow">
+ 
+ <i class="fas fa-spinner fa-spin"></i> Processing Estimate
 </div>
       </div>
       </div>
@@ -1446,6 +1536,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Save via AJAX
   saveBtn.addEventListener('click', () => {
+  saveBtn.innerHTML = '<i style="margin-right:5px;" class="fas fa-spinner fa-spin"></i><span style="padding-right:12px;">Updating</span>';
     const newAddr = inputField.value.trim();
     if (!newAddr) {
       alert('Address cannot be empty.');
@@ -1462,13 +1553,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return res.text();
     })
     .then(() => {
+       saveBtn.innerHTML = 'Save Address';
       // Update UI
       addrText.textContent = newAddr;
       editPane.style.display = 'none';
       viewPane.style.display = 'block';
 
       // Show & auto-hide success banner
-      successMsg.style.display = 'block';
+      successMsg.style.display = 'none';
       setTimeout(() => successMsg.style.display = 'none', 3000);
     })
     .catch(err => {
@@ -1490,6 +1582,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function lookupAccessoryPrice() {
+      if($("#vehicle-reg").val().trim() === "" ) {
+          alert("Please enter your vehicle's registration number!.");
+          return;
+        }
+      const estbtn     = document.getElementById("show-price-button"); 
+      estbtn.innerHTML = 'Hold On <i style="font-size:18px;margin-left:5px;"class="fas fa-spinner fa-spin"></i>';
       var brandId = $("#vehicle-brand").data("brand-id");
       var brandName = $("#vehicle-brand").data("brand-name");
       var model = $("#vehicle-model").data("model");
@@ -1524,6 +1622,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       } else {
+        estbtn.innerHTML = 'Get Price Estimate';
         alert("Please select both brand and model before checking the price.");
       }
     }
@@ -1657,8 +1756,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Bind click event for "View Invoice" button
       $("#view-invoice-btn").click(function(){
+          $('#goldOverlay2').css('display', 'flex').hide().fadeIn();
+         setTimeout(function(){
+             $('#goldOverlay2').fadeOut('fast');
         console.log("View Invoice button clicked");
         $("#invoice-modal").dialog("open");
+                }, 10000);
       });
 
       // Trigger file input when clicking the upload box
@@ -1836,14 +1939,18 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       
       $("#vehicle-brand").autocomplete({
+      
         source: function(request, response) {
+            document.querySelector('.vehicle-brand-spinner').style.display = 'inline-block';
           $.ajax({
             url: "<?php echo site_url('imageUpload/get_brands'); ?>",
             dataType: "json",
             data: { term: request.term },
             success: function(data) {
+              document.querySelector('.vehicle-brand-spinner').style.display = 'none';
               response($.map(data, function(item) {
                 return { label: item.name, value: item.name, id: item.id };
+                 
               }));
             }
           });
@@ -1857,6 +1964,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       $("#vehicle-model").autocomplete({
         source: function(request, response) {
+        document.querySelector('.vehicle-brand-spinner2').style.display = 'inline-block';
           var brandId = $("#vehicle-brand").data("brand-id");
           if (!brandId) { response([]); return; }
           $.ajax({
@@ -1864,6 +1972,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dataType: "json",
             data: { term: request.term, brand_id: brandId },
             success: function(data) {
+            document.querySelector('.vehicle-brand-spinner2').style.display = 'none';
               response($.map(data, function(item) {
                 return { label: item.name, value: item.name, id: item.id };
               }));
@@ -1878,6 +1987,8 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Updated schedule form submit: extract diagnosed issue from the card.
       $("#schedule-form").submit(function(e){
+         const conbtn = document.getElementById('confirm');
+        conbtn.innerHTML = 'Confirming Request <i style="font-size:17px;margin-left:4px;"class="fas fa-spinner fa-spin"></i>';
         e.preventDefault();
         var pickupDate = $("#pickup-date").val();
         var pickupTime = $("#pickup-time").val();

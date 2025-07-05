@@ -1055,7 +1055,7 @@
         <i class="fas fa-envelope"></i>
         <div class="detail-text">
           <div class="detail-label">Email</div>
-          <div class="detail-value" style="font-size:13.8px;"><?= html_escape($user['email']) ?></div>
+          <div class="detail-value" style="font-size:13.2px;"><?= html_escape($user['email']) ?></div>
         </div>
       </div>
       <div class="detail-item">
@@ -1241,8 +1241,8 @@
   <button type="button" class="category-btn" data-cat="bottts">
   <i class="fas fa-robot" style="margin-bottom:2.8px;"></i>Bottts
   </button>
-  <button type="button" class="category-btn" data-cat="lorelei">
-  <i class="fa-solid fa-pencil" style="margin-bottom:1px;"></i>Lorelei</button>
+  <button type="button" class="category-btn" data-cat="notionists">
+  <i class="fa-solid fa-pencil" style="margin-bottom:1px;"></i>Loreri</button>
   <button type="button" class="category-btn" data-cat="pixel-art">
   <i class="fa-solid fa-palette" style="margin-bottom:1px;"></i></i>Pixel Art</button>
   

@@ -399,8 +399,8 @@ class Payment extends CI_Controller {
            
             // Define your script paths and parameters
             // Paths and parameters as before.
-$pythonExecutable = 'C:\\Users\\shanu\\AppData\\Local\\Programs\\Python\\Python38\\python.exe';
-$pythonScriptPath = 'C:\\wamp64\\www\\XFINITY\\assets\\python\\payment_confirm.py';
+ $pythonExecutable = 'python3';
+           $pythonScriptPath = '/var/www/html/assets/python/payment_confirm.py';
 
 // Build the command string with properly escaped parameters.
 $cmd = $pythonExecutable . " " . $pythonScriptPath . " " .
