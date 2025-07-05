@@ -27,7 +27,7 @@ def get_credentials():
 
 def create_message():
     message = MIMEText("This is a test email from XFINITY Gmail API setup.")
-    message['to'] = 'sulthanlatheef1@gmail.com'
+    message['to'] = 'sulthanlatheef0@gmail.com'
     message['from'] = 'me'
     message['subject'] = 'XFINITY Gmail Test'
     encoded_message = base64.urlsafe_b64encode(message.as_bytes()).decode()

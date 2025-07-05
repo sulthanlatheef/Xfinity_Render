@@ -200,6 +200,7 @@
     .btn {
       
       position: relative; overflow: hidden;
+     
       padding: .75rem 1.6rem;
       border: none; border-radius: var(--radius);
       background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
@@ -375,7 +376,7 @@
        <img style= "padding:2px 2px;background:white;border-radius:7px;width:26px; height:26px;position:absolute;left:23px;" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>Sign up with Google
     </a>
     <button type="button" class="btn" id="nextBtn1" style="">
-      Next <i class="fas fa-arrow-right" style="margin-left:8px"></i>
+      Next <i class="fas fa-arrow-right" style="margin-left:10px"></i>
     </button>
    
   </div>
@@ -423,10 +424,10 @@
         <!-- Step 3 -->
         <section class="form-step" data-step="3">
           <div class="form-heading">Verify Your Account</div>
-          <div class="form-desc">We’ve sent a one-time code to your email. Enter it below to confirm you’re you.</div>
+          <div id="otpInstruction" class="form-desc">We’ve sent a one-time code to your email. Enter it below to confirm you’re you.</div>
           <div class="form-group">
             <label for="otp">One-Time Password *</label>
-           <input id="otp" name="otp" data-original-placeholder="Enter OTP" placeholder="Enter OTP" />
+           <input id="otp" name="otp" data-original-placeholder="Enter OTP Here" placeholder="Enter OTP Here" />
 
             <i class="fas fa-key fa-icon"></i>
             <div class="error" id="otpError"></div>
@@ -462,9 +463,7 @@
            </div>
   <div class="form-desc">Click “Register” to finalize your new XFINITY account.</div>
   <div class="btn-group">
-    <button type="button" class="btn btn--secondary" id="backBtn4">
-      <i class="fas fa-arrow-left" style="margin-right:8px"></i>Back
-    </button>
+   
     <button type="button" class="btn" id="registerBtn">
       <i class="fas fa-user-check" style="margin-right:8px"></i>Register
     </button>
@@ -521,7 +520,7 @@ function formatTime(seconds) {
   const m = Math.floor(seconds / 60).toString().padStart(2, '0');
   const s = (seconds % 60).toString().padStart(2, '0');
   return `${m}:${s}`;
-}
+}3
 
 // Handle resend OTP click
 document.getElementById('resendOtp').onclick = function (e) {
@@ -591,6 +590,8 @@ startOtpCountdown();
         });
       };
 
+      const nxt1     = document.getElementById("nextBtn1");
+
      document.getElementById('nextBtn1').addEventListener('click', function () {
   const emailInput = document.getElementById('email');
   const email = emailInput.value.trim();
@@ -614,6 +615,7 @@ startOtpCountdown();
     }, 2000);
   } else {
     // Send to backend for existence check
+   nxt1.innerHTML = '<i style="font-size:17.5px;padding-right:18px;padding-left:17.5px;"class="fas fa-spinner fa-spin"></i>';
     fetch('Register/validate_email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -622,6 +624,7 @@ startOtpCountdown();
     .then(res => res.json())
     .then(response => {
       if (response.status === 'error' && response.errors && response.errors.email) {
+        nextBtn1.innerHTML = 'Next <i style="margin-left:10px;"class="fas fa-arrow-right"></i> ';
         emailInput.value = '';
           emailInput.classList.add('red-placeholder');
         emailInput.placeholder = response.errors.email;
@@ -655,6 +658,8 @@ document.getElementById('nextBtn2').onclick = async () => {
     input.classList.remove('shake');
     input.placeholder = input.getAttribute('data-original-placeholder') || '';
   });
+  
+  const nxt2     = document.getElementById("nextBtn2"); 
 
   const payload = {
     name:     document.getElementById('name').value.trim(),
@@ -664,6 +669,7 @@ document.getElementById('nextBtn2').onclick = async () => {
   };
 
   try {
+    nxt2.innerHTML = '<i style="font-size:15px;padding-bottom:-5px;padding-right:18px;padding-left:18px;"class="fas fa-spinner fa-spin"></i>';
     const res  = await fetch('register/validate_details', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -672,6 +678,7 @@ document.getElementById('nextBtn2').onclick = async () => {
     const data = await res.json();
 
     if (data.status === 'error') {
+      nextBtn2.innerHTML = 'Next <i style="margin-left:5px;"class="fas fa-arrow-right"></i> ';
       // For each field with an error, show the error using placeholder + shake + red border
       for (let [field, msg] of Object.entries(data.errors)) {
         const input = document.getElementById(field);
@@ -718,6 +725,9 @@ document.getElementById('nextBtn2').onclick = async () => {
     const otpData = await otpRes.json();
 
     if (otpData.status === 'success') {
+      const email = document.getElementById('emailHidden').value;
+      const otpInstruction = document.getElementById('otpInstruction');
+      otpInstruction.innerHTML = `We’ve sent a one-time verification code to <strong>${email}</strong>`;
       show(2); // Continue to OTP entry step
     } else {
       alert('Failed to generate OTP. Please try again.');
@@ -735,6 +745,7 @@ document.getElementById('nextBtn2').onclick = async () => {
 
       // Step 3
 document.getElementById('nextBtn3').onclick = () => {
+  const nxt3     = document.getElementById("nextBtn3"); 
   const otpEl = document.getElementById('otp');
   const err = document.getElementById('otpError');
   const otpValue = otpEl.value.trim();
@@ -749,7 +760,7 @@ document.getElementById('nextBtn3').onclick = () => {
     otpEl.style.boxShadow = '0 0 0 2px #f44336';
     return;
   }
-
+  nxt3.innerHTML = 'Verify <i style="font-size:15px;margin-left:4px;"class="fas fa-spinner fa-spin"></i>';
   // Send OTP to server for verification
  fetch('register/verify_otp', {
     method: 'POST',
@@ -772,6 +783,7 @@ document.getElementById('nextBtn3').onclick = () => {
     }, 1500);
 
   } else if (data.status === 'expired') { 
+    nxt3.innerHTML = 'Verify <i style="font-size:15px;margin-left:4px;"class="fas fa-shield-halved "></i>';
     otpEl.value = '';
     otpEl.placeholder = data.message;
     otpEl.style.boxShadow = '0 0 0 2px orange';
@@ -786,6 +798,7 @@ document.getElementById('nextBtn3').onclick = () => {
     }, 3000);
 
   } else if (data.status === 'invalid') {
+    nxt3.innerHTML = 'Verify <i style="font-size:15px;margin-left:4px;"class="fas fa-shield-halved "></i>';
     otpEl.value = '';
     otpEl.placeholder = data.message;
     otpEl.style.boxShadow = '0 0 0 2px #f44336';
@@ -801,6 +814,7 @@ document.getElementById('nextBtn3').onclick = () => {
   }
 
   else if (data.status === 'cleared') {
+    nxt3.innerHTML = 'Verify <i style="font-size:15px;margin-left:4px;"class="fas fa-shield-halved "></i>';
     otpEl.value = '';
     otpEl.placeholder = data.message;
     otpEl.style.boxShadow = '0 0 0 2px #f44336';
@@ -833,6 +847,7 @@ document.getElementById('nextBtn3').onclick = () => {
     document.getElementById('registerBtn').addEventListener('click', async function(e) {
   // 1) Grab the current step container via `this.closest`
   const stepEl  = this.closest('.form-step');
+   const nxt4     = document.getElementById("registerBtn"); 
   // 2) Find the button group inside *that* step
   const btnGroup = stepEl.querySelector('.btn-group');
   const confMsg  = stepEl.querySelector('#confirmationMessage');
@@ -843,6 +858,7 @@ document.getElementById('nextBtn3').onclick = () => {
   // gather data
   const formEl  = document.getElementById('regForm');
   const formData = new FormData(formEl);
+  nxt4.innerHTML = '<i style="font-size:15px;padding-bottom:-5px;padding-right:18px;padding-left:18px;"class="fas fa-spinner fa-spin"></i>';
 
   try {
     const res  = await fetch('register/submit', {
@@ -861,6 +877,7 @@ document.getElementById('nextBtn3').onclick = () => {
       // show your confirmation block
       confMsg.style.display  = 'block';
     } else {
+      nxt4.innerHTML = ' <i class="fas fa-user-check" style="margin-right:8px"></i>Register';
       // server returned an error
       alert(data.message || 'Registration failed. Please try again.');
       btnGroup.querySelectorAll('button').forEach(btn => btn.disabled = false);

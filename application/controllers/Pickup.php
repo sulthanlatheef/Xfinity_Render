@@ -116,8 +116,8 @@ if($this->db->insert('tracking', $tracking_data)) {
 
             // Trigger the Python script to send an email.
             // Use full paths for the Python executable and script.
-            $pythonExecutable = 'C:\\Users\\shanu\\AppData\\Local\\Programs\\Python\\Python38\\python.exe';
-            $pythonScriptPath = 'C:\\wamp64\\www\\XFINITY\\assets\\python\\send_email.py';
+             $pythonExecutable = 'python3';
+           $pythonScriptPath = '/var/www/html/assets/python/send_email.py';
 
             // Pass parameters to the Python script
             $cmd = $pythonExecutable . " " . $pythonScriptPath . " " . 
