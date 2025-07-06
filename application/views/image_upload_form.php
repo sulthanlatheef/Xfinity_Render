@@ -566,11 +566,16 @@
     }
     
     /* Invoice Modal (Restored as provided) */
-    #invoice-modal { display: none; font-size: 14px; }
+    #invoice-modal { display: none; font-size: 14px; margin-bottom:-12px;}
     #invoice-modal .modal-content {
-      padding: 20px;
+      padding-top: 20px;
+      padding-left: 20px;
+          padding-right: 20px;
+          padding-bottom:20px;
+      padding-bottom:
       background: #fff;
       border-radius: 8px;
+      overflow:hidden;
     }
     .invoice-header {
       display: flex;
@@ -578,8 +583,10 @@
       align-items: center;
       margin-bottom: 20px;
     }
-    .invoice-logo img { max-width: 100px; }
+    .invoice-logo img { max-width: 250px; }
     .imgwrap{
+    
+     
       display:flex;
       justify-content:flex-end;
     }
@@ -788,7 +795,10 @@
   @keyframes zoomIn {
     to { transform: scale(1); opacity: 1; }
   }
-
+ .temp{
+  position:relative;
+  width:100%;
+ }
   /* Header with gradient + Lottie */
   .modal1-header {
     position: relative;
@@ -1124,10 +1134,10 @@
         <div class="preview-info">
         This detailed repair estimate is generated based on our advanced AI damage detection system. Prices are calculated considering the severity of the damage and your  selected vehicle model. For any inquiries or assistance, feel free to contact our support team.  We ensure transparent and accurate pricing for your vehicle's best care.
         </div>
-        <div id="invoice-modal" title="XFINITY ">
+        <div style="margin-top:-7px;" id="invoice-modal" title="XFINITY ">
           <div class="modal-content">
             <div class="invoice-header">
-              <div class="invoice-logo">
+              <div style="margin-top:-7px;"class="invoice-logo">
                 <img src="<?php echo base_url('assets/images/creative ai (2).png'); ?>" alt="XFINITY Logo">
 
               </div>
@@ -1175,15 +1185,20 @@
                 </tr>
               </tfoot>
             </table>
-            <div class="imgwrap">
+            <div style="" class="imgwrap">
+             
             <div class="invoice-logo2">
-             <p style="font-size:11px;font-weight:bold;margin-bottom:3px;">Authorised Signatory</p>
-                <img  src="<?php echo base_url('assets/images/ChatGPT Image Jun 27, 20025, 10_57_40 PM.png'); ?>" alt="XFINITY Logo">
-                  
-              </div>
-              </div>
+          
+                <img style="margin-top:0px;" src="<?php echo base_url('assets/images/ChatGPT Image Jun 27, 20025, 10_57_40 PM.png'); ?>" alt="XFINITY Logo">
+               
+                
+                    <p style="font-size:10.5px;font-weight:bold;margin-top:19px;margin-bottom:0px;padding-bottom:0px;">Authorised Signatory</p> 
+              
+    </div>
+             
           </div>
         </div>
+    </div>
         <button id="view-invoice-btn" class="btn">View Estimate</button>
       </section>
 
@@ -1553,12 +1568,15 @@ document.addEventListener('DOMContentLoaded', () => {
       return res.text();
     })
     .then(() => {
-       saveBtn.innerHTML = 'Save Address';
+    saveBtn.innerHTML = '<i style="margin-right:5px;" class="fas fa-circle-check"></i><span style="padding-right:15px;">Success</span>';
+      setTimeout(function(){
+      saveBtn.innerHTML = 'Save Address';
       // Update UI
       addrText.textContent = newAddr;
       editPane.style.display = 'none';
       viewPane.style.display = 'block';
-
+       
+           }, 1500);
       // Show & auto-hide success banner
       successMsg.style.display = 'none';
       setTimeout(() => successMsg.style.display = 'none', 3000);
@@ -1761,7 +1779,7 @@ document.addEventListener('DOMContentLoaded', () => {
              $('#goldOverlay2').fadeOut('fast');
         console.log("View Invoice button clicked");
         $("#invoice-modal").dialog("open");
-                }, 10000);
+                },0000);
       });
 
       // Trigger file input when clicking the upload box
