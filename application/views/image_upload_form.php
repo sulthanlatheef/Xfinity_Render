@@ -1779,7 +1779,7 @@ document.addEventListener('DOMContentLoaded', () => {
              $('#goldOverlay2').fadeOut('fast');
         console.log("View Invoice button clicked");
         $("#invoice-modal").dialog("open");
-                },0000);
+                },7000);
       });
 
       // Trigger file input when clicking the upload box
