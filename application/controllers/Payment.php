@@ -409,12 +409,12 @@ $cmd = $pythonExecutable . " " . $pythonScriptPath . " " .
        escapeshellarg($pickup_id) . " " .
        escapeshellarg($razorpay_payment_id) . " " .
        escapeshellarg($currentDate) . " " .
-       escapeshellarg($currentTime) . " >NUL 2>&1";
+       escapeshellarg($currentTime);
 
 // To improve responsiveness, we launch the process using the full command interpreter.
 // Using "cmd /C" forces the command shell to execute our command, and "start /B" launches it in the background without opening a new window.
 // This method helps detach the execution.
-$fullCommand = 'cmd /C start /B ' . $cmd;
+$fullCommand = "nohup $cmd > /dev/null 2>&1 &";
 
 // Set an empty descriptor array (we don’t need to read or write to the process).
 $descriptorspec = [
@@ -433,7 +433,7 @@ if (is_resource($process)) {
     }
     // Close the process handle to free up resources immediately.
     proc_close($process);
-    log_message('info', "Executed asynchronous command via proc_open with cmd /C and start /B.");
+    log_message('info', "Executed asynchronous command via proc_open with linux");
 } else {
     log_message('error', "Failed to launch asynchronous process.");
 }

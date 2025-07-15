@@ -1559,19 +1559,7 @@ const modalConfetti = confetti.create(modalCanvas, {
             description: "Premium Plan",
             order_id: res.order_id,
             handler: function (response) {
-  $.ajax({
-    url: '<?= site_url("Payment/verify") ?>',
-    type: 'POST',
-    dataType: 'json',
-    data: {
-      razorpay_order_id:   response.razorpay_order_id,
-      razorpay_payment_id: response.razorpay_payment_id,
-      razorpay_signature:  response.razorpay_signature
-    },
-    success: function (res) {
-  if (res.status === 'success') {
-         
-  const lottiePlayer = document.querySelector('#paymentOverlay lottie-player');
+               const lottiePlayer = document.querySelector('#paymentOverlay lottie-player');
 
     // Remove the old player
     const newPlayer = document.createElement('lottie-player');
@@ -1592,6 +1580,19 @@ const modalConfetti = confetti.create(modalCanvas, {
 
     // Show the overlay
     $('#paymentOverlay').css('display', 'flex').show();
+  $.ajax({
+    url: '<?= site_url("Payment/verify") ?>',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      razorpay_order_id:   response.razorpay_order_id,
+      razorpay_payment_id: response.razorpay_payment_id,
+      razorpay_signature:  response.razorpay_signature
+    },
+    success: function (res) {
+  if (res.status === 'success') {
+         
+ 
 setTimeout(function() {
     $('#paymentOverlay').fadeOut('fast');
     openGoldModal();
@@ -1678,6 +1679,8 @@ prefill: {
   modal: {
     // This is called when the user clicks the “×” or presses Esc
     ondismiss: function () {
+        $('#paymentOverlay .processing-text').text("Authenticating Transaction...");
+          $('#paymentOverlay').css('display', 'flex').show();
       // re-verify membership
       $.ajax({
         url: '<?= site_url("Payment/verify_sub") ?>',
@@ -1685,8 +1688,7 @@ prefill: {
         dataType: 'json'
       }).done(function(subRes) {
         if (subRes.membership_type !== 'Gold Membership') {
-          $('#paymentOverlay .processing-text').text("Authenticating Transaction...");
-          $('#paymentOverlay').css('display', 'flex').show();
+        
           setTimeout(function() {
     $('#paymentOverlay').fadeOut('fast');
    
