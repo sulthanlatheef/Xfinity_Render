@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>XFINITY Invoice</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
@@ -150,10 +151,10 @@
   <div><input type="text" id="desc" placeholder="Description"></div>
   <div><input type="number" id="qty" placeholder="Quantity" min="1"></div>
   <div><input type="number" id="price" placeholder="Unit Price" step="0.01"></div>
-  <div><button onclick="addItem()">Add</button></div>
+  <div><button style="transform:translateY(-7px);border-radius:10px;padding:9px;padding-right:15px;padding-left:15px;" onclick="addItem()">Add</button></div>
 </div>
 
-<button onclick="downloadPDF()">Download & Save Invoice</button>
+<button id="savebtn" style= "border-radius:10px;"onclick="downloadPDF()">Download & Save Invoice</button>
 
 <script>
   // Auto-populate bill-to name if present
@@ -236,6 +237,8 @@ function updateTotals() {
 
 
   function downloadPDF() {
+    const saveBtn    = document.getElementById('savebtn');
+    saveBtn.innerHTML = '<i style="margin-right:5px;" class="fas fa-spinner fa-spin"></i><span>Saving Invoice</span>';
     const $clone = $('#invoice-content').clone();
     const modifiedNum = document.getElementById('invoice-no').value;
 
@@ -272,11 +275,13 @@ function updateTotals() {
             total: total,
             pickup_id: pickupId
           }, function(finRes) {
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<i style="margin-right:5px;" class="fas fa-circle-check"></i><span>Invoice Saved Successfully</span>';
             console.log("finvoice() success:", finRes);
-            alert("Invoice data sent and PDF saved.");
+            
           }).fail(function(err) {
             console.error("finvoice() failed:", err);
-            alert("Invoice PDF saved but info not sent to backend.");
+            alert("Invoice PDF saved but info not sent to backend.Please refresh the page and try again");
           });
 
         },
