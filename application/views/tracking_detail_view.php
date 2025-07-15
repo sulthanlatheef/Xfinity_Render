@@ -994,7 +994,7 @@
     e.preventDefault();
     
     // Show the overlay as flex
-    $('#paymentOverlay').css('display', 'flex').hide().fadeIn();
+    $('#paymentOverlay').css('display', 'flex');
 
     // Delay the payment process for 7 seconds
     setTimeout(function() {
@@ -1013,18 +1013,7 @@
               "description": "Test Transaction",
               "order_id": orderData.order_id,
               "handler": function (response) {
-                $.ajax({
-                  url: "<?php echo site_url('Payment/verify_payment'); ?>",
-                  type: "POST",
-                  dataType: "json",
-                  contentType: "application/json",
-                  data: JSON.stringify({
-                    razorpay_payment_id: response.razorpay_payment_id,
-                    razorpay_order_id: response.razorpay_order_id,
-                    razorpay_signature: response.razorpay_signature
-                  }),
-                  success: function(verifyResult) {
-                    const lottiePlayer = document.querySelector('#paymentOverlay lottie-player');
+                const lottiePlayer = document.querySelector('#paymentOverlay lottie-player');
 
     // Remove the old player
     const newPlayer = document.createElement('lottie-player');
@@ -1045,6 +1034,18 @@
 
     // Show the overlay
     $('#paymentOverlay').css('display', 'flex').show();
+                $.ajax({
+                  url: "<?php echo site_url('Payment/verify_payment'); ?>",
+                  type: "POST",
+                  dataType: "json",
+                  contentType: "application/json",
+                  data: JSON.stringify({
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_signature: response.razorpay_signature
+                  }),
+                  success: function(verifyResult) {
+                  
 
 setTimeout(function() {
   $('#paymentOverlay').fadeOut();
