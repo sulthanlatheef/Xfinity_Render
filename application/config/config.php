@@ -395,7 +395,7 @@ $config['encryption_key'] = '';
 */
 $config['sess_driver'] = 'database';
 $config['sess_cookie_name'] = 'ci_session_xfinity';   // Unique name
-$config['sess_save_path'] = 'sql12784901.ci_sessions';            // Table name
+$config['sess_save_path'] = 'sql12793349.ci_sessions';            // Table name
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
