@@ -95,7 +95,7 @@ Edit your DB credentials in:
    :alt: Homepage UI
    :align: center
 
-.. image:: assets/images/gold.png
+.. image:: assets/images/Screenshot 2025-06-10 212327.png
    :alt: AI Damage Detection
    :align: center
 
