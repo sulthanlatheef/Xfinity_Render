@@ -12,10 +12,10 @@ A modern web application that combines AI-powered automobile diagnostics with a 
 
 ## Tech Stack
 
-- **Backend**: PHP, CodeIgniter 3.1.14
-- **Frontend**: HTML, CSS, JavaScript
-- **AI/ML**: Python, YOLOv5, OpenCV
-- **Database**: MySQL
+- **Backend**: PHP, CodeIgniter 3.1.14  
+- **Frontend**: HTML, CSS, JavaScript  
+- **AI/ML**: Python, YOLOv5, OpenCV  
+- **Database**: MySQL  
 - **Web Server**: Apache / Localhost (can be deployed on cloud servers)
 
 ## Installation & Setup
@@ -23,12 +23,6 @@ A modern web application that combines AI-powered automobile diagnostics with a 
 1. Clone the repository:
    ```bash
    git clone https://github.com/sulthanlatheef/Xfinity_Render.git
-2. Install Python dependencies for AI module:
-   ```bash
-   pip install -r requirements.txt
-3. Configure the database in application/config/database.php.
 
-4. Start the local server or deploy to cloud hosting.
 
-5. Run the Flask AI module (app.py) for damage detection.
 
