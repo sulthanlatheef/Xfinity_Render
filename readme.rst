@@ -1,43 +1,126 @@
-# 🚗✨ Xfinity Render — AI-Powered Automobile Diagnostics & Service Portal
+FullStack Automobile Service & Diagnostics Web App
+==================================================
 
-Welcome to **Xfinity Render** — where cutting-edge AI meets seamless car care!  
-Transform your auto service experience with instant, image-based damage detection, easy bookings, and dynamic service estimates — all in one sleek web app.
+A **modern, AI-powered web application** that combines **automobile damage detection**
+with a **comprehensive service management system**. Users can upload images of their
+vehicles, detect external damages, and instantly receive a detailed service estimate — all in one place.
 
----
+Key Features
+------------
 
-## 🌟 Why Xfinity Render?
+- **AI-Based Damage Detection**
 
-- **Snap & Detect:**  
-  Simply upload a photo of your vehicle — let our smart AI (powered by YOLOv5) pinpoint dents, scratches, glass cracks, and headlight problems in seconds!
+  Upload images of your vehicle to detect:
+  
+  - Bumper dents
+  - Scratches
+  - Glass cracks
+  - Headlight issues
 
-- **Instant Estimates:**  
-  No more guesswork! Get detailed invoices and repair costs tailored to your car’s brand & model, right after damage is detected.
+  Powered by a **YOLOv5-based deep learning model**.
 
-- **Book with Ease:**  
-  Enjoy a smooth, intuitive interface to book services, choose your vehicle, and review comprehensive damage reports.
+- **Dynamic Service Estimates**
 
-- **Ready for Tomorrow:**  
-  Our modular, future-proof platform is primed for payment gateways, appointment scheduling, and advanced diagnostics.
+  Generates detailed invoices based on:
+  
+  - Detected damages
+  - Selected vehicle brand and model
 
----
+- **FullStack Web Functionality**
 
-## 🛠️ Tech That Drives Us
+  Developed with a **CodeIgniter (PHP)** backend and modern frontend stack.
 
-| 💻 Layer      | 🚀 Technology                   |
-|--------------|---------------------------------|
-| Backend      | PHP, CodeIgniter 3.1.14         |
-| Frontend     | HTML, CSS, JavaScript           |
-| AI/ML        | Python, YOLOv5, OpenCV          |
-| Database     | MySQL                           |
-| Server       | Apache / Localhost (Cloud-ready)|
+- **User-Friendly Interface**
 
----
+  Allows:
+  
+  - Booking services
+  - Selecting vehicle make/model
+  - Viewing damage reports and repair cost estimates
 
-## ⚡ Get Started in Minutes!
+- **Future-Ready Architecture**
 
-1. **Clone the Magic:**
-   ```bash
+  Designed for easy integration of:
+  
+  - Payment gateways
+  - Appointment scheduling
+  - Advanced diagnostics
+
+Tech Stack
+----------
+
++----------------+--------------------------------------+
+| Layer          | Technologies                         |
++================+======================================+
+| Backend        | PHP, CodeIgniter 3.1.14              |
++----------------+--------------------------------------+
+| Frontend       | HTML, CSS, JavaScript                |
++----------------+--------------------------------------+
+| AI/ML Module   | Python, YOLOv5, OpenCV               |
++----------------+--------------------------------------+
+| Database       | MySQL                                |
++----------------+--------------------------------------+
+| Server         | Apache / Localhost (Cloud-Ready)     |
++----------------+--------------------------------------+
+
+Installation & Setup
+---------------------
+
+1. **Clone the Repository**
+
+::
+
    git clone https://github.com/sulthanlatheef/Xfinity_Render.git
    cd Xfinity_Render
 
+2. **Install Python Dependencies for AI Module**
 
+::
+
+   pip install -r requirements.txt
+
+3. **Configure the Database**
+
+Edit the file:
+
+::
+
+   application/config/database.php
+
+Add your MySQL credentials.
+
+4. **Run the Application**
+
+- Start your Apache server (e.g., XAMPP, MAMP, etc.)
+- Access the project via `localhost` or deploy it to your preferred cloud provider.
+
+Screenshots *(Optional)*
+-------------------------
+
+Add screenshots to showcase:
+
+- Homepage UI
+- AI Detection Results
+- Service Estimate Page
+
+You can add images like:
+
+.. image:: screenshots/homepage.png
+   :alt: Homepage
+
+.. image:: screenshots/detection_result.png
+   :alt: Damage Detection Result
+
+Contributions & Feedback
+-------------------------
+
+Have suggestions or want to contribute?
+
+- Fork the repository
+- Submit a Pull Request
+- Open an Issue for bugs or feature requests
+
+License
+-------
+
+This project is licensed under the MIT License. See the ``LICENSE`` file for more details.
