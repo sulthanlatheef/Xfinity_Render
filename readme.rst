@@ -91,7 +91,7 @@ Edit your DB credentials in:
 🖼️ Screenshots (Optional)
 --------------------------
 
-.. image:: /assets/images/image-250x150 (1).jpg
+.. image:: assets/images/Screenshot 2025-06-10 212327.png
    :alt: Homepage UI
    :align: center
 
