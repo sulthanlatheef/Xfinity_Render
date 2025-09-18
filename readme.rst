@@ -1,33 +1,40 @@
-FullStack Automobile Service & Diagnostics Web App
+# Advanced AI Diagnostics Engine for Vehicle Damage Detection
 
-A modern web application that combines AI-powered automobile diagnostics with a complete service management system. Users can upload images of their vehicles to detect external damages, select their car model and brand, and receive a detailed service estimate automatically.
+A YOLOv5-based AI engine designed to automatically detect external vehicle damages from images. This engine can identify multiple types of car damages, provide confidence scores for severity, and can be integrated into web or desktop applications for automated service estimates.
 
- Features
+## Features
 
-- **AI-based Damage Detection**: Upload car images to detect damages such as bumper dents, scratches, glass cracks, and headlight issues using a YOLOv5-based model.
-- **Dynamic Service Estimates**: Generates detailed invoices based on detected damage and selected car model.
-- **FullStack Web Functionality**: Built with CodeIgniter (backend) and modern frontend technologies.
-- **User-Friendly Interface**: Intuitive design for service booking, vehicle selection, and viewing repair estimates.
-- **Future-Ready**: Structured to integrate additional modules like payment gateways, appointment scheduling, and advanced AI diagnostics.
+- **Damage Detection**: Detects external car damages including:
+  - Front/Rear Glass Damage
+  - Headlight Damage
+  - Bumper Scratches & Dents
+  - Side Mirror Damage
+- **Confidence Scoring**: Each detected damage includes a confidence score, useful for estimating severity.
+- **YOLOv5 Model**: Trained with a custom dataset for high accuracy on vehicle damage detection.
+- **Integration Ready**: Can be used with Flask or other web frameworks, easily integrated into FullStack applications.
 
- Tech Stack
+## Tech Stack
 
-- **Backend**: PHP, CodeIgniter 3.1.14  
-- **Frontend**: HTML, CSS, JavaScript  
-- **AI/ML**: Python, YOLOv5, OpenCV  
-- **Database**: MySQL  
-- **Web Server**: Apache / Localhost (can be deployed on cloud servers)
+- **AI/ML Framework**: PyTorch, YOLOv5
+- **Programming Language**: Python 3.x
+- **Computer Vision**: OpenCV
+- **Web Integration**: Flask API (for connecting with web applications)
+- **Dataset**: Custom-labeled vehicle damage images
 
-Installation & Setup
+## Installation & Setup
 
-1. Clone the repository: git clone https://github.com/sulthanlatheef/Xfinity_Render.git
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/advanced-ai-diagnostics.gitxt
+2.Install required Python packages:
+ pip install -r requirements.txt
+ 
+3.Ensure best.pt (trained YOLOv5 model) is in the root directory.
 
-2. Install Python dependencies for AI module: pip install -r requirements.txt
-
-3. Configure the database in application/config/database.php.
-
-
-4.Start the local server or deploy to cloud hosting.
+4. Run the Flask API:
+   ```bash
+   python app.py
+ 5.The engine is now ready to receive vehicle images via API for damage detection. 
 
 
 
