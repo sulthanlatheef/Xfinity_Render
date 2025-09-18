@@ -20,12 +20,12 @@ A modern web application that combines AI-powered automobile diagnostics with a 
 
 Installation & Setup
 
-1. Clone the repository:
-   
-   git clone https://github.com/sulthanlatheef/Xfinity_Render.git
-2. Install Python dependencies for AI module:
-   pip install -r requirements.txt
+1. Clone the repository: git clone https://github.com/sulthanlatheef/Xfinity_Render.git
+
+2. Install Python dependencies for AI module: pip install -r requirements.txt
+
 3. Configure the database in application/config/database.php.
+
 4.Start the local server or deploy to cloud hosting.
 
 
