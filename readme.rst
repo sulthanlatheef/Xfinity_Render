@@ -91,7 +91,7 @@ Edit your DB credentials in:
 🖼️ Screenshots (Optional)
 --------------------------
 
-.. image:: screenshots/homepage.png
+.. image:: assets/_storage_emulated_0_DCIM_.convert_security_files_1742575758602.jpg
    :alt: Homepage UI
    :align: center
 
