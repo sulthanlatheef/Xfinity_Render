@@ -21,10 +21,10 @@ A modern web application that combines AI-powered automobile diagnostics with a 
 ## Installation & Setup
 
 1. Clone the repository:
-   bash
-   git clone https://github.com/sulthanlatheef/Xfinity_Alive.git
+   ```bash
+   git clone https://github.com/sulthanlatheef/Xfinity_Render.git
 2. Install Python dependencies for AI module:
-   bash
+   ```bash
    pip install -r requirements.txt
 3. Configure the database in application/config/database.php.
 
