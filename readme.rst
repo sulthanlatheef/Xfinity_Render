@@ -26,6 +26,8 @@ A modern web application that combines AI-powered automobile diagnostics with a 
 
 3. Configure the database in application/config/database.php.
 
+4.
+
 
 
 
