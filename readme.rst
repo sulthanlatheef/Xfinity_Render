@@ -95,7 +95,7 @@ Edit your DB credentials in:
    :alt: Homepage UI
    :align: center
 
-.. image:: screenshots/detection_result.png
+.. image:: assets/images/gold.png
    :alt: AI Damage Detection
    :align: center
 
