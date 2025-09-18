@@ -26,6 +26,7 @@ Installation & Setup
 
 3. Configure the database in application/config/database.php.
 
+
 4.Start the local server or deploy to cloud hosting.
 
 
