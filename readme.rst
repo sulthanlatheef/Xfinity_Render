@@ -91,11 +91,11 @@ Edit your DB credentials in:
 🖼️ Screenshots (Optional)
 --------------------------
 
-.. image::assets/images/home.png
+.. image:: assets/images/home.png
    :alt: Homepage UI
    :align: center
 
-.. image::assets/images/Screenshot 2025-06-10 212327.png
+.. image:: assets/images/Screenshot 2025-06-10 212327.png
    :alt: AI Damage Detection
    :align: center
 
