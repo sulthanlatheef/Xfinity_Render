@@ -91,7 +91,7 @@ Edit your DB credentials in:
 🖼️ Screenshots (Optional)
 --------------------------
 
-.. image:: assets/images/image-250x150 (5).jpg
+.. image:: assets/images/creative.png
    :alt: Homepage UI
    :align: center
 
