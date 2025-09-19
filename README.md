@@ -75,4 +75,8 @@ application/config/database.php
 ### 🖼️ Screenshots
 ![Homepage UI](assets/images/homepage.png)  
 
+![Homepage UI](assets/images/intro.png)  
+
+![Homepage UI](assets/images/login.png)  
+
 
