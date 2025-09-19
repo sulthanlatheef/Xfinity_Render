@@ -88,15 +88,20 @@ Edit your DB credentials in:
 - Start your Apache server (e.g., XAMPP/MAMP)
 - Access via `localhost` or deploy to a cloud provider
 
-🖼️ Screenshots (Optional)
---------------------------
+🖼️ Screenshots
+---------------
 
-![Homepage UI](assets/images/home.png)
+.. image:: assets/images/home.png
+   :alt: Homepage UI
+   :align: center
+   :width: 600px
 
-![AI Damage Detection](assets/images/screenshot-2025-06-10.png)
+.. image:: assets/images/screenshot-2025-06-10-212327.png
+   :alt: AI Damage Detection
+   :align: center
+   :width: 600px
 
-
-💡 Tip: Make sure screenshots are added to the `screenshots/` folder.
+💡 Tip: Make sure screenshots are added to the ``assets/images/`` folder.
 
 🤝 Contributions & Feedback
 ----------------------------
@@ -112,4 +117,3 @@ We welcome your contributions! 🙌
 
 This project is licensed under the **MIT License**.  
 See the ``LICENSE`` file for details.
-
