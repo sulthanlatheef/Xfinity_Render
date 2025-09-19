@@ -1,7 +1,7 @@
 ## 🖼️ Screenshots
 
 ### Homepage
-![Homepage UI](assets/images/gold.png)
+![Homepage UI](assets/images/profile.png)
 
 ### AI Damage Detection
 ![AI Detection](assets/images/detection.png)
