@@ -9,11 +9,14 @@ vehicles, detect visible damages automatically, and get real-time service estima
 ## ✨ Key Features
 
 ### 🔍 AI-Based Damage Detection
-- Upload vehicle images to detect:
+- Upload vehicle images to detect issues like:
   - 🚙 Bumper dents  
   - ✨ Scratches  
   - 🔍 Glass cracks  
-  - 💡 Headlight issues  
+  - 💡 Headlight issues
+  - 🔍 Side Mirror Damages
+  - 🚙Fender Issues
+  - 💡Quaterpannel Issues
 - Powered by a **YOLOv5 deep learning model** and OpenCV.
 
 ### 🧾 Dynamic Service Estimates
@@ -28,7 +31,8 @@ vehicles, detect visible damages automatically, and get real-time service estima
 ### 🖥️ User-Friendly Interface
 - Book repair services  
 - Select vehicle brand/model  
-- View repair diagnostics and cost estimates  
+- View repair diagnostics and cost estimates
+- Dedicated chatbot named 'xyle' powered Google Gemini
 
 ### 🚀 Future-Ready Architecture
 - Designed to integrate:
@@ -100,6 +104,8 @@ application/config/database.php
 ![Homepage UI](assets/images/p1.png)
 
 ![Homepage UI](assets/images/p2.png) 
+
+![Homepage UI](assets/images/profile.png) 
 
 ![Homepage UI](assets/images/about.png) 
 
