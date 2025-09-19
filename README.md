@@ -73,6 +73,6 @@ application/config/database.php
   * Access via http://localhost or deploy to a cloud provider
 
 ### 🖼️ Screenshots
-![Homepage UI](assets/images/profile.png)  
+![Homepage UI](assets/images/Screenshot 2025-04-27 173518.png)  
 
 
