@@ -63,6 +63,13 @@ pip install -r requirements.txt
 ```
 3️⃣ Configure the Database
 Edit your DB credentials in:
+```bash
+application/config/database.php
+```
+4️⃣ Run the Application
 
+  * Start your Apache server (e.g., XAMPP/MAMP)
+
+  * Access via http://localhost or deploy to a cloud provider
 
 
