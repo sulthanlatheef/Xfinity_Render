@@ -1570,7 +1570,7 @@ input:focus{
   <div class="gold-wrapper" style="box-sizing:border-box;">
     <!-- LEFT: Reduced-Width Image -->
     <div class="gold-image">
-      <img src="<?= base_url('assets/images/gold.png') ?>" alt="Gold Membership Illustration" />
+      <img src="<?= base_url('assets/images/goldimg.png') ?>" alt="Gold Membership Illustration" />
     </div>
 
     <!-- RIGHT: Expanded Benefits Panel -->
