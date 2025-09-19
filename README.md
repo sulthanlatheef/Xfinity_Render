@@ -77,6 +77,33 @@ application/config/database.php
 
 ![Homepage UI](assets/images/intro.png)  
 
-![Homepage UI](assets/images/login.png)  
+![Homepage UI](assets/images/xyle.png) 
+
+![Homepage UI](assets/images/signup.png)  
+
+![Homepage UI](assets/images/login.png) 
+
+![Homepage UI](assets/images/login2.png) 
+
+![Homepage UI](assets/images/services.png) 
+
+![Homepage UI](assets/images/upload) 
+
+![Homepage UI](assets/images/result.png) 
+
+![Homepage UI](assets/images/invoice.png) 
+
+![Homepage UI](assets/images/booked.png) 
+
+![Homepage UI](assets/images/track.png) 
+
+![Homepage UI](assets/images/p1.png)
+
+![Homepage UI](assets/images/p2.png) 
+
+![Homepage UI](assets/images/about.png) 
+
+
+
 
 
