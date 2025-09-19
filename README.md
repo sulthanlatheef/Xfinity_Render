@@ -1,4 +1,4 @@
-# 🚗 FullStack Automobile Service & Diagnostics Web App
+#  Full-Stack Cloud Platform for Intelligent Automobile  Service Management (Xfinity)
 
 A **modern, AI-powered web application** that combines automobile **damage detection**
 with a full-featured **service management system**. Users can upload images of their
@@ -76,7 +76,7 @@ application/config/database.php
 
   * Access via http://localhost or deploy to a cloud provider
 
-### 🖼️ Screenshots
+### 🖼️ Screenshots 
 ![Homepage UI](assets/images/homepage.png)  
 
 ![Homepage UI](assets/images/intro.png)  
