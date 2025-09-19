@@ -91,15 +91,11 @@ Edit your DB credentials in:
 🖼️ Screenshots
 ---------------
 
-.. image:: assets/images/home.png
+.. image:: https://github.com/sulthanlatheef/Xfinity_Render/raw/main/assets/images/home.png
    :alt: Homepage UI
-   :align: center
-   :width: 600px
 
-.. image:: assets/images/screenshot-2025-06-10-212327.png
+.. image:: https://github.com/sulthanlatheef/Xfinity_Render/raw/main/assets/images/screenshot-2025-06-10-212327.png
    :alt: AI Damage Detection
-   :align: center
-   :width: 600px
 
 💡 Tip: Make sure screenshots are added to the ``assets/images/`` folder.
 
