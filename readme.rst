@@ -91,13 +91,10 @@ Edit your DB credentials in:
 🖼️ Screenshots (Optional)
 --------------------------
 
-.. image::  assets/images/home.png
-   :alt: Homepage UI
-   :align: center
+![Homepage UI](assets/images/home.png)
 
-.. image:: assets/images/Screenshot 2025-06-10 212327.png
-   :alt: AI Damage Detection
-   :align: center
+![AI Damage Detection](assets/images/screenshot-2025-06-10.png)
+
 
 💡 Tip: Make sure screenshots are added to the `screenshots/` folder.
 
