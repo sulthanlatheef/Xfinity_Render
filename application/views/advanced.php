@@ -832,7 +832,7 @@ footer .social-icons i:hover {
       </div>
       <!-- Generate Estimate Card with Image -->
       <div class="feature-card">
-        <img src="<?php echo base_url('assets/images/image-250x150 (5).jpg'); ?>" alt="Generate Estimate" class="card-img" />
+        <img src="<?php echo base_url('assets/images/image-250x150(5).jpg'); ?>" alt="Generate Estimate" class="card-img" />
         <h3>
           Instant Estimate</h3>
         <p>
