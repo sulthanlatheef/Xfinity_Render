@@ -3,12 +3,12 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE_DIR)
 import sys
 import base64
+from dotenv import load_dotenv
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from email.mime.text import MIMEText
-
+load_dotenv(dotenv_path="../../.env")
 # Get arguments from PHP
 email = sys.argv[2]
 payment_id = sys.argv[4]
@@ -22,21 +22,17 @@ SCOPES = ['https://www.googleapis.com/auth/gmail.send']
 
 def get_credentials():
     creds = None
-    # Load existing token
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
     
-    # If no valid credentials, authenticate
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
-            creds = flow.run_local_server(port=0)
-        # Save credentials for future use
-        with open('token.json', 'w') as token:
-            token.write(creds.to_json())
+    creds = Credentials(
+    token=None,  # access token will be fetched
+    refresh_token=os.getenv("GOOGLE_REFRESH_TOKEN"),
+    token_uri=os.getenv("GOOGLE_TOKEN_URI"),
+    client_id=os.getenv("GOOGLE_CLIENT_ID"),
+    client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
+    scopes=SCOPES
+        )
     
+    creds.refresh(Request())
     return creds
 
 def send_email(service, message):

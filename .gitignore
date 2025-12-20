@@ -30,3 +30,19 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /tests/tests/
 /tests/results/
+
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Secrets
+token.json
+credentials.json
+
+# OS
+.DS_Store
+Thumbs.db
+
