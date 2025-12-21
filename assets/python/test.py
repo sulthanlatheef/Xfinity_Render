@@ -2,7 +2,6 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE_DIR)
 import sys
-from dotenv import load_dotenv
 import base64
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -12,7 +11,6 @@ from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-load_dotenv(dotenv_path="../../.env")
 # Get arguments from PHP (in order)
 # 1: recipient email
 # 2: customer name

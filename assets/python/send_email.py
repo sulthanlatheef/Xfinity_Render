@@ -1,14 +1,13 @@
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE_DIR)
-from dotenv import load_dotenv
 import sys
 import base64
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from email.mime.text import MIMEText
-load_dotenv(dotenv_path="../../.env")
+
 # Expecting 9 parameters: name, brand, model, email, original_prediction, pickup_date, pickup_time, vehicle_reg_no, pickup_id
 if len(sys.argv) != 10:
     print("Usage: python pickupconfirmation.py <name> <brand> <model> <email> <original_prediction> <pickup_date> <pickup_time> <vehicle_reg_no> <pickup_id>")
