@@ -14,8 +14,9 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     libxml2-dev \
     libjpeg-dev \
-    zlib1g-dev \
-    && docker-php-ext-install mysqli
+    libpq-dev \
+    docker-php-ext-install pgsql pdo_pgsql
+
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

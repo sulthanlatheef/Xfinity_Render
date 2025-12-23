@@ -24,7 +24,8 @@ class Mechacontrol extends CI_Controller {
             redirect('login');
             return;
         }
-
+        
+        log_message('info', 'City: ' . $vcity);
         // 2) Fetch all matching pickups
         $data['pickups'] = $this->Forcepickups_model->get_by_city($vcity);
         

@@ -22,12 +22,14 @@ class Ventures_model extends CI_Model {
      * @return array
      */
     public function search_by_zip($zip)
-    {
-        // Use FIND_IN_SET to match exact zip in CSV field
-        $this->db
-             ->select('location, address, contact_no')
-             ->where("FIND_IN_SET(" . $this->db->escape($zip) . ", serviceable_zip) >", 0);
+{
+    $zip = $this->db->escape_str($zip);
 
-        return $this->db->get('ventures')->result_array();
-    }
+    $this->db
+        ->select('location, address, contact_no')
+        ->where("',' || serviceable_zip || ',' LIKE '%,{$zip},%'", NULL, FALSE);
+
+    return $this->db->get('ventures')->result_array();
+}
+
 }

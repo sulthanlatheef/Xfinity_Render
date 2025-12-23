@@ -12,7 +12,7 @@
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <!-- Google Maps API: Replace YOUR_API_KEY with your actual key -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5sQ89Ap2Q93cbNV54D4oYH5kT-FANMLA"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmue4B-7tO7F7mGU38tGtz1WNc5uLy-fM"></script>
    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   
   <style>
